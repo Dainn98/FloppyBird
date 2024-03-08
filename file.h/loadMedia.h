@@ -4,15 +4,15 @@
 #include "declaration.h"
 bool loadMedia(){
 	bool success = true;     
-	if( !gSpriteSheetTexture.loadFromFile( "Sprites/background.jpg" ) ){
+	if( !gBackgroundTexture.loadFromFile( "Sprites/background.jpg" ) ){
 		printf( "Failed to load background texture image!\n" );
 		success = false; 
 	}else{
         for(int i = 0; i < BACKGROUND_FRAME;i++){
-            gSpriteClips[i].x = 0;
-            gSpriteClips[i].y = 0;
-            gSpriteClips[i].w = BACKGROUND_WIDTH;
-            gSpriteClips[i].h = BACKGROUND_HEIGHT;
+            gSpriteBackground[i].x = 0;
+            gSpriteBackground[i].y = 0;
+            gSpriteBackground[i].w = BACKGROUND_WIDTH;
+            gSpriteBackground[i].h = BACKGROUND_HEIGHT;
         }
     }
     if(!gBaseSurface.loadFromFile( "Sprites/base.png" )){  
@@ -23,6 +23,7 @@ bool loadMedia(){
         string imagePath = "Sprites/bluebird" + to_string(i + 1) + ".png"; 
         if (!gTextures[i].loadFromFile(imagePath))  success = false;
     }
+    
     //  switch (whichPipe){
     //         case 1:  
     //             pipeSurface = IMG_Load("Sprites/pipeRed.png");

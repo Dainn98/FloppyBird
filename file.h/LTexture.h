@@ -45,7 +45,7 @@ bool LTexture::loadFromFile( string path ){
 	}
 	mTexture = newTexture;
 	return mTexture != NULL;
-	
+
 }
 
 void LTexture::free(){
@@ -106,8 +106,11 @@ int LTexture::getHeight()	{return mHeight;}
 // }
 LTexture gBackgroundTexture,
          gBaseSurface,
-         gSpriteSheetTexture,
+        //  gSpriteSheetTexture,
          gTextures[FLYING_ANIMATION_FRAMES_OF_BIRD];
-SDL_Rect gSpriteClips[ BACKGROUND_FRAME ];
+SDL_Rect gSpriteBackground[ BACKGROUND_FRAME ];
+LTexture gPiranhaPlant,
+        gIceberg;
+LTexture gPipe[NUMBER_OF_PIPE];
 
 #endif

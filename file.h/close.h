@@ -6,7 +6,7 @@ void close() {
     for (int i = 0; i < 4; ++i) gTextures[i].free(); // => free loaded image
     SDL_DestroyTexture(birdTexture);
     gBackgroundTexture.free();
-    gSpriteSheetTexture.free();
+    // gSpriteSheetTexture.free();
     gBaseSurface.free();
    //destroy window,texture,render
     SDL_DestroyTexture(pipeTexture);

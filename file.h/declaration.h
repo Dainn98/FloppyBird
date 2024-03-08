@@ -33,9 +33,10 @@ const int SCREEN_WIDTH = 1280,
         LOWER_PIPE_HEIGHT_OFFSET = 134,
         BACKGROUND_FRAME = 8,
         SIZE_OF_FONT = 28,
+        
 //Bird
-        BIRD_WIDTH = 50,
-        BIRD_HEIGHT = 50,
+        BIRD_WIDTH = 40,
+        BIRD_HEIGHT = 30,
 //Pipe
         PIPE_WIDTH = 100,
         PIPE_HEIGHT = 300,
@@ -48,6 +49,7 @@ const int SCREEN_WIDTH = 1280,
         COLOR_KEY_R = 167,
         COLOR_KEY_G = 175,
         COLOR_KEY_B = 180;
+const int NUMBER_OF_PIRANHA_PLANT = 5;
 //Declaration for Main loop
 bool quit = false;
 SDL_Event e;
