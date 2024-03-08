@@ -1,7 +1,5 @@
 // Sửa lỗi cột ống nước 
-#include "file.h/CommonFunc.h"
-#include "file.h/CommonTexture.h"
-#include "file.h/GeneratingPipe.h"
+#include "file.h/Header.h"
  bool checkCollision(const SDL_Rect& a, const SDL_Rect& b); // check obstacle
 LTexture gBackgroundTexture,
          gBaseSurface,

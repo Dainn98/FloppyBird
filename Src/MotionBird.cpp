@@ -34,7 +34,7 @@ public:
     }
 
     void jump() {
-        velocity = JUMP_VELOCITY;
+        velocity = BIRD_JUMP_VELOCITY;
     }
 
     void update() {

@@ -1,10 +1,11 @@
-#ifndef GENERATING_BIRD_H
-#define GENERATING_BIRD_H
-#include "CommonFunc.h"
+#ifndef BIRD_H
+#define BIRD_H
+#include "declaration.h"
 class Bird {
 public:
     int x, y, velocity, currentFrame,width,height;
-    Bird() {
+    // Bird();
+    Bird(){
         x = SCREEN_WIDTH / 4;
         y = SCREEN_HEIGHT / 2;
         velocity = 0;

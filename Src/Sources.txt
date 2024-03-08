@@ -1,0 +1,2 @@
+File ảnh : https://github.com/samuelcust/flappy-bird-assets/tree/master/sprites
+Một số dòng code liên quan đến SDL : //https://lazyfoo.net/tutorials/SDL/index.php
