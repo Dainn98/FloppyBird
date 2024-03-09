@@ -22,7 +22,7 @@ int main(int argc, char* args[]) {
             => reset
             =>revive*/
             // COLLISION_WITH_OBSTACLE();
-            quit = true;
+            quit = true;     
         }
         if(birdStrikeObstacle.y + birdStrikeObstacle.h >= SCREEN_HEIGHT - BASE_HEIGHT || birdStrikeObstacle.y < -100) quit = true;
         BuildScreen();

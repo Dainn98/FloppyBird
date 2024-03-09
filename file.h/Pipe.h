@@ -28,7 +28,7 @@ Pipe::Pipe(int startX, int pipeHeight){
 }
 void Pipe::update() { 
         x -= PIPE_VELOCITY;
-        if (x + PIPE_WIDTH < 50) { //số lần xuất hiện pipe
+        if (x + PIPE_WIDTH < 50) { 
             x = SCREEN_WIDTH;
             // whichPipe = (++whichPipe) % 3 + 1;
             whichPipe = getRandomNumber(NUMBER_OF_PIPE);
@@ -68,7 +68,8 @@ void Pipe::render(){
             SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
         }
         pipeTexture = SDL_CreateTextureFromSurface(gRenderer, pipeSurface);
-        // SDL_FreeSurface(pipeSurface);
+
+        SDL_FreeSurface(pipeSurface);
 }
 SDL_Rect Pipe:: strikeUpperObstacle(){
     if(whichPipe % 3 == 0) return emptyObstacle;
