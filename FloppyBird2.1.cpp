@@ -3,7 +3,7 @@ int main(int argc, char* args[]) {
     if (!init()) {
         cout << "Failed to initialize." << endl;
         return -1;
-    }
+    }///
     loadMedia();
     Bird bird;
     Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); // 1 random
