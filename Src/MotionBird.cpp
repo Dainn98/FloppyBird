@@ -1,3 +1,4 @@
+//Hello
 #include "file.h/CommonFunc.h"
 #include "file.h/CommonTexture.h"
 #include "file.h/GeneratingPipe.h"
