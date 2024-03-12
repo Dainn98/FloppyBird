@@ -1,12 +1,21 @@
 #ifndef HEADER_H
 #define HEADER_H
 #include "declaration.h"
-#include "close.h"
+
+#include "initialize.h"
+
+#include "Pause.h"
+
+#include "LTexture.h"
+
 #include "Bird.h"
 #include "Pipe.h"
-#include "LTexture.h"
-#include "initialize.h"
-#include "loadMedia.h"
-#include "frame.h"
-#include "Collision_With_Obstacles.h"
+
+#include "Game.h"
+// #include "close.h"
+// #include "loadMedia.h"
+// #include "defLTexture.h"
+// #include "frame.h"
+// #include "Collision_With_Obstacles.h"
+// #include "feature.h"
 #endif

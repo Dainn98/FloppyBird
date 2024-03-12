@@ -2,12 +2,7 @@
 #define GENERATING_PIPE_H
 #include "declaration.h"
 #include "LTexture.h"
-// const int NUMBER_OF_PIRANHA_PLANT = 5;
-// LTexture gPiranhaPlant[NUMBER_OF_PIRANHA_PLANT],
-//         gIceberg;
-// LTexture gPipe[NUMBER_OF_PIPE];
 SDL_Rect gSpritePiranhaPlant[ NUMBER_OF_PIRANHA_PLANT ];
-// SDL_Rect* currentPiranhaPlant = &gSpritePiranhaPlant[ NUMBER_OF_PIRANHA_PLANT];
 class Pipe {
 public:
     int x, height,width,whichPipe;
@@ -17,6 +12,10 @@ public:
     void render();
     SDL_Rect strikeUpperObstacle();
     SDL_Rect strikeLowerObstacle();
+    void intit(){
+        x = SCREEN_WIDTH;
+        height = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
+    }
 
 };
 Pipe::Pipe(){};
@@ -41,16 +40,7 @@ void Pipe::update() {
 void Pipe::render(){
     
         if(whichPipe % 3 == 0) {
-            SDL_Rect lowerPipeRect = { x, height + LOWER_PIPE_OFFSET, PIPE_WIDTH, SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height)}; 
-            gPiranhaPlant.loadFromFile( "Sprites/piranha5.png" );
-            for(int i = 0; i < NUMBER_OF_PIRANHA_PLANT;i++){
-                // string imagePath = "Sprites/piranha" + to_string(i + 1) + ".png";
-                // gPiranhaPlant[i].loadFromFile(imagePath);
-                gSpritePiranhaPlant[i].x = SCREEN_WIDTH/2;
-                gSpritePiranhaPlant[i].y = SCREEN_HEIGHT/3;
-                gSpritePiranhaPlant[i].w = 50;
-                gSpritePiranhaPlant[i].h = 50;
-            }
+            SDL_Rect lowerPipeRect = { x, height + LOWER_PIPE_OFFSET, PIPE_WIDTH, SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height)};          
             pipeSurface = IMG_Load("Sprites/pipeRed.png");
             SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
             }

@@ -1,11 +1,20 @@
 #ifndef BIRD_H
 #define BIRD_H
 #include "declaration.h"
+// #include "defLTexture.h"
 class Bird {
 public:
     int x, y, velocity, currentFrame,width,height;
     // Bird();
     Bird(){
+        x = SCREEN_WIDTH / 4;
+        y = SCREEN_HEIGHT / 2;
+        velocity = 0;
+        currentFrame = 0;
+        width = BIRD_WIDTH;
+        height = BIRD_HEIGHT;
+    }
+    void init(){
         x = SCREEN_WIDTH / 4;
         y = SCREEN_HEIGHT / 2;
         velocity = 0;
