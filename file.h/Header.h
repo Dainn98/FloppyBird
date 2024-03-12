@@ -12,6 +12,9 @@
 #include "Pipe.h"
 
 #include "Game.h"
+#include "impTimer.h"
+#include "BaseObject.h"
+#include "BulletObject.h"
 // #include "close.h"
 // #include "loadMedia.h"
 // #include "defLTexture.h"

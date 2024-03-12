@@ -5,61 +5,44 @@
 #include "Bird.h"
 #include "Pipe.h"
 #include "LTexture.h"
+#include "impTimer.h"
+#include "BaseObject.h"
+
 Bird bird;
 Pipe pipe;
 Pause OptionInGame;
+ImpTimer fps_timer; 
 
-class Game {
+class Game : public BaseObject{
     private:
+        
     int score;
     public:
-    
     void Play();
-    void updateScore();
+    // void updateScore();
 };
 void Game::Play(){
-    SDL_SetRenderDrawColor(gRenderer,0,0,0,0);          //clear screen
+    // ImpTimer fps_timer; 
+    int score = 0;
+    SDL_SetRenderDrawColor(gRenderer,0x00,0x00,0x00,0x00);          //clear screen
     SDL_RenderClear(gRenderer);
-
-    Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); // 1 random
+    Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); // random the first pipe
     while (!quit) {
-        solveEvent();
-         
+        fps_timer.start();
 
-//check collision
-        SDL_Rect     birdStrikeObstacle = bird.strikeObstacle(),
-                birdStrikeUpperObstacle = pipe.strikeUpperObstacle(),
-                birdStrikeLowerObstacle = pipe.strikeLowerObstacle();
-        if( checkCollision(birdStrikeLowerObstacle, birdStrikeObstacle)||checkCollision(birdStrikeObstacle, birdStrikeUpperObstacle)){
-            /*mã game: sau khi va chạm 
-            => reset
-            =>revive*/
-            // COLLISION_WITH_OBSTACLE();
-            quit = true;     
+
+        while (SDL_PollEvent(&e) != 0){
+        if(e.type == SDL_MOUSEBUTTONDOWN){
+            if(e.button.button == SDL_BUTTON_LEFT ){
+                bird.LoadBullet();
+                // BulletObject* p_bullet = new BulletObject();
+                // p_bullet->LoadImageFile("Sprites/xbullet.png",gRenderer);
+                // p_bullet->SetRect(this ->rect_.x + BIRD_WIDTH - 20,rect_.y + 0.5*BIRD_HEIGHT);
+                // p_bullet->set_x_val(20);
+                // p_bullet->set_is_move(true);
+                // p_bullet_list_->push_back(p_bullet);                 
+            }
         }
-
-
-        if(abs(birdStrikeObstacle.x - birdStrikeUpperObstacle.x) <=20 &&
-            abs( birdStrikeObstacle.x - birdStrikeLowerObstacle.x) <= 20)
-                cout <<" score "<<endl;
-        
-
-
-        if(birdStrikeObstacle.y + birdStrikeObstacle.h >= SCREEN_HEIGHT - BASE_HEIGHT || birdStrikeObstacle.y < -150) quit = true;
-         BuildScreen();
-        bird.update();      bird.render();
-        pipe.update();      pipe.render();
-
-        OptionInGame.render();
-
-        SDL_RenderPresent(gRenderer);
-        SDL_RenderClear(gRenderer);
-        SDL_Delay(DELAY);
-        // cout << DELAY<<endl;
-    }
-}
-void solveEvent(){
-     while (SDL_PollEvent(&e) != 0){
         if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)  {quit = true;}
         else if (e.type == SDL_KEYDOWN){
         switch( e.key.keysym.sym ){
@@ -86,7 +69,7 @@ void solveEvent(){
         if (OptionInGame.mPresentState[EXIT])       quit = true; 
 
         if(OptionInGame.mPresentState[REPLAY]){  
-            bird.init();  
+            bird.resetPositon();  
             
 
 
@@ -98,15 +81,49 @@ void solveEvent(){
             
         }
     }
+         
+//check collision
+        SDL_Rect     birdStrikeObstacle = bird.strikeObstacle(),
+                birdStrikeUpperObstacle = pipe.strikeUpperObstacle(),
+                birdStrikeLowerObstacle = pipe.strikeLowerObstacle();
+        if( checkCollision(birdStrikeLowerObstacle, birdStrikeObstacle)||checkCollision(birdStrikeObstacle, birdStrikeUpperObstacle)){
+            /*mã game: sau khi va chạm 
+            => reset
+            =>revive*/
+            // COLLISION_WITH_OBSTACLE();
+            quit = true;     
+        }
+
+        //tính điểm 
+        if(abs(birdStrikeObstacle.x - birdStrikeUpperObstacle.x) <=10 &&
+            abs( birdStrikeObstacle.x - birdStrikeLowerObstacle.x) <= 10)
+                cout <<++score<<endl;
+        
+
+
+        if(birdStrikeObstacle.y + birdStrikeObstacle.h >= SCREEN_HEIGHT - BASE_HEIGHT || birdStrikeObstacle.y < -150) quit = true;
+         BuildScreen();
+        
+        bird.HandleBullet(gRenderer);
+        bird.update();      bird.render();
+        pipe.update();      pipe.render();
+
+        OptionInGame.render();
+
+        SDL_RenderPresent(gRenderer);
+
+        int real_imp_time = fps_timer.get_ticks();          // calculate how long it took to render this
+        int time_one_frame = 1000/FRAME_PER_SECOND;         //ms
+        if (real_imp_time <time_one_frame){
+            int delay_time  = time_one_frame-real_imp_time ;   //delay to make one frame
+            if(delay_time >= 0) SDL_Delay(delay_time);
+        }
+        // SDL_RenderClear(gRenderer);
+        // SDL_Delay(DELAY);
+        // cout << DELAY<<endl;
+    }
 }
-// void Game::updateScore(){
-//     SDL_Rect    birdStrikeObstacle = bird.strikeObstacle(),
-//                 birdStrikeUpperObstacle = pipe.strikeUpperObstacle(),
-//                 birdStrikeLowerObstacle = pipe.strikeLowerObstacle();
-//     if(abs(birdStrikeObstacle.x - birdStrikeUpperObstacle.x) <=20 &&
-//       abs( birdStrikeObstacle.x - birdStrikeLowerObstacle.x) <= 20){
-//         cout <<" score "<<endl;
-//        }
-    
-// }
+void solveEvent(){
+     
+}
 #endif

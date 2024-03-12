@@ -14,7 +14,7 @@ bool loadMedia(){
     gBaseSurface.loadFromFile( "Sprites/base.png" );
     for(int i = 0; i <FLYING_ANIMATION_FRAMES_OF_BIRD;i++){     //=> continuous bird
         string imagePath = "Sprites/bluebird" + to_string(i + 1) + ".png"; 
-        gTextures[i].loadFromFile(imagePath);
+        gBird[i].loadFromFile(imagePath);
     }
     gFly = Mix_LoadWAV("Sound/wing.wav");
     gMusic = Mix_LoadMUS("Sound/music.wav");

@@ -71,7 +71,11 @@ bool LTexture::loadFromFile( std::string path )
 	//Load image at specified path
 	SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
 		//Color key image
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+		 Uint32 key = SDL_MapRGB(loadedSurface->format,
+                                COLOR_KEY_R,
+                                COLOR_KEY_G,
+                                COLOR_KEY_B);
+		SDL_SetColorKey( loadedSurface, SDL_TRUE,key);
 		//Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
 			//Get image dimensions
@@ -210,7 +214,7 @@ int LTexture::getHeight()
 LTexture gBackgroundTexture,
          gBaseSurface,
         //  gSpriteSheetTexture,
-         gTextures[FLYING_ANIMATION_FRAMES_OF_BIRD];
+         gBird[FLYING_ANIMATION_FRAMES_OF_BIRD];
 
 LTexture gPiranhaPlant,
         gIceberg;

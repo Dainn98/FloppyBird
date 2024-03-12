@@ -31,7 +31,7 @@ const int SCREEN_WIDTH = 1280,
         PIPE_HEIGHT = 300,
         FLYING_ANIMATION_FRAMES_OF_BIRD = 3, 
 //Feature 
-        
+          //fps time
         GRAVITY = 1,
         BIRD_JUMP_VELOCITY = -15,
         PIPE_VELOCITY = 15,
@@ -62,6 +62,7 @@ bool quit = false;
 SDL_Event e;
 int frame = 0,
     backgroundX = 0,
+    FRAME_PER_SECOND = 35,
     picture = 0;
 double DELAY = 20;
 Mix_Chunk *gFly = NULL;
@@ -78,5 +79,6 @@ int getRandomNumber(int size){
         // srand(time(0));
         return rand() % size + 1;
 }
+
 
 #endif

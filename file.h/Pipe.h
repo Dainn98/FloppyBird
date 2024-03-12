@@ -33,7 +33,7 @@ void Pipe::update() {
             whichPipe = getRandomNumber(NUMBER_OF_PIPE);
             // height = rand() % (SCREEN_HEIGHT - BASE_HEIGHT*2) ; //  random 2
             height = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
-            DELAY -= 0.05;
+            FRAME_PER_SECOND += 0.5;
             if(height < 20) height = 0;
         }
     }
