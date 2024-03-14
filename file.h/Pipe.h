@@ -2,118 +2,92 @@
 #define GENERATING_PIPE_H
 #include "declaration.h"
 #include "LTexture.h"
-SDL_Rect gSpritePiranhaPlant[ NUMBER_OF_PIRANHA_PLANT ];
-class Pipe {
+
+class Pipe:public BaseObject {
 public:
-    int x, height,width,whichPipe;
     Pipe();
-    Pipe(int startX, int pipeHeight);
+    ~Pipe();
+
+    Pipe(int posX, int pipe_height);
+
     void update();
     void render();
+
+    void set_x_val(const int& xVal) { x_val_ = xVal;}
+    void set_y_val(const int& yVal) { y_val_ = yVal;}
+    int get_x_val() const {return x_val_;}
+    int get_y_val() const {return y_val_;}
+
     SDL_Rect strikeUpperObstacle();
     SDL_Rect strikeLowerObstacle();
-    void intit(){
-        x = SCREEN_WIDTH;
-        height = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
-    }
-
+private:
+    int x_val_,
+        y_val_,
+        height_,
+        width_,
+        whichPipe;
 };
-Pipe::Pipe(){};
-Pipe::Pipe(int startX, int pipeHeight){
-    x = startX;
-    height = pipeHeight;
-    width = PIPE_WIDTH;
+
+Pipe::Pipe(){
+    x_val_ = SCREEN_WIDTH;
+    y_val_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
+};
+Pipe::Pipe(int posX, int pipe_height){
+    x_val_ = posX;
+    height_ = pipe_height;
+    width_ = PIPE_WIDTH;
     
 }
 void Pipe::update() { 
-        x -= PIPE_VELOCITY;
-        if (x + PIPE_WIDTH < 50) { //số lần xuất hiện pipe
-            x = SCREEN_WIDTH;
-            // whichPipe = (++whichPipe) % 3 + 1;
+        x_val_ -= PIPE_VELOCITY;
+        if (x_val_ + PIPE_WIDTH < 0) { //số lần xuất hiện pipe
+            x_val_ = SCREEN_WIDTH;
             whichPipe = getRandomNumber(NUMBER_OF_PIPE);
-            // height = rand() % (SCREEN_HEIGHT - BASE_HEIGHT*2) ; //  random 2
-            height = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
+            height_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
             FRAME_PER_SECOND += 0.5;
-            if(height < 20) height = 0;
+            if(height_ < BASE_HEIGHT + 20) height_ = 0;
         }
     }
 void Pipe::render(){
+    SDL_Rect lowerPipeRect ={x_val_,
+                            height_ + LOWER_PIPE_OFFSET,
+                            PIPE_WIDTH,
+                            SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height_)},          
+             upperPipeRect ={x_val_,
+                            UPPER_PIPE_OFFSET,
+                            PIPE_WIDTH,
+                            height_};  
+
+    if(whichPipe % 3 == 0) {
+        pipeSurface = IMG_Load("Sprites/pipeRed.png");
+        upperPipeRect = emptyObstacle;
+        }
+    else if(whichPipe % 3 == 1){
+        pipeSurface = IMG_Load("Sprites/pipeBlue.png");
+        lowerPipeRect = emptyObstacle;
+    }
+    else if (whichPipe % 3 == 2) pipeSurface = IMG_Load("Sprites/pipeGreen.png");
     
-        if(whichPipe % 3 == 0) {
-            SDL_Rect lowerPipeRect = { x, height + LOWER_PIPE_OFFSET, PIPE_WIDTH, SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height)};          
-            pipeSurface = IMG_Load("Sprites/pipeRed.png");
-            SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-            }
-        
-        else if(whichPipe % 3 == 1){
-            SDL_Rect upperPipeRect = { x, UPPER_PIPE_OFFSET, PIPE_WIDTH, height };   
-            pipeSurface = IMG_Load("Sprites/pipeBlue.png");
-            SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        }
-        else if (whichPipe % 3 == 2){
-            SDL_Rect lowerPipeRect = { x, height + LOWER_PIPE_OFFSET, PIPE_WIDTH, SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height)}; 
-            SDL_Rect upperPipeRect = { x, UPPER_PIPE_OFFSET, PIPE_WIDTH, height  };   
-            pipeSurface = IMG_Load("Sprites/pipeGreen.png");
-            SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-            SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        }
-        pipeTexture = SDL_CreateTextureFromSurface(gRenderer, pipeSurface);
-        // SDL_FreeSurface(pipeSurface);
+    SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
+    SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
+    pipeTexture = SDL_CreateTextureFromSurface(gRenderer, pipeSurface);
+    SDL_FreeSurface(pipeSurface);
 }
 SDL_Rect Pipe:: strikeUpperObstacle(){
     if(whichPipe % 3 == 0) return emptyObstacle;
-    SDL_Rect Obstacle = { x, UPPER_PIPE_OFFSET, width, height }; //need to check
+    SDL_Rect Obstacle = { x_val_, UPPER_PIPE_OFFSET, width_, height_ }; //need to check
     return Obstacle;
-    // return emptyObstacle;
 }
 SDL_Rect Pipe:: strikeLowerObstacle() {
     if(whichPipe % 3 == 1) return emptyObstacle;
-    SDL_Rect Obstacle = { x, height + LOWER_PIPE_OFFSET, width, SCREEN_HEIGHT - height - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET) };//need to check
+    SDL_Rect Obstacle = { x_val_, height_ + LOWER_PIPE_OFFSET, width_, SCREEN_HEIGHT - height_ - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET) };//need to check
     return Obstacle;
 }
-
+Pipe::~Pipe(){
+    x_val_ = 0;
+    y_val_ = 0;
+    height_ = 0;
+    width_ = 0;
+    whichPipe = -1;
+}
 #endif
-/*void Pipe::render(){
-        SDL_Rect lowerPipeRect = { x, height + LOWER_PIPE_OFFSET, PIPE_WIDTH, SCREEN_HEIGHT - (LOWER_PIPE_OFFSET+LOWER_PIPE_HEIGHT_OFFSET+height)};
-        SDL_Rect upperPipeRect = { x, UPPER_PIPE_OFFSET, PIPE_WIDTH, height  };        
-        // int ranNum = getRandomNumber(NUMBER_OF_PIPE); //declaration
-        // switch (whichPipe){
-        //     case 1:  
-        //         SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect); 
-        //         break;
-        //     case 2:
-        //         SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        //         break;
-        //     case 3: 
-        //         SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-        //         SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        //     default:
-        //         break;
-
-        // }
-        // SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-        // SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        // if(whichPipe == 1) SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-
-        // else if (whichPipe == 2)SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-
-        // else if(whichPipe == 3){
-        //     SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-        //     SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        // }
-         if(whichPipe == 1)pipeSurface = IMG_Load("Sprites/pipeRed.png");
-
-        else if (whichPipe == 3)pipeSurface = IMG_Load("Sprites/pipeGreen.png");
-
-        else if(whichPipe == 2) pipeSurface = IMG_Load("Sprites/pipeBlue.png");
-        if(whichPipe == 1) SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-
-        else if (whichPipe == 2)SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-
-        else if(whichPipe == 3){
-            SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-            SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-        }
-        pipeTexture = SDL_CreateTextureFromSurface(gRenderer, pipeSurface);
-         SDL_FreeSurface(pipeSurface);
-}*/

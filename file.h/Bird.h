@@ -1,18 +1,17 @@
-#ifndef BIRD_H
-#define BIRD_H
-// #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2"
+#ifndef MAIN_OBJECT_H
+#define MAIN_OBJECT_H
+
 #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
 #include "declaration.h"
 #include "BulletObject.h"
-#include <vector>
 // #include "defLTexture.h"
+// #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2"
 class Bird;
 class Bird : public BaseObject {
 public:
     Bird();
     ~Bird();
      
-
     void resetPositon();    //reset position when restart
     void Free(); //thieu
 
@@ -21,18 +20,16 @@ public:
     void jump();
 
     void set_x_val(const int& xVal) { x_val_ = xVal;}
-    void  set_y_val(const int& yVal) { y_val_ = yVal;}
+    void set_y_val(const int& yVal) { y_val_ = yVal;}
     int get_x_val() const {return x_val_;}
     int get_y_val() const {return y_val_;}
 
     void LoadBullet();
-    // std::vector<BulletObject *> p_bullet_list_;
-    void set_bullet_list(std::vector<BulletObject *> bullet_list){
-        p_bullet_list_ = bullet_list;    
-    }
+    void set_bullet_list(std::vector<BulletObject *> bullet_list)   {p_bullet_list_ = bullet_list;}
     std::vector<BulletObject *> get_bullet_list() const {return p_bullet_list_;}
-    SDL_Rect strikeObstacle() const;
     void HandleBullet(SDL_Renderer* des);
+    
+    SDL_Rect strikeObstacle() const;
 private:
     std::vector<BulletObject *> p_bullet_list_;
     int x_val_,
@@ -54,7 +51,7 @@ Bird :: ~Bird(){
     Free();
 }
 void Bird ::resetPositon(){
-     x_val_ = SCREEN_WIDTH / 4;
+    x_val_ = SCREEN_WIDTH / 4;
     y_val_ = SCREEN_HEIGHT / 2;
     velocity_ = 0;
     currentFrame = 0;
@@ -77,14 +74,16 @@ void Bird::update() {
         currentFrame = (currentFrame + 1) % FLYING_ANIMATION_FRAMES_OF_BIRD;
 }
 void Bird:: Free(){
-    //thieu
+    //To do
 }
 
 void Bird::LoadBullet(){
         BulletObject* p_bullet = new BulletObject();
-        p_bullet->LoadImageFile("Sprites/xbullet.png",gRenderer);
+        p_bullet->set_bullet_type(bullet[0]);
+        
+        p_bullet->LoadImgBullet(gRenderer);
         p_bullet->SetRect(this ->x_val_ + BIRD_WIDTH - 20,y_val_ + 0.5*BIRD_HEIGHT);
-        p_bullet->set_x_val(20);
+        p_bullet->set_x_val(30);
         p_bullet->set_is_move(true);
         p_bullet_list_.push_back(p_bullet);        
 }
