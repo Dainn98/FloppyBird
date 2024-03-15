@@ -39,7 +39,7 @@ bool loadMedia(){
 }
 void close() {
                                                     //FREE LTEXTURE
-    for (int i = 0; i < FLYING_ANIMATION_FRAMES_OF_BIRD; ++i) gBird[i].free // => free loaded image
+    for (int i = 0; i < FLYING_ANIMATION_FRAMES_OF_BIRD; ++i) gBird[i].free();// => free loaded image
     gBaseSurface.free();
     gBackgroundTexture.free();
     gButtonControlGame[0].free();
@@ -62,8 +62,8 @@ void close() {
     // TTF_CloseFont(gFont);
     // gFont = NULL;
                                                     //DESTROY SURFACE
-    SDL_FreeSurface(pipeSurface);
-    pipeSurface = NULL;
+    // SDL_FreeSurface(pipeSurface);
+    // pipeSurface = NULL;
     //quit SDL subsystem
     IMG_Quit();
     Mix_Quit();

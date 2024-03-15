@@ -1,6 +1,7 @@
 #ifndef Game_h
 #define Game_h
 #include <windows.h>
+#include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
 #include "Pause.h"
 #include "declaration.h"
 #include "Bird.h"
@@ -10,24 +11,26 @@
 #include "BaseObject.h"
 #include "ThreatObject.h"
 
-Bird bird;
-Pipe pipe;
-Pause OptionInGame;
-ImpTimer fps_timer; 
+
 
 class Game : public BaseObject{
   
 private:    
     int score = 0;
     ThreatObject* p_threat_list = new ThreatObject[NUM_THREAT];
+    Bird bird;
+    Pipe pipe;
+    Pause OptionInGame;
+    ImpTimer fps_timer; 
 public:
     void Play();
-    void  DeleteAll();
+    void DeleteAll();
+    void CollisionWithFrame();
     void changeFPS();
 };
 void Game::Play(){
 
-
+bird.SetRect(SCREEN_WIDTH/4,SCREEN_HEIGHT/2);
 Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); //  GENERATE THE FIRST PIPE
 
 for(int t = 0; t < NUM_THREAT; t++){                //  GENERATE THE THREAT 
@@ -103,11 +106,12 @@ while (!quit) {
     }
 }
 
-    SDL_Rect     birdStrikeObstacle = bird.strikeObstacle(),         //COLLISION
-            birdStrikeUpperObstacle = pipe.strikeUpperObstacle(),
-            birdStrikeLowerObstacle = pipe.strikeLowerObstacle();
-    if(birdStrikeObstacle.y + birdStrikeObstacle.h >= SCREEN_HEIGHT - BASE_HEIGHT || birdStrikeObstacle.y < -150) quit = true;        
-    if( checkCollision(birdStrikeLowerObstacle, birdStrikeObstacle)||checkCollision(birdStrikeObstacle, birdStrikeUpperObstacle)){
+    // SDL_Rect     birdStrikeObstacle = bird.strikeObstacle(),         //COLLISION
+    //         pipe.strikeUpperObstacle() = pipe.strikeUpperObstacle(),
+    //         pipe.strikeLowerObstacle() = pipe.strikeLowerObstacle();
+
+    if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;        
+    if( checkCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
         /*mã game: sau khi va chạm 
         => reset
         =>revive*/
@@ -115,22 +119,45 @@ while (!quit) {
         quit = true;     
     }
     //tính điểm 
-    if(abs(birdStrikeObstacle.x - birdStrikeUpperObstacle.x) <=10 || abs( birdStrikeObstacle.x - birdStrikeLowerObstacle.x) <= 10)    cout << ++score<<endl;
-        
-    BuildScreen();                              //RENDER
+    if(abs( bird.strikeObstacle().x - pipe.strikeUpperObstacle().x) <=10 || abs(  bird.strikeObstacle().x - pipe.strikeLowerObstacle().x) <= 10)    cout << ++score<<endl;
+                                                //LOADING SCREEN_FRAME
+    BuildScreen();                              
+                                                //BIRD & BULLET_BIRD => UPDATE POSITION AND RENDER 
+    bird.update(); 
+    bird.HandleBullet(gRenderer);               
+    bird.render();          
 
-    bird.HandleBullet(gRenderer);               //BULLET 
-
-    bird.update();      bird.render();          //BIRD
-
-    for(int tt = 0; tt < NUM_THREAT;tt++){      //IMPLEMENT THREAT
+    for(int tt = 0; tt < NUM_THREAT;tt++){                                    //IMPLEMENT THREAT
         ThreatObject* p_threat = (p_threat_list + tt);
-        if(p_threat){                           //CHECK POINTER IS NULL OR NOT
-            p_threat->Render(gRenderer);
+        if(p_threat){                                                         //CHECK POINTER IS NULL OR NOT
             p_threat->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
-            p_threat->MakeBullet(gRenderer,SCREEN_WIDTH,SCREEN_HEIGHT);
+            p_threat->Render(gRenderer);
+                                                                            //GENERATE BULLET FOR THREAT
+            p_threat->MakeBullet(gRenderer,SCREEN_WIDTH,SCREEN_HEIGHT);     
+                                                                            //CHECK COLLISION BIRD AND THREATS
+            bool is_collision = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
+            // bool is_collision = SDLCommonFunc::CheckCollision( bird.strikeObstacle(),p_threat->GetRect());
+            if(is_collision){
+                //To do
+                //isDie
+                //choose button replay,exit
+            }
+            //CHECK BULLET_BIRD WITH THREATS
+            std::vector<BulletObject*> bullet_list = bird.get_bullet_list();
+            for(int ib = 0; ib < bullet_list.size(); ib++){
+                BulletObject* p_bullet = bullet_list.at(ib);
+                if(p_bullet!=NULL){
+                    bool ret_collision = SDLCommonFunc::CheckCollision(p_bullet->GetRect(),p_threat->GetRect());
+                    if(ret_collision){
+                        //=> DELETE THREATS, BULLET_BIRD => INCREASE MONEY,ITEMS,..
+                        p_threat->Reset(SCREEN_WIDTH + tt * DISTANCE_BETWEEN_THREATS);  //RESET POSI THREAT
+                        bird.RemoveBullet(ib);                                          //REMOVE BULLET BIRD
+
+                    }                    
+                }
+            }
+
         }
-        
     }
 
     pipe.update();      pipe.render();          //PIPE
@@ -143,7 +170,6 @@ while (!quit) {
     
 }
 void Game :: DeleteAll(){
-    delete[] p_threat_list;
     close();
    
 }
@@ -154,5 +180,8 @@ void Game :: changeFPS(){
         int delay_time  = time_one_frame-real_imp_time ;   //delay to make one frame
         if(delay_time >= 0) SDL_Delay(delay_time);
     }
+}
+void Game::CollisionWithFrame(){
+    
 }
 #endif

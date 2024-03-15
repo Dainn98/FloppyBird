@@ -24,10 +24,15 @@ public:
     int get_x_val() const {return x_val_;}
     int get_y_val() const {return y_val_;}
 
+
     void LoadBullet();
     void set_bullet_list(std::vector<BulletObject *> bullet_list)   {p_bullet_list_ = bullet_list;}
     std::vector<BulletObject *> get_bullet_list() const {return p_bullet_list_;}
     void HandleBullet(SDL_Renderer* des);
+    void HandleInputAction(SDL_Event events);
+
+    void RemoveBullet(const int& idx);
+
     
     SDL_Rect strikeObstacle() const;
 private:
@@ -39,35 +44,42 @@ private:
         width_,
         height_;
 };
+
 Bird::Bird(){
+                                //POSITION
     x_val_ = SCREEN_WIDTH / 4;
     y_val_ = SCREEN_HEIGHT / 2;
-    velocity_ = 0;
-    currentFrame = 0;
     width_ = BIRD_WIDTH;
     height_ = BIRD_HEIGHT;
+
+    rect_.x = x_val_;
+    rect_.y = y_val_;
+    rect_.w = width_;
+    rect_.h = height_;
+    
+    velocity_ = 0;
+    currentFrame = 0;
 }
 Bird :: ~Bird(){
     Free();
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
-    y_val_ = SCREEN_HEIGHT / 2;
+    y_val_ = SCREEN_HEIGHT/2;
     velocity_ = 0;
     currentFrame = 0;
     width_ = BIRD_WIDTH;
     height_ = BIRD_HEIGHT;
 }
-void Bird::jump(){
-    velocity_ = BIRD_JUMP_VELOCITY;
-}
-void Bird :: render(){
-    gBird[currentFrame].render(x_val_, y_val_);
-}
+void Bird::jump(){velocity_ = BIRD_JUMP_VELOCITY;}
+
+void Bird :: render(){gBird[currentFrame].render(x_val_, y_val_);}
+
 SDL_Rect Bird :: strikeObstacle() const {
-        SDL_Rect Obstacle = { x_val_, y_val_, width_, height_ };
-        return Obstacle;
-    }
+    SDL_Rect Obstacle = { x_val_, y_val_, width_, height_ };
+    return Obstacle;
+}
+
 void Bird::update() {
         velocity_ += GRAVITY;
         y_val_ += velocity_;
@@ -78,15 +90,16 @@ void Bird:: Free(){
 }
 
 void Bird::LoadBullet(){
-        BulletObject* p_bullet = new BulletObject();
-        p_bullet->set_bullet_type(bullet[0]);
-        
-        p_bullet->LoadImgBullet(gRenderer);
-        p_bullet->SetRect(this ->x_val_ + BIRD_WIDTH - 20,y_val_ + 0.5*BIRD_HEIGHT);
-        p_bullet->set_x_val(30);
-        p_bullet->set_is_move(true);
-        p_bullet_list_.push_back(p_bullet);        
+    BulletObject* p_bullet = new BulletObject();
+    p_bullet->set_bullet_type(bullet[0]);
+    
+    p_bullet->LoadImgBullet(gRenderer);
+    p_bullet->SetRect(this ->x_val_ + BIRD_WIDTH - 20,y_val_ + 0.5*BIRD_HEIGHT);
+    p_bullet->set_x_val(30);
+    p_bullet->set_is_move(true);
+    p_bullet_list_.push_back(p_bullet);        
 }
+
 void Bird::HandleBullet(SDL_Renderer* des){
     for(int i = 0; i < p_bullet_list_.size();i++){
         BulletObject* p_bullet = p_bullet_list_.at(i);
@@ -104,6 +117,23 @@ void Bird::HandleBullet(SDL_Renderer* des){
             }
         }
     }
+}
+
+void Bird::RemoveBullet(const int& idx){
+  for (int i = 0; i < p_bullet_list_.size(); i++){
+    if (idx < p_bullet_list_.size()){
+      BulletObject* p_bullet = p_bullet_list_.at(idx);
+      p_bullet_list_.erase(p_bullet_list_.begin() + idx);
+
+      if (p_bullet != NULL){
+        delete p_bullet;
+        p_bullet = NULL;
+      }
+    }
+  }
+}
+void Bird::HandleInputAction(SDL_Event events){
+    //To do
 }
 #endif
 

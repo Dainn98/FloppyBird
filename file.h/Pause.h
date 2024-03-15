@@ -142,7 +142,7 @@ void Pause::render(){
         }
     }
 }
-void Pause:: ~Pause(){
+Pause:: ~Pause(){
     //To do
 }
 
