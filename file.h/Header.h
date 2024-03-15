@@ -15,4 +15,5 @@
 #include  "ThreatObject.h"
 #include "BaseObject.h"
 #include "BulletObject.h"
+#include "Explosion.h"
 #endif

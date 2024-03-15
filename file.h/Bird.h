@@ -4,6 +4,7 @@
 #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
 #include "declaration.h"
 #include "BulletObject.h"
+#include "Pipe.h"
 // #include "defLTexture.h"
 // #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2"
 class Bird;
@@ -28,7 +29,7 @@ public:
     void LoadBullet();
     void set_bullet_list(std::vector<BulletObject *> bullet_list)   {p_bullet_list_ = bullet_list;}
     std::vector<BulletObject *> get_bullet_list() const {return p_bullet_list_;}
-    void HandleBullet(SDL_Renderer* des);
+    void HandleBullet(SDL_Renderer* des,Pipe pipe);
     void HandleInputAction(SDL_Event events);
 
     void RemoveBullet(const int& idx);
@@ -100,7 +101,7 @@ void Bird::LoadBullet(){
     p_bullet_list_.push_back(p_bullet);        
 }
 
-void Bird::HandleBullet(SDL_Renderer* des){
+void Bird::HandleBullet(SDL_Renderer* des,Pipe pipe){
     for(int i = 0; i < p_bullet_list_.size();i++){
         BulletObject* p_bullet = p_bullet_list_.at(i);
         if(p_bullet != NULL){
@@ -108,13 +109,20 @@ void Bird::HandleBullet(SDL_Renderer* des){
                 p_bullet->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
                 p_bullet->Render(des);
             }
-            else{
+            else {
                 p_bullet_list_.erase(p_bullet_list_.begin()+i);
                 if(p_bullet != NULL){
                     delete p_bullet;
                     p_bullet = NULL;
                 }
             }
+        }
+        if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) ||//DELETE BULLET WHEN COLLIDE WITH PIPE
+                        SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))) {
+            delete p_bullet;
+            p_bullet = NULL;
+            p_bullet_list_.erase(p_bullet_list_.begin() + i);
+            i--; // Decrement i to account for the erased element
         }
     }
 }

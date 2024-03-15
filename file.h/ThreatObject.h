@@ -3,6 +3,7 @@
 #include"BaseObject.h"
 #include "declaration.h"
 #include "BulletObject.h"
+#include "Pipe.h"
 #include <vector>
  
 class ThreatObject : public BaseObject{
@@ -22,7 +23,7 @@ public:
   std::vector<BulletObject*> GetBulletList() const {return p_bullet_list_;}                     //BULLET LIST
 
   void InitBullet(BulletObject* p_bullet);
-  void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit);
+  void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe);
   void Reset(const int& xboder);
   void ResetBullet(BulletObject* p_bullet);
 
@@ -81,19 +82,23 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
   }
 }
 
-void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit){
-  for (int i = 0; i < p_bullet_list_.size(); i++){
-    BulletObject* p_bullet = p_bullet_list_.at(i);
-    if (p_bullet){              //  IF IT IS NOT EMPTY
+void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe){
+  for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
+    BulletObject* p_bullet = p_bullet_list_.at(itmb);
+    if (p_bullet!=NULL){              //  IF IT IS NOT EMPTY
       if (p_bullet->get_is_move()){ //    BULLET MOVE
         p_bullet->Render(des);
-        // p_bullet->HandleMoveRightToLeft(); //Trajectory
-        p_bullet->HandleMoveRightToLeft(i);
+                                                // p_bullet->HandleMoveRightToLeft(); //Trajectory
+        p_bullet->HandleMoveRightToLeft(itmb);
       }
       else{                   
         p_bullet->set_is_move(true);                       
         p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5); //Reset bullet back to the previous position
       }
+    }
+    if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) || //RESET BULLET WHEN COLLIDE WITH PIPE
+                    SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))){
+        ResetBullet(p_bullet);
     }
   }
 }
@@ -102,8 +107,8 @@ void ThreatObject::Reset(const int& xboder){
   rect_.x = xboder; 
   rect_.y = SDLCommonFunc::MakeRandValue();
 
-  for (int i = 0; i < p_bullet_list_.size(); i++){
-    BulletObject* p_bullet = p_bullet_list_.at(i);
+  for (int irs = 0; irs < p_bullet_list_.size(); irs++){
+    BulletObject* p_bullet = p_bullet_list_.at(irs);
     if (p_bullet) ResetBullet(p_bullet);
   }
 }

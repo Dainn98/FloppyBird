@@ -25,27 +25,29 @@ private:
         y_val_,
         height_,
         width_,
-        whichPipe;
+        which_pipe_= getRandomNumber(NUMBER_OF_PIPE);;
 };
 
 Pipe::Pipe(){
     x_val_ = SCREEN_WIDTH;
     y_val_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
+    // which_pipe_ = 0;
 };
 Pipe::Pipe(int posX, int pipe_height){
     x_val_ = posX;
     height_ = pipe_height;
     width_ = PIPE_WIDTH;
+    // which_pipe_ = getRandomNumber(NUMBER_OF_PIPE);
     
 }
 void Pipe::update() { 
         x_val_ -= PIPE_VELOCITY;
         if (x_val_ + PIPE_WIDTH < 0) { //số lần xuất hiện pipe
             x_val_ = SCREEN_WIDTH;
-            whichPipe = getRandomNumber(NUMBER_OF_PIPE);
+            which_pipe_ = getRandomNumber(NUMBER_OF_PIPE);
             height_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
             FRAME_PER_SECOND += 0.5;
-            if(height_ < BASE_HEIGHT + 20) height_ = 0;
+            if(which_pipe_ < 0) which_pipe_ = 0;
         }
     }
 void Pipe::render(){
@@ -58,15 +60,15 @@ void Pipe::render(){
                             PIPE_WIDTH,
                             height_};  
 
-    if(whichPipe % 3 == 0) {
+    if(which_pipe_ % 3 == 0) {
         pipeSurface = IMG_Load("Sprites/pipeRed.png");
         upperPipeRect = emptyObstacle;
         }
-    else if(whichPipe % 3 == 1){
+    else if(which_pipe_ % 3 == 1){
         pipeSurface = IMG_Load("Sprites/pipeBlue.png");
         lowerPipeRect = emptyObstacle;
     }
-    else if (whichPipe % 3 == 2) pipeSurface = IMG_Load("Sprites/pipeGreen.png");
+    else if (which_pipe_ % 3 == 2) pipeSurface = IMG_Load("Sprites/pipeGreen.png");
     
     SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
     SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
@@ -74,12 +76,12 @@ void Pipe::render(){
     SDL_FreeSurface(pipeSurface);
 }
 SDL_Rect Pipe:: strikeUpperObstacle(){
-    if(whichPipe % 3 == 0) return emptyObstacle;
+    if(which_pipe_ % 3 == 0) return emptyObstacle;
     SDL_Rect Obstacle = { x_val_, UPPER_PIPE_OFFSET, width_, height_ }; //need to check
     return Obstacle;
 }
 SDL_Rect Pipe:: strikeLowerObstacle() {
-    if(whichPipe % 3 == 1) return emptyObstacle;
+    if(which_pipe_ % 3 == 1) return emptyObstacle;
     SDL_Rect Obstacle = { x_val_, height_ + LOWER_PIPE_OFFSET, width_, SCREEN_HEIGHT - height_ - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET) };//need to check
     return Obstacle;
 }
@@ -88,6 +90,6 @@ Pipe::~Pipe(){
     y_val_ = 0;
     height_ = 0;
     width_ = 0;
-    whichPipe = -1;
+    which_pipe_ = -1;
 }
 #endif
