@@ -19,6 +19,7 @@ public:
     enum BulletType{
         SPHERE_BULLET = 50,
         LASER_BULLET = 51,
+        DYNAMIC_BULLET = 52,
     };
     
     void set_x_val(const int& xVal) { x_val_ = xVal;}
@@ -66,10 +67,12 @@ BulletObject:: BulletObject(){
 BulletObject:: ~BulletObject(){}
 
 void BulletObject::LoadImgBullet(SDL_Renderer* des){
-    if(bullet_type_ == LASER_BULLET){
-        LoadImageFile("Sprites/laser.png",des);
+    if(bullet_type_ == SPHERE_BULLET){
+        LoadImageFile("Sprites/bulletBird1.png",des);
+    }else if (bullet_type_ == LASER_BULLET){
+    LoadImageFile("Sprites/bulletBird2.png",des);    
     }else{
-    LoadImageFile("Sprites/xbullet.png",des);    
+        LoadImageFile("Sprites/bulletBird3.png",des);
     }
 }
 void BulletObject::HandleMove(const int& x_border, const int& y_border){    //BULLET FOR MAIN BIRD

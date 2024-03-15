@@ -48,9 +48,10 @@ const int SCREEN_WIDTH = 1280,
         PIPE_VELOCITY = 15,
         COLOR_KEY_R = 167,
         COLOR_KEY_G = 175,
-        COLOR_KEY_B = 180;
+        COLOR_KEY_B = 180,
                                                     //BULLET
-int bullet[2] = {50,51};      
+        BULLET_TYPES = 2;
+int bullet[BULLET_TYPES] = {50,51};      
                                                     //FUNCTION
 bool init();  
 bool loadMedia();
@@ -82,6 +83,8 @@ double DELAY = 20;
 Mix_Chunk *gFly = NULL;
 Mix_Chunk *gSwoosh = NULL;
 Mix_Chunk *gSwapBullet = NULL;
+Mix_Chunk *gDie = NULL;
+Mix_Chunk *gExplosion = NULL;
 Mix_Music *gMusic = NULL;
 enum Button{
     PAUSE,

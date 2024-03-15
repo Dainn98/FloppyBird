@@ -16,6 +16,7 @@ class Game : public BaseObject{
   
 private:    
     int score = 0;
+    int bullet_type_ = 50;
     ThreatObject* p_threat_list = new ThreatObject[NUM_THREAT];
     Bird bird;
     Pipe pipe;
@@ -38,7 +39,7 @@ void Game::Play(){
 for(int t = 0; t < NUM_THREAT; t++){                //  GENERATE THE THREAT 
     ThreatObject* p_threat = (p_threat_list + t);
     if(p_threat){
-        p_threat->LoadImageFile("Sprites/redbird1.png",gRenderer);
+        p_threat->LoadImageFile("Sprites/creepy.png",gRenderer);
         int rand_y = SDLCommonFunc::MakeRandValue();
         p_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); //400: DISTANCE BETWEEN THREATS
         p_threat->set_x_val(THREAT_VELOCITY);                         // SET VELOCITY_THREAT
@@ -50,6 +51,10 @@ for(int t = 0; t < NUM_THREAT; t++){                //  GENERATE THE THREAT
     explosion.LoadImageFile("Sprites/Expolosion.png", gRenderer);
     explosion.set_clip();
  Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); //  GENERATE THE FIRST PIPE
+//INITIALIZE PIRANHA OBJECT
+
+//INITIALIZE ICE OBJCET
+
 
 while (!quit) {
     fps_timer.start();
@@ -101,7 +106,7 @@ while (!quit) {
     OptionInGame.render();   
     if(OptionInGame.mPresentState[PAUSE]){
         // Sleep(500); //10s
-        SDL_Delay(100);
+        // SDL_Delay(100);
         // return;
     }
 }
@@ -113,6 +118,8 @@ while (!quit) {
         => reset
         =>revive*/
         // COLLISION_WITH_OBSTACLE();
+            Mix_PlayChannel( -1, gDie, 0 );
+            SDL_Delay(100);
         quit = true;     
     }
     //tính điểm 
@@ -144,6 +151,7 @@ while (!quit) {
                     explosion.set_frame(ex);
                     explosion.SetRect(xPos,yPos);
                     explosion.ShowEx(gRenderer);
+                    Mix_PlayChannel( -1, gExplosion, 0 );
                     SDL_Delay(100);
                 }
                 /*if(GAME OVER){
@@ -152,6 +160,7 @@ while (!quit) {
                 //To do
                 //isDie
                 //choose button replay,exit
+                Mix_PlayChannel( -1, gDie, 0 );
                 quit = true;
             }
             //CHECK BULLET_BIRD WITH THREATS

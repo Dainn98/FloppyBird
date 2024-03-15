@@ -30,6 +30,8 @@ bool loadMedia(){
     gMusic = Mix_LoadMUS("Sound/musicBackground.wav");
     gSwoosh = Mix_LoadWAV("Sound/swoosh.wav");
     gSwapBullet = Mix_LoadWAV("Sound/swapBullet.wav");
+    gExplosion = Mix_LoadWAV("Sound/explosion.wav");
+    gDie = Mix_LoadWAV("Sound/die.wav");
                                                     //BUTTON CONTORL LOADING
     gButtonControlGame[PAUSE].loadFromFile("Sprites/pausebutton.png");
     gButtonControlGame[PLAY].loadFromFile("Sprites/playbutton.png");
@@ -50,6 +52,8 @@ void close() {
     Mix_FreeChunk( gFly );  gFly = NULL;
     Mix_FreeMusic( gMusic ); gMusic = NULL;
     Mix_FreeChunk( gSwoosh ); gSwoosh = NULL;
+    Mix_FreeChunk( gDie ); gDie = NULL;
+    Mix_FreeChunk( gExplosion ); gExplosion = NULL;
     Mix_FreeChunk( gSwapBullet ); gSwapBullet = NULL;
     
 	                                                //DESTROY TEXTURE
