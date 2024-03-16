@@ -70,7 +70,7 @@ void ThreatObject::HandleInputAction(SDL_Event events)
 }
 void ThreatObject::InitBullet(BulletObject* p_bullet){
   if (p_bullet){
-    bool ret = p_bullet->LoadImageFile("Sprites/bulletThreat1.png",gRenderer);
+    bool ret = p_bullet->LoadImageFile(Bullet_Threat1_path,gRenderer);
     if (ret){
       p_bullet->set_is_move(true);
       p_bullet->SetWidthHeight(WIDTH_SPHERE, HEIGHT_SPHERE);

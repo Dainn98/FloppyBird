@@ -11,7 +11,7 @@ bool loadMedia(){
 	bool success = true;   
 
 //BACKGROUND LOADING  
-	gBackgroundTexture.loadFromFile( "Sprites/background.jpg" );
+	gBackgroundTexture.loadFromFile( gBackGroundTexture_path );
         for(int i = 0; i < BACKGROUND_FRAME;i++){
             gSpriteBackground[i].x = 0;
             gSpriteBackground[i].y = 0;
@@ -19,24 +19,24 @@ bool loadMedia(){
             gSpriteBackground[i].h = BACKGROUND_HEIGHT;
         }
                                                     //BASE LOADING
-    gBaseSurface.loadFromFile( "Sprites/base.png" );
+    gBaseSurface.loadFromFile( gBaseSurface_path );
                                                     //BIRD LOADING
     for(int i = 0; i <FLYING_ANIMATION_FRAMES_OF_BIRD;i++){     //=> continuous bird
         string imagePath = "Sprites/bluebird" + to_string(i + 1) + ".png"; 
         gBird[i].loadFromFile(imagePath);
     }
                                                     //MUSIC LOADING
-    gFly = Mix_LoadWAV("Sound/wing.wav");
-    gMusic = Mix_LoadMUS("Sound/musicBackground.wav");
-    gSwoosh = Mix_LoadWAV("Sound/swoosh.wav");
-    gSwapBullet = Mix_LoadWAV("Sound/swapBullet.wav");
-    gExplosion = Mix_LoadWAV("Sound/explosion.wav");
-    gDie = Mix_LoadWAV("Sound/die.wav");
+    gFly = Mix_LoadWAV(gFly_path);
+    gMusic = Mix_LoadMUS(gMusic_path);
+    gSwoosh = Mix_LoadWAV(gSwoosh_path);
+    gSwapBullet = Mix_LoadWAV(gSwapBullet_path);
+    gExplosion = Mix_LoadWAV(gExplosion_path);
+    gDie = Mix_LoadWAV(gDie_path);
                                                     //BUTTON CONTORL LOADING
-    gButtonControlGame[PAUSE].loadFromFile("Sprites/pausebutton.png");
-    gButtonControlGame[PLAY].loadFromFile("Sprites/playbutton.png");
-    gButtonControlGame[REPLAY].loadFromFile("Sprites/restartbutton.png");
-    gButtonControlGame[EXIT].loadFromFile("Sprites/stopbutton.png");
+    gButtonControlGame[PAUSE].loadFromFile(gButtonControlGame_PAUSE_path);
+    gButtonControlGame[PLAY].loadFromFile(gButtonControlGame_PLAY_path);
+    gButtonControlGame[REPLAY].loadFromFile(gButtonControlGame_REPLAY_path);
+    gButtonControlGame[EXIT].loadFromFile(gButtonControlGame_EXIT_path);
 	return success;
 }
 void close() {

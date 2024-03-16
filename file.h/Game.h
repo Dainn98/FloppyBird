@@ -32,63 +32,64 @@ public:
 
 
 void Game::Play(){
-
-// bird.SetRect(SCREEN_WIDTH/4,SCREEN_HEIGHT/2);
-//  Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); //  GENERATE THE FIRST PIPE
-
-for(int t = 0; t < NUM_THREAT; t++){                //  GENERATE THE THREAT 
+Mix_PlayMusic( gMusic, -1 );
+    
+                                                                        //  GENERATE THE FIRST PIPE
+Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); 
+                                                                        //  GENERATE THE THREAT 
+for(int t = 0; t < NUM_THREAT; t++){                
     ThreatObject* p_threat = (p_threat_list + t);
     if(p_threat){
-        p_threat->LoadImageFile("Sprites/creepy.png",gRenderer);
+        p_threat->LoadImageFile(Creepy_path,gRenderer);
         int rand_y = SDLCommonFunc::MakeRandValue();
-        p_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); //400: DISTANCE BETWEEN THREATS
-        p_threat->set_x_val(THREAT_VELOCITY);                         // SET VELOCITY_THREAT
-        BulletObject* p_bullet = new BulletObject();    //INTIALIZE BULLET FOR THREAT
-        p_threat->InitBullet(p_bullet);
+        p_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); 
+        p_threat->set_x_val(THREAT_VELOCITY);                           // SET VELOCITY_THREAT
+        BulletObject* p_bullet = new BulletObject();                    //INTIALIZE BULLET FOR THREAT
+        p_threat->InitBullet(p_bullet); 
     }
 }
-//INITIALIZE  EXPLOSION OBJECT
-    explosion.LoadImageFile("Sprites/Expolosion.png", gRenderer);
+                                                                            //INITIALIZE  EXPLOSION OBJECT
+    explosion.LoadImageFile(Explosion_path, gRenderer);
     explosion.set_clip();
- Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); //  GENERATE THE FIRST PIPE
-//INITIALIZE PIRANHA OBJECT
 
-//INITIALIZE ICE OBJCET
+                                                                            //INITIALIZE PIRANHA OBJECT
 
+                                                                            //INITIALIZE ICE OBJCET
 
 while (!quit) {
     fps_timer.start();
     while (SDL_PollEvent(&e) != 0){
-//MOUSEBUTTONDOWN
+                                                                            //MOUSEBUTTONDOWN
     if(e.type == SDL_MOUSEBUTTONDOWN)       
     if(e.button.button == SDL_BUTTON_LEFT ){
         bird.LoadBullet();
         Mix_PlayChannel(-1,gSwoosh,0);
     }
 
-//  KEY
+                                                                            //KEY
     if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)  {quit = true;}
     else if (e.type == SDL_KEYDOWN){
         switch( e.key.keysym.sym ){  
             case SDLK_b:
-                std::swap(bullet[0],bullet[1]); //SWITCH TYPE BULLET (IN DECLARATION)
+                                                                            //SWITCH TYPE BULLET (IN DECLARATION)
+                std::swap(bullet[0],bullet[1]); 
                 Mix_PlayChannel(-1,gSwapBullet,0);
                 break;
-
-            case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   //BIRD SWING
+                                                                            //BIRD SWING
+            case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
                 bird.jump();
                 Mix_PlayChannel( -1, gFly, 0 );
                 break;
-
-            case SDLK_m://PLAY THE MUSIC
+                                                                            //PLAY THE MUSIC
+            case SDLK_m:
                 if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
                 else{
-                    if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();   //RESUME THE MUSIC 
-                    else  Mix_PauseMusic();                 //PAUSE THE MUSIC                       
+                    if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
+                    else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
                 }
                 break;
-
-            case SDLK_0:    //STOP THE MUSIC
+                                                                            //STOP THE MUSIC
+            case SDLK_0:    
                 Mix_HaltMusic();   
                 break;
         }
@@ -111,17 +112,17 @@ while (!quit) {
     }
 }
 
-    if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
+    // if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
 
-    if( checkCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
-        /*mã game: sau khi va chạm 
-        => reset
-        =>revive*/
-        // COLLISION_WITH_OBSTACLE();
-            Mix_PlayChannel( -1, gDie, 0 );
-            SDL_Delay(100);
-        quit = true;     
-    }
+    // if( checkCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
+    //     /*mã game: sau khi va chạm 
+    //     => reset
+    //     =>revive*/
+    //     // COLLISION_WITH_OBSTACLE();
+    //         Mix_PlayChannel( -1, gDie, 0 );
+    //         SDL_Delay(100);
+    //     quit = true;     
+    // }
     //tính điểm 
     if(abs( bird.strikeObstacle().x - pipe.strikeUpperObstacle().x) <=10 || abs(  bird.strikeObstacle().x - pipe.strikeLowerObstacle().x) <= 10)    cout << ++score<<endl;
                                                 //LOADING SCREEN_FRAME
@@ -133,13 +134,30 @@ while (!quit) {
 
     bird.render();          
 
-    for(int tt = 0; tt < NUM_THREAT;tt++){                                    //IMPLEMENT THREAT
+    for(int tt = 0; tt < NUM_THREAT;tt++){                                   //IMPLEMENT THREAT
         ThreatObject* p_threat = (p_threat_list + tt);
-        if(p_threat){                                                         //CHECK POINTER IS NULL OR NOT
+        if(p_threat){                                                        //CHECK POINTER IS NULL OR NOT
             p_threat->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
             p_threat->Render(gRenderer);
                                                                             //GENERATE BULLET FOR THREAT
             p_threat->MakeBullet(gRenderer,SCREEN_WIDTH,SCREEN_HEIGHT,pipe);     
+            bool is_col1 = false;
+            std::vector<BulletObject*> bullet_arr = p_threat->GetBulletList();
+            for (int am = 0; am < bullet_arr.size(); am++)
+            {
+            BulletObject* p_bullet = bullet_arr.at(am);
+            if (p_bullet)
+            {
+                is_col1 = SDLCommonFunc::CheckCollision(p_bullet->GetRect(), bird.strikeObstacle());
+                if (is_col1 == true)
+                {
+                p_threat->ResetBullet(p_bullet);
+                cout << "shooted"<<endl;
+                // quit = true;
+                break;
+                }
+            }
+            }
                                                                             //CHECK COLLISION BIRD AND THREATS
             bool is_collision = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
             // bool is_collision = SDLCommonFunc::CheckCollision( bird.strikeObstacle(),p_threat->GetRect());

@@ -68,11 +68,11 @@ BulletObject:: ~BulletObject(){}
 
 void BulletObject::LoadImgBullet(SDL_Renderer* des){
     if(bullet_type_ == SPHERE_BULLET){
-        LoadImageFile("Sprites/bulletBird1.png",des);
+        LoadImageFile(Sphere_Bullet_path,des);
     }else if (bullet_type_ == LASER_BULLET){
-    LoadImageFile("Sprites/bulletBird2.png",des);    
+    LoadImageFile(Laser_Bullet_path,des);    
     }else{
-        LoadImageFile("Sprites/bulletBird3.png",des);
+        LoadImageFile(Other_Type_Bullet_path,des);
     }
 }
 void BulletObject::HandleMove(const int& x_border, const int& y_border){    //BULLET FOR MAIN BIRD
