@@ -4,7 +4,9 @@ int main( int argc, char* argv[]){
     loadMedia();    
     Game game;
     game.Play();
-    game.DeleteAll();
+    // game.DeleteAll();
+    close();
+    
     return 0;
 }
 bool loadMedia(){
@@ -19,6 +21,7 @@ bool loadMedia(){
             gSpriteBackground[i].h = BACKGROUND_HEIGHT;
         }
                                                     //BASE LOADING
+    // gPiranhaPlant.loadFromFile("Sprites/piranha5.png");
     gBaseSurface.loadFromFile( gBaseSurface_path );
                                                     //BIRD LOADING
     for(int i = 0; i <FLYING_ANIMATION_FRAMES_OF_BIRD;i++){     //=> continuous bird
@@ -63,12 +66,9 @@ void close() {
     SDL_DestroyRenderer(gRenderer);  gRenderer = NULL;
     SDL_DestroyWindow(gWindow);      gWindow= NULL;
                                                     //DESTROY FONT
-    // TTF_CloseFont(gFont);
-    // gFont = NULL;
+    TTF_CloseFont(gFontText);
+    gFontText = NULL;
                                                     //DESTROY SURFACE
-    // SDL_FreeSurface(pipeSurface);
-    // pipeSurface = NULL;
-    //quit SDL subsystem
     IMG_Quit();
     Mix_Quit();
     SDL_Quit();

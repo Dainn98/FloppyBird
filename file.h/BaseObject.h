@@ -21,6 +21,8 @@ public:
 protected:
   SDL_Texture* p_object_texture; //lưu ảnh 
   SDL_Rect rect_; //lưu kích thước ảnh
+  SDL_Surface* p_object_surface;
+
 };
 BaseObject::BaseObject(){
     p_object_texture = NULL;
@@ -55,7 +57,7 @@ bool BaseObject::LoadImageFile(std::string path, SDL_Renderer* screen){
 
 void BaseObject::Free(){
     if (p_object_texture != NULL){
-        SDL_DestroyTexture(p_object_texture);
+        // SDL_DestroyTexture(p_object_texture);
         p_object_texture = NULL;
         rect_.w = 0;
         rect_.h = 0;
@@ -70,4 +72,20 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     }
     SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
 }
+// bool BaseObject::LoadImg(const char* file_name)
+// {
+//   p_object_surface = SDLCommonFunc::LoadImage(file_name);
+//   if (p_object_surface == NULL)
+//     return false;
+//   return true;
+// }
+
+void BaseObject::Show(SDL_Surface* des)
+{
+  if (p_object_surface != NULL)
+  {
+    rect_ =  SDLCommonFunc::ApplySurface(p_object_surface, des, rect_.x, rect_.y);
+  }
+}
+
 #endif

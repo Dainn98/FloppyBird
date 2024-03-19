@@ -23,7 +23,7 @@ static char Laser_Bullet_path[] = {"Sprites/bulletBird2.png"};
 static char Other_Type_Bullet_path[] = {"Sprites/bulletBird3.png"};
 static char Creepy_path[] = {"Sprites/creepy.png"};
 
-static char Bullet_Threat1_path[] = {"Sprites/bulletThreat1.png"};
+static char Bullet_Threat1_path[] = {"Sprites/xbullet.png"};
 static char Explosion_path[] = {"Sprites/Expolosion.png"};
 
 static char gFly_path[] = {"Sound/wing.wav"};
@@ -32,6 +32,8 @@ static char gSwoosh_path[] = {"Sound/swoosh.wav"};
 static char gSwapBullet_path[] = {"Sound/swapBullet.wav"};
 static char gExplosion_path[] = {"Sound/explosion.wav"};
 static char gDie_path[] = {"Sound/die.wav"};
+
+#define GA_FAILED -1
 
 const int 
                                                 //SCREEN
@@ -88,18 +90,22 @@ void solveEvent();
 int getRandomNumber(int size)   {return rand() % size + 1;}
                                                             //DECLARE SDL
 static SDL_Event* g_event;
-SDL_Window* gWindow = NULL;
-SDL_Renderer* gRenderer = NULL;
-SDL_Texture* birdTexture = NULL;
-SDL_Texture* pipeTexture = NULL;
-TTF_Font* gFont = NULL;
-SDL_Surface* pipeSurface = NULL;
-SDL_Rect emptyObstacle = {0, 0, 0, 0};
-SDL_Rect gSpriteBackground[ BACKGROUND_FRAME ];
+static SDL_Surface* g_screen    = NULL;
+
+static SDL_Window* gWindow = NULL;
+static SDL_Renderer* gRenderer = NULL;
+static SDL_Texture* birdTexture = NULL;
+static SDL_Texture* pipeTexture = NULL;
+static SDL_Surface* pipeSurface = NULL;
+static SDL_Rect emptyObstacle = {0, 0, 0, 0};
+static SDL_Rect gSpriteBackground[ BACKGROUND_FRAME ];
+static TTF_Font* gFont = NULL;
+static TTF_Font* gFontText = NULL;
+
                                                              //DECLARATION FOR MAIN LOOP
 bool quit = false;
 SDL_Event e;
-double DELAY = 20;
+double SPEED_OF_PROJECT = 15;
 int frame = 0,
     backgroundX = 0,
     FRAME_PER_SECOND = 35,
@@ -122,13 +128,14 @@ enum Button{
 };
 
 namespace SDLCommonFunc{
-        SDL_Rect ApplySurface(SDL_Texture* src, SDL_Renderer* des, int x, int y);
+        SDL_Rect ApplySurface(SDL_Surface* src, SDL_Surface* des, int x, int y);
         void ApplySurfaceClip(SDL_Texture* src, SDL_Renderer* des, SDL_Rect* clip, int x, int y);
 
         bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
         int MakeRandValue(const int& div_val = 500); //Need to change the Div_val
         int ShowMenu(SDL_Surface* des, TTF_Font* font);
         bool CheckFocusWithRect(const int& x, const int& y,  const SDL_Rect& rect);
+
 }
 void SDLCommonFunc::ApplySurfaceClip(SDL_Texture* src, SDL_Renderer* des, SDL_Rect* clip, int x, int y)
 {
@@ -206,6 +213,15 @@ int SDLCommonFunc::MakeRandValue(const int& div_val /*400*/){
   int rand_y = rand()%div_val;
   if (rand_y > SCREEN_HEIGHT - UNDER_LIMIT_THREAT)  rand_y = SCREEN_HEIGHT*0.3;
   return rand_y;
+}
+SDL_Rect SDLCommonFunc::ApplySurface(SDL_Surface* src, SDL_Surface* des, int x, int y)
+{
+  SDL_Rect offset;
+  offset.x = x;
+  offset.y = y;
+  SDL_BlitSurface(src, NULL, des, &offset);
+
+  return offset;
 }
 
 #endif

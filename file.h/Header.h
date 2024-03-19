@@ -2,18 +2,21 @@
 #define HEADER_H
 #include "declaration.h"
 #include "initialize.h"
+#include "Game.h"
 
-#include "Pause.h"
+#include "impTimer.h"
 
 #include "LTexture.h"
-
-#include "Game.h"
-#include "impTimer.h"
+#include "BaseObject.h"
 
 #include "Bird.h"
 #include "Pipe.h"
 #include  "ThreatObject.h"
-#include "BaseObject.h"
 #include "BulletObject.h"
+#include "PlantObject.h"
+
 #include "Explosion.h"
+
+#include "Pause.h"
+#include "TextObject.h"
 #endif

@@ -5,6 +5,7 @@
 #include "declaration.h"
 #include "BulletObject.h"
 #include "Pipe.h"
+#include "Explosion.h"
 // #include "defLTexture.h"
 // #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2"
 class Bird;
@@ -33,6 +34,9 @@ public:
     void HandleInputAction(SDL_Event events);
 
     void RemoveBullet(const int& idx);
+
+    void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
+    // void CollisionBirdAndPlant(PlantObject plant,ExplosionObject explosion_Collision, SDL_Renderer* gRenderer);
 
     
     SDL_Rect strikeObstacle() const;
@@ -143,4 +147,17 @@ void Bird::RemoveBullet(const int& idx){
 void Bird::HandleInputAction(SDL_Event events){
     //To do
 }
+void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Renderer* gRenderer){
+    for(int ex = 0; ex < 4; ex++){
+        int xPos = ( strikeObstacle().x + strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;
+        int yPos = ( strikeObstacle().y + strikeObstacle().h*0.5) - EXP_HEIGHT * 0.5;
+        explosion_Collision.set_frame(ex);
+        explosion_Collision.SetRect(xPos,yPos);
+        explosion_Collision.ShowEx(gRenderer);
+        Mix_PlayChannel( -1, gExplosion, 0 );
+        SDL_Delay(100);
+        SDL_RenderPresent(gRenderer);
+    }
+}
+
 #endif

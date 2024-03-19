@@ -16,7 +16,7 @@ bool init(){
 		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )	printf( "Warning: Linear texture filtering not enabled!" );
 		
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "BY TUAN ANH", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL ){
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
 			success = false;
@@ -42,6 +42,17 @@ bool init(){
 					printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
 					success = false;
 				}
+				if( TTF_Init() == -1 )
+				{
+					printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
+					success = false;
+				}
+   				  gFontText  = TTF_OpenFont("Sprites/turok.ttf",28);
+				  if(gFontText == NULL){
+					printf("Failed to load font %s!\n", "Sprites/turok.ttf");
+					success = false;
+				  }
+
 			}
 		}
 	}
@@ -49,8 +60,7 @@ bool init(){
 	return success;
 }
 void BuildScreen(){
-    SDL_SetRenderDrawColor(gRenderer,COLOR_KEY_R,COLOR_KEY_G,COLOR_KEY_B,0xFF);       //CLEAR SCREEN   
-	SDL_RenderClear(gRenderer);
+    
   
     SDL_Rect* currentBackground = &gSpriteBackground[ frame /  BACKGROUND_FRAME]; // LOADING BACKGROUND
     gBackgroundTexture.render((SCREEN_WIDTH - currentBackground->w) - picture,(SCREEN_HEIGHT - currentBackground->h), currentBackground );

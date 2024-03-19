@@ -17,6 +17,9 @@ public:
     void set_y_val(const int& yVal) { y_val_ = yVal;}
     int get_x_val() const {return x_val_;}
     int get_y_val() const {return y_val_;}
+    int get_width_pipe() const {return width_;}
+    int get_height_pipe() const{return height_;}
+    int get_which_pipe() const {return which_pipe_;}
 
     SDL_Rect strikeUpperObstacle();
     SDL_Rect strikeLowerObstacle();
@@ -45,9 +48,9 @@ void Pipe::update() {
         if (x_val_ + PIPE_WIDTH < 0) { //số lần xuất hiện pipe
             x_val_ = SCREEN_WIDTH;
             which_pipe_ = getRandomNumber(NUMBER_OF_PIPE);
-            height_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
+            height_ = getRandomNumber(PIPE_HEIGHT*1.5)+BASE_HEIGHT;
             FRAME_PER_SECOND += 0.5;
-            if(which_pipe_ < 0) which_pipe_ = 0;
+            if(height_ < 150) height_ = PIPE_HEIGHT;
         }
     }
 void Pipe::render(){
