@@ -48,14 +48,18 @@ void Pipe::update() {
             which_pipe_ = getRandomNumber(NUMBER_OF_PIPE);
             height_ = getRandomNumber(PIPE_HEIGHT*1.5)+BASE_HEIGHT;
             FRAME_PER_SECOND += 0.5;
-            if(height_ < 150) height_ = PIPE_HEIGHT;
+            if(height_ < 150){
+                which_pipe_ = 2;
+                height_ = PIPE_HEIGHT;
+            }
         }
     }
 void Pipe::render(){
     SDL_Rect lowerPipeRect ={x_val_,
                             height_ + LOWER_PIPE_OFFSET,
                             PIPE_WIDTH,
-                            SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height_)},          
+                            // SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height_)},
+                            SCREEN_HEIGHT - LOWER_PIPE_OFFSET - LOWER_PIPE_HEIGHT_OFFSET},          
              upperPipeRect ={x_val_,
                             UPPER_PIPE_OFFSET,
                             PIPE_WIDTH,

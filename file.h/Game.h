@@ -83,6 +83,7 @@ again_label:
 
     unsigned int money = 0;
     unsigned int  score = 0;
+     int moveY = 0;
 
                                                                             //INITIALIZE PIRANHA OBJECT
 
@@ -148,24 +149,24 @@ while (!quit) {
             // Mix_PlayChannel( -1, gDie, 0 );
     }
     //tính điểm 
-                                                                    //LOADING SCREEN_FRAME
+                                                                                                //LOADING SCREEN_FRAME
     BuildScreen();                              
-                                                                    //BIRD & BULLET_BIRD => UPDATE POSITION AND RENDER 
+                                                                                                //BIRD & BULLET_BIRD => UPDATE POSITION AND RENDER 
     bird.update();
     bird.HandleBullet(gRenderer,pipe);                      
     bird.render();   
-                                                                    //IMPLEMETN PLANT & COLLISION
+                                                                                                //IMPLEMETN PLANT & COLLISION
     int random_plant = getRandomNumber(NUM_PLANT)-1;
     collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,gRenderer,random_plant);
-                                                                    //IMPLEMETN ICICLE & COLLISION
+                                                                                                //IMPLEMETN ICICLE & COLLISION
     int random_icicle = getRandomNumber(NUM_ICICLE)-1;
-    collision.CollisionBirdAndIcicle(pipe,bird,icicle,explosion_Collision,gRenderer,random_icicle);
-                                                                                //IMPLEMENT THREAT
+    collision.CollisionBirdAndIcicle(pipe,bird,icicle,explosion_Collision,gRenderer,random_icicle,moveY);
+                                                                                                //IMPLEMENT THREAT
     for(int tt = 0; tt < NUM_THREAT;tt++){                                   
         ThreatObject* p_threat = (p_threat_list + tt);
-        if(p_threat){                                                           //CHECK POINTER IS NULL OR NOT
+        if(p_threat){                                                                           //CHECK POINTER IS NULL OR NOT
             p_threat->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
-            p_threat->Render(gRenderer);                                        //LOADING BULLET FOR THREAT                            
+            p_threat->Render(gRenderer);                                                        //LOADING BULLET FOR THREAT                            
             p_threat->MakeBullet(gRenderer,SCREEN_WIDTH,SCREEN_HEIGHT,pipe);   
             std::vector<BulletObject*> bullet_arr = p_threat->GetBulletList();
             bool Collision_Bird_BulletOfThreat = false;
@@ -211,7 +212,11 @@ while (!quit) {
         }
     }
                                                                                         //PIPE
-    pipe.update();      pipe.render();          
+    pipe.update();      pipe.render();         
+                                                                                        //Base
+    gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);
+    gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
+
                                                                                         //OPTION_CONTROL_GAME
     OptionInGame.render();                      
                                                                                         //SHOW MONEY

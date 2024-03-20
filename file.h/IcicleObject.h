@@ -16,7 +16,7 @@ class IcicleObject : public BaseObject{
         void set_frame_icicle(int& fr) {frame_ = fr;}
         void ShowIcicle(SDL_Renderer* des);
         
-        SDL_Rect ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx);
+        SDL_Rect ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx,int& moveY);
     private:
         SDL_Rect clip_[NUM_ICICLE];
         int frame_;
@@ -64,12 +64,18 @@ void IcicleObject::ShowIcicle(SDL_Renderer* des){
     if (frame_ >= NUM_ICICLE) frame_ = 0;
     SDLCommonFunc :: ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
 }
-SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx){
+SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx,int& moveY){
     SDL_Rect rect = {SCREEN_WIDTH,SCREEN_HEIGHT,ICICLE_WIDTH,ICICLE_HEIGHT};
     if(pipe.get_which_pipe() % 3 == 1){
         if(pipe.get_x_val() - bird.get_x_val() <= 70){
-            rect.x = pipe.get_x_val();
-            if(pipe.get_height_pipe() < 400) rect.y = pipe.get_height_pipe() + UPPER_PIPE_OFFSET; // DELETE THE SITUATION : PIPE_HEIGHT IS REACHING BASE => NOT RENDERING ICICLE 
+            rect.x = pipe.get_x_val() + 10;
+            if(pipe.get_height_pipe() < 450){
+                rect.y = pipe.get_height_pipe() + UPPER_PIPE_OFFSET;// DELETE THE SITUATION : PIPE_HEIGHT IS REACHING BASE => NOT RENDERING ICICLE 
+                if(rect.y > 531) rect.y = 531;
+                else rect.y += (++moveY)*ICICLE_WIDTH/2;
+            }  
+            else if(pipe.get_height_pipe() >= 510) rect.y = 0;
+            if(pipe.get_x_val() <= 0) moveY = 0;
             set_frame_icicle(idx);
             SetRect(rect.x,rect.y);
             ShowIcicle(des);
@@ -77,4 +83,5 @@ SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* d
     }
     return rect;
 }
+
 #endif
