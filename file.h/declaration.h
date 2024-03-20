@@ -27,6 +27,7 @@ static char Bullet_Threat1_path[] = {"Sprites/xbullet.png"};
 static char Explosion_path[] = {"Sprites/Expolosion.png"};
 static char Explosion_Bullet_path[] = {"Sprites/explosion.png"};
 static char Plant_path[] = {"Sprites/plantX.png"};
+static char Icicle_path[] = {"Sprites/Icicle2.png"};
 
 static char PipeRed_path[] = {"Sprites/pipeRed.png"};
 static char PipeBlue_path[] = {"Sprites/pipeBlue.png"};

@@ -14,6 +14,7 @@
 #include  "ThreatObject.h"
 #include "BulletObject.h"
 #include "PlantObject.h"
+#include "IcicleObject.h"
 
 #include "Explosion.h"
 

@@ -70,7 +70,7 @@ SDL_Rect PlantObject::ImplementPlantRect(Pipe pipe, Bird bird,SDL_Renderer* des,
     SDL_Rect rect = {SCREEN_WIDTH,SCREEN_HEIGHT,PLANT_WIDTH,PLANT_HEIGHT};
     if(pipe.get_which_pipe() % 3 == 0){
         if(pipe.get_x_val() - bird.get_x_val() <= 50){
-                    index %=5;
+                    index %=NUM_PLANT;
                     rect.x = (pipe.get_x_val() + PIPE_WIDTH*0.15);
                     rect.y = pipe.get_height_pipe()+ LOWER_PIPE_OFFSET -PLANT_HEIGHT + clip_[index].y ;
                     set_frame_plant(index);     

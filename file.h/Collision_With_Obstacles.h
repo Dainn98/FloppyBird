@@ -5,30 +5,41 @@
 #include "Bird.h"
 #include "Pipe.h"
 #include "PlantObject.h"
+#include "IcicleObject.h"
 class Collision :public BaseObject{
     public:
-    void CollisionBirdAndPlant(Pipe pipe,PlantObject plant,Bird bird,ExplosionObject CollisionObject, SDL_Renderer* gRenderer, int num);
-    void ExplosionBirdAndObject(Pipe pipe,Bird bird ,ExplosionObject CollisionObject, SDL_Renderer* gRenderer);
+    void CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, SDL_Renderer* des, int num);
+   
+    void CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_,SDL_Renderer* des, int num);
+
+    void ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_, SDL_Renderer* des);
+
 
 };
 
-void Collision:: CollisionBirdAndPlant(Pipe pipe,PlantObject plant,Bird bird,ExplosionObject CollisionObject, SDL_Renderer* gRenderer, int num){
-    if(SDLCommonFunc::CheckCollision(plant.ImplementPlantRect(pipe,bird,gRenderer,num),bird.strikeObstacle())){
-        ExplosionBirdAndObject(pipe,bird,CollisionObject,gRenderer);
-    }
-}
-void Collision::ExplosionBirdAndObject(Pipe pipe,Bird bird ,ExplosionObject CollisionObject, SDL_Renderer* gRenderer){
+void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_, SDL_Renderer* des){
     for(int ex = 0; ex < 4; ex++){
-        int xPos = ( bird.strikeObstacle().x + bird.strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;
-        int yPos = ( bird.strikeObstacle().y + bird.strikeObstacle().h*0.5) - EXP_HEIGHT * 0.5;
-        CollisionObject.set_frame(ex);
-        CollisionObject.SetRect(xPos,yPos);
-        CollisionObject.ShowEx(gRenderer);
+        int xPos = ( bird_.strikeObstacle().x + bird_.strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;
+        int yPos = ( bird_.strikeObstacle().y + bird_.strikeObstacle().h*0.5) - EXP_HEIGHT * 0.5;
+        CollisionObject_.set_frame(ex);
+        CollisionObject_.SetRect(xPos,yPos);
+        CollisionObject_.ShowEx(des);
         Mix_PlayChannel( -1, gExplosion, 0 );
         SDL_Delay(100);
-        SDL_RenderPresent(gRenderer);
+        SDL_RenderPresent(des);
     }
     Mix_PlayChannel( -1, gDie, 0 );
 }
+void Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, SDL_Renderer* des, int num){
+    if(SDLCommonFunc::CheckCollision(plant_.ImplementPlantRect(pipe_,bird_,des,num),bird_.strikeObstacle())){
+        ExploringBird(pipe_,bird_,CollisionObject_,des);
+    }
+}
 
+void Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_,SDL_Renderer* des, int num){
+    if(SDLCommonFunc::CheckCollision(icicle_.ImplementIciclceRect(pipe_,bird_,des,num),bird_.strikeObstacle())){
+        // int a = 5;
+        ExploringBird(pipe_,bird_,CollisionObject_,des);
+    }
+}
 #endif
