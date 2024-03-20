@@ -15,8 +15,8 @@ public:
   bool is_paused();
 
 private:
-  int start_tick_; //time at started
-  int paused_ticks_; //The ticks stored when the timer was pause
+  int start_tick_; //TIME IS STARTESD
+  int paused_ticks_; //THE TICKS WHEN TIMER WAS PAUSED
   bool is_paused_;
   bool is_started_;
 };
@@ -49,20 +49,18 @@ void ImpTimer::pause(){
 
 void ImpTimer::unpause(){
   if( is_paused_ == true ){
-    is_paused_ = false; //Reset the starting ticks
-    start_tick_ = SDL_GetTicks() - paused_ticks_;   //Reset the paused ticks
+    is_paused_ = false;                                               //RESET THE STARTING TICKS
+    start_tick_ = SDL_GetTicks() - paused_ticks_;                    //TRESET THE PAUSED TICKS
     paused_ticks_ = 0;
   }
 }
 
 int ImpTimer::get_ticks(){
-  if( is_started_ == true ){
-    //If the timer is paused
+  if( is_started_ == true ){                                         //WHEN THE TIMER IS PAUSED
     if( is_paused_ == true )  return paused_ticks_;
     else return SDL_GetTicks() - start_tick_;
-  }
-  //If the timer isn't running
-  return 0;
+  }                        
+  return 0;                                                          //IF THE TIMER IS NOT STARTED YET, RETURN ZERO
 }
 
 bool ImpTimer::is_started() {return is_started_;}

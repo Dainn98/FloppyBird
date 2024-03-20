@@ -5,7 +5,6 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
 class TextObject : public BaseObject{
-
   public:
     TextObject();
     ~TextObject();
@@ -17,18 +16,10 @@ class TextObject : public BaseObject{
    
     void SetText(const std::string& text) {str_val_ = text;}
     void SetColor(const int& type);
-  void CreateGameText (TTF_Font* font, SDL_Surface* des);
 
+    bool loadFromRenderedText(TTF_Font* gFont, SDL_Renderer* screen);
 
-    // bool CreateGameText(TTF_Font* gFont, SDL_Renderer* screen);
-  bool loadFromRenderedText(TTF_Font* gFont, SDL_Renderer* screen);
-// void Free();
-
-// // void setColor(Uint8 red, Uint8 green, Uint8 blue);
-// // void setColor(int type);
-
-void RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
-
+    void RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     int getWidth() const {return width_;}
     int getHeight() const {return height_;}
@@ -42,74 +33,50 @@ void RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip = NULL, doubl
 TextObject::TextObject(){
   rect_.x = 10;
   rect_.y = 10;
-  text_color_.r = 255;
-  text_color_.g = 255;
-  text_color_.b = 255;
+
+  text_color_.r = 0xFF;
+  text_color_.g = 0xFF;
+  text_color_.b = 0xFF;
 }
 
 TextObject::~TextObject(){
-
+  //To do
 }
 
-void TextObject::SetColor(const int& type)
-{
-  if (type == RED_TEXT)
-  {
-    SDL_Color color = {255, 0, 0};
+void TextObject::SetColor(const int& type){
+  if (type == RED_TEXT){
+    SDL_Color color = {0xFF, 0, 0};
     text_color_ = color;
   }
-  else if (type == WHITE_TEXT)
-  {
-    SDL_Color color = {255, 255, 255};
+  else if (type == WHITE_TEXT){
+    SDL_Color color = {0xFF, 0xFF, 0xFF};
     text_color_ = color;
   }
-  else
-  {
+  else{
     SDL_Color color = {0, 0, 0};
     text_color_ = color;
   }
 }
-void TextObject::CreateGameText(TTF_Font* font, SDL_Surface* des)
-{
-  p_object_surface = TTF_RenderText_Solid(font, str_val_.c_str(), text_color_);
-  Show(des);
-}
-bool TextObject::loadFromRenderedText(TTF_Font* gFont, SDL_Renderer* screen)
-{
-  //Render text surface
-  SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, str_val_.c_str(), text_color_);
-  if( textSurface != NULL )
-  {
-    //Create texture from surface pixels
-    texture_ = SDL_CreateTextureFromSurface(screen, textSurface );
-    if( texture_ != NULL )
-    {
-      //Get image dimensions
-      width_ = textSurface->w;
+
+bool TextObject::loadFromRenderedText(TTF_Font* gFont, SDL_Renderer* screen){
+  SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, str_val_.c_str(), text_color_);  //RENDER TEXT_SURFACE
+  if( textSurface != NULL ){
+    texture_ = SDL_CreateTextureFromSurface(screen, textSurface );                        //CREATE TEXTURE FROM SURFACE PIXELS
+    if( texture_ != NULL ){   
+      width_ = textSurface->w;                                                            //GET IMAGE DIMENSIONS
       height_ = textSurface->h;
     }
-
-    //Get rid of old surface
     SDL_FreeSurface( textSurface );
   }
-
-  //Return success
   return texture_ != NULL;
 }
-void TextObject::RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip /* = NULL */, double angle /* = 0.0 */, SDL_Point* center /* = NULL */, SDL_RendererFlip flip /* = SDL_FLIP_NONE */)
-{
-  //Set rendering space and render to screen
+void TextObject::RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip /* = NULL */, double angle /* = 0.0 */, SDL_Point* center /* = NULL */, SDL_RendererFlip flip /* = SDL_FLIP_NONE */){
   SDL_Rect renderQuad = { x, y, width_, height_ };
-
-  //Set clip rendering dimensions
-  if( clip != NULL )
-  {
+  if( clip != NULL ){                                                                     //GET IMAGE DIMENSIONS
     renderQuad.w = clip->w;
     renderQuad.h = clip->h;
   }
-
-  //Render to screen
-  SDL_RenderCopyEx(screen, texture_, clip, &renderQuad, angle, center, flip );
+  SDL_RenderCopyEx(screen, texture_, clip, &renderQuad, angle, center, flip );            //RENDER SCREEN
 }
 
 #endif

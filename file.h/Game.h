@@ -2,7 +2,6 @@
 #define Game_h
 #include <windows.h>
 #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
-// #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2\SDL_ttf.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
@@ -140,7 +139,7 @@ while (!quit) {
     //To do
         }
     }
-    // if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
+    if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
 
     if( SDLCommonFunc::CheckCollision (pipe.strikeLowerObstacle(),bird.strikeObstacle())||
         SDLCommonFunc::CheckCollision (bird.strikeObstacle(),pipe.strikeUpperObstacle())){

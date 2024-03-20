@@ -18,9 +18,10 @@ public:
   void set_y_val(const int& val) {y_val_ = val;}
   int get_x_val() const {return x_val_;}
   int get_y_val() const {return y_val_;}
-  
-  void SetBulletList(std::vector<BulletObject*> bullet_list) {p_bullet_list_ = bullet_list;}    //SET BULLET OBECT FOR THREAT_OBJECT
-  std::vector<BulletObject*> GetBulletList() const {return p_bullet_list_;}                     //BULLET LIST
+                                                                // SET BULLET OBECT FOR THREAT_OBJECT
+  void SetBulletList(std::vector<BulletObject*> bullet_list) {p_bullet_list_ = bullet_list;}  
+                                                                // BULLET LIST  
+  std::vector<BulletObject*> GetBulletList() const {return p_bullet_list_;}                     
 
   void InitBullet(BulletObject* p_bullet);
   void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe);
@@ -55,9 +56,9 @@ ThreatObject::~ThreatObject(){
     p_bullet_list_.clear();
   }
 }
-
-void ThreatObject::HandleMove(const int& x_bordr, const int& y_border){
-  rect_.x -= x_val_;        //Move the threat_object to the left
+                                                                          // MOVE THE THREAT_OBJECT TO THE LEFT
+void ThreatObject::HandleMove(const int& x_bordr, const int& y_border){                                   
+  rect_.x -= x_val_;                                                                            
   if (rect_.x < 0){
     rect_.x  = SCREEN_WIDTH;      
     rect_.y= SDLCommonFunc::MakeRandValue();  
@@ -85,15 +86,15 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
 void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe){
   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
     BulletObject* p_bullet = p_bullet_list_.at(itmb);
-    if (p_bullet!=NULL){              //  IF IT IS NOT EMPTY
-      if (p_bullet->get_is_move()){ //    BULLET MOVE
+    if (p_bullet!=NULL){     //IF P_BULLET IS NOT EMPTY         
+      if (p_bullet->get_is_move()){ //BULLET MOVE
         p_bullet->Render(des);
-                                                // p_bullet->HandleMoveRightToLeft(); //Trajectory
+                                                                // TRAJECTION
         p_bullet->HandleMoveRightToLeft(itmb);
       }
       else{                   
         p_bullet->set_is_move(true);                       
-        p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5); //Reset bullet back to the previous position
+        p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);  //RESET BULLET BACK TO THE PREVIOUS POSITION
       }
     }
     if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) || //RESET BULLET WHEN COLLIDE WITH PIPE
