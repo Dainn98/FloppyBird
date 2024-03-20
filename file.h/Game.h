@@ -17,13 +17,15 @@
 #include "Explosion.h"
 #include "TextObject.h"
 #include "PlantObject.h"
+#include "Collision_With_Obstacles.h"
+
 
 
 class Game : public BaseObject{
   
 private:    
-    int score = 0;
-    int bullet_type_ = 50;
+    unsigned int bullet_type_ = 50;
+  
     ThreatObject* p_threat_list = new ThreatObject[NUM_THREAT];
     Bird bird;
     Pipe pipe;
@@ -32,12 +34,12 @@ private:
     ExplosionObject explosion_Collision;
     ExplosionObject bullet_explosion;
     PlantObject plant;
-    
+    Collision collision;
+    TextObject text_count_;  
+    TextObject text_money_game_;
+
 public:
     void Play();
-    // void DeleteAll();
-    void CollisionWithFrame();
-    void changeFPS();
 };
 
 
@@ -49,124 +51,109 @@ void Game::Play(){
 again_label:
 
 //TEXT  
-    TextObject text_count_;  
     text_count_.SetColor(TextObject::BLACK_TEXT);
-
-    TextObject text_money_game_;
     text_money_game_.SetColor(TextObject::WHITE_TEXT);
-    unsigned int score = 0;
-    unsigned int money = 0;
-    unsigned int ppp = 0;
-
-    
-
-
                                                                         //  GENERATE THE FIRST PIPE
     Pipe pipe(SCREEN_WIDTH, getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2)); 
                                                                         //  GENERATE THE THREAT 
-for(int t = 0; t < NUM_THREAT; t++){                
-    ThreatObject* p_threat = (p_threat_list + t);
-    if(p_threat){
-        p_threat->LoadImageFile(Creepy_path,gRenderer);
-        int rand_y = SDLCommonFunc::MakeRandValue();
-        p_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); 
-        p_threat->set_x_val(THREAT_VELOCITY);                           // SET VELOCITY_THREAT
-        BulletObject* p_bullet = new BulletObject();                    //INTIALIZE BULLET FOR THREAT
-        p_threat->InitBullet(p_bullet); 
+    for(int t = 0; t < NUM_THREAT; t++){                
+        ThreatObject* p_threat = (p_threat_list + t);
+        if(p_threat){
+            p_threat->LoadImageFile(Creepy_path,gRenderer);
+            int rand_y = SDLCommonFunc::MakeRandValue();
+            p_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); 
+            p_threat->set_x_val(THREAT_VELOCITY);                           // SET VELOCITY_THREAT
+            BulletObject* p_bullet = new BulletObject();                    //INTIALIZE BULLET FOR THREAT
+            p_threat->InitBullet(p_bullet); 
+        }
     }
-}
                                                                             //INITIALIZE  EXPLOSION OBJECT
     explosion_Collision.LoadImageFile(Explosion_path, gRenderer);
     explosion_Collision.set_clip_explosion();
-    bullet_explosion.LoadImageFile("Sprites/explosion.png",gRenderer);
+    bullet_explosion.LoadImageFile(Explosion_Bullet_path,gRenderer);
     bullet_explosion.set_clip_bullet_explosion();
-    plant.LoadImageFile("Sprites/plantX.png",gRenderer);
+    plant.LoadImageFile(Plant_path,gRenderer);
     plant.set_clip_plant();
 
+    unsigned int money = 0;
+    unsigned int  score = 0;
 
                                                                             //INITIALIZE PIRANHA OBJECT
 
                                                                             //INITIALIZE ICE OBJCET
-while (!quit) {
+ while (!quit) { 
     fps_timer.start();
     while (SDL_PollEvent(&e) != 0){
                                                                             //MOUSEBUTTONDOWN
-    if(e.type == SDL_MOUSEBUTTONDOWN)       
-    if(e.button.button == SDL_BUTTON_LEFT ){
-        bird.LoadBullet();
-        Mix_PlayChannel(-1,gSwoosh,0);
-    }
-                                                                            //KEY
-    if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)  {quit = true;}
-    else if (e.type == SDL_KEYDOWN){
-        switch( e.key.keysym.sym ){  
-            case SDLK_b:
-                                                                            //SWITCH TYPE BULLET (IN DECLARATION)
-                std::swap(bullet[0],bullet[1]); 
-                Mix_PlayChannel(-1,gSwapBullet,0);
-                break;
-                                                                            //BIRD SWING
-            case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
-                bird.jump();
-                Mix_PlayChannel( -1, gFly, 0 );
-                break;
-                                                                            //PLAY THE MUSIC
-            case SDLK_m:
-                if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
-                else{
-                    if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
-                    else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
-                }
-                break;
-                                                                            //STOP THE MUSIC
-            case SDLK_0:    
-                Mix_HaltMusic();   
-                break;
+        if(e.type == SDL_MOUSEBUTTONDOWN)       
+        if(e.button.button == SDL_BUTTON_LEFT ){
+            bird.LoadBullet();
+            Mix_PlayChannel(-1,gSwoosh,0);
+        }
+                                                                                //KEY
+        if (e.type == SDL_QUIT || e.key.keysym.sym == SDLK_ESCAPE)  {quit = true;}
+        else if (e.type == SDL_KEYDOWN){
+            switch( e.key.keysym.sym ){  
+                case SDLK_b:
+                                                                                //SWITCH TYPE BULLET (IN DECLARATION)
+                    std::swap(bullet[0],bullet[1]); 
+                    Mix_PlayChannel(-1,gSwapBullet,0);
+                    break;
+                                                                                //BIRD SWING
+                case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
+                    bird.jump();
+                    Mix_PlayChannel( -1, gFly, 0 );
+                    break;
+                                                                                //PLAY THE MUSIC
+                case SDLK_m:
+                    if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
+                    else{
+                        if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
+                        else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
+                    }
+                    break;
+                                                                                //STOP THE MUSIC
+                case SDLK_0:    
+                    Mix_HaltMusic();   
+                    break;
+            }
+        }
+                                                                                ///OPTION_CONTROL_GAME LOGIC
+        OptionInGame.handleEvent( &e );
+        if (OptionInGame.mPresentState[EXIT])       quit = true; 
+
+        if(OptionInGame.mPresentState[REPLAY]){  
+            bird.resetPositon();  
+            OptionInGame.mPresentState[PAUSE] = false;
+            OptionInGame.mPresentState[REPLAY] = false;
+            goto again_label;
+        }
+        OptionInGame.render();   
+        if(OptionInGame.mPresentState[PAUSE]){
+    //To do
         }
     }
-///OPTION_CONTROL_GAME LOGIC
-
-    OptionInGame.handleEvent( &e );
-    if (OptionInGame.mPresentState[EXIT])       quit = true; 
-
-    if(OptionInGame.mPresentState[REPLAY]){  
-        bird.resetPositon();  
-        OptionInGame.mPresentState[PAUSE] = false;
-        OptionInGame.mPresentState[REPLAY] = false;
-        goto again_label;
-    }
-    OptionInGame.render();   
-    if(OptionInGame.mPresentState[PAUSE]){
-        // Sleep(500); //10s
-        // SDL_Delay(100);
-        // return;
-    }
-}
-
     // if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
 
-    // if( checkCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
-    //     /*mã game: sau khi va chạm 
-    //     => reset
-    //     =>revive*/
-    //     // COLLISION_WITH_OBSTACLE();
-    //         SDL_Delay(100);
-    //         Mix_PlayChannel( -1, gDie, 0 );
-    //     // quit = true;     
-    // }
+    if( SDLCommonFunc::CheckCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
+        //To do GameOver
+            collision.ExplosionBirdAndObject(pipe,bird,explosion_Collision,gRenderer);
+            // Mix_PlayChannel( -1, gDie, 0 );
+    }
     //tính điểm 
-    if(abs( bird.strikeObstacle().x - pipe.strikeUpperObstacle().x) <=10 || abs(  bird.strikeObstacle().x - pipe.strikeLowerObstacle().x) <= 10)    ++score;
-                                                //LOADING SCREEN_FRAME
+                                                                    //LOADING SCREEN_FRAME
     BuildScreen();                              
-                                                //BIRD & BULLET_BIRD => UPDATE POSITION AND RENDER 
-    bird.update();  
-    // //IMPLEMETN PLANT
-    int random_plant = getRandomNumber(5)-1;
-    plant.ImplementPlant(pipe,bird,gRenderer,random_plant);
-    plant.CollisionBirdAndPlant(bird,explosion_Collision,gRenderer,random_plant);
-    if(ppp >6) ppp = 0;
-    bird.HandleBullet(gRenderer,pipe); 
+                                                                    //BIRD & BULLET_BIRD => UPDATE POSITION AND RENDER 
+    bird.update();
+    bird.HandleBullet(gRenderer,pipe);                      
     bird.render();   
+                                                                    //IMPLEMETN PLANT & Collision
+    int random_plant = getRandomNumber(5)-1;
+    collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,gRenderer,random_plant);
+    // plant.ImplementPlant(pipe,bird,gRenderer,random_plant);
+    // plant.CollisionBirdAndPlant(bird,explosion_Collision,gRenderer,random_plant);
+    
+      
 
     for(int tt = 0; tt < NUM_THREAT;tt++){                                   //IMPLEMENT THREAT
         ThreatObject* p_threat = (p_threat_list + tt);
@@ -175,30 +162,25 @@ while (!quit) {
             p_threat->Render(gRenderer);
                                                                             //GENERATE BULLET FOR THREAT
             p_threat->MakeBullet(gRenderer,SCREEN_WIDTH,SCREEN_HEIGHT,pipe);     
-            bool is_col1 = false;
+            bool Collision_Bird_BulletOfThreat = false;
             std::vector<BulletObject*> bullet_arr = p_threat->GetBulletList();
-            for (int am = 0; am < bullet_arr.size(); am++)
-            {
-            BulletObject* p_bullet = bullet_arr.at(am);
-            if (p_bullet)
-            {
-                is_col1 = SDLCommonFunc::CheckCollision(p_bullet->GetRect(), bird.strikeObstacle());
-                if (is_col1 == true)
-                {
-                p_threat->ResetBullet(p_bullet);
-                bird.ExplosionBirdAndThreat(explosion_Collision, gRenderer);
-
-                // quit = true;
-                break;
+            for (int am = 0; am < bullet_arr.size(); am++){
+                BulletObject* p_bullet = bullet_arr.at(am);
+                if (p_bullet){
+                    Collision_Bird_BulletOfThreat = SDLCommonFunc::CheckCollision(p_bullet->GetRect(), bird.strikeObstacle());
+                    if (Collision_Bird_BulletOfThreat == true){
+                    p_threat->ResetBullet(p_bullet);
+                    collision.ExplosionBirdAndObject(pipe,bird,explosion_Collision,gRenderer);
+                    break;
+                    }
                 }
             }
-            }
                                                                             //CHECK COLLISION BIRD AND THREATS
-            bool is_collision = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
-            // bool is_collision = SDLCommonFunc::CheckCollision( bird.strikeObstacle(),p_threat->GetRect());
-            if(is_collision){
-                bird.ExplosionBirdAndThreat(explosion_Collision, gRenderer);
-                Mix_PlayChannel( -1, gDie, 0 );
+            bool Collision_Bird_Threat = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
+            if(Collision_Bird_Threat){
+                // bird.ExplosionBirdAndThreat(explosion_Collision, gRenderer);
+                collision.ExplosionBirdAndObject(pipe,bird,explosion_Collision,gRenderer);
+                // Mix_PlayChannel( -1, gDie, 0 );
 
             }
             //CHECK BULLET_BIRD WITH THREATS
@@ -209,7 +191,6 @@ while (!quit) {
                     bool ret_collision = SDLCommonFunc::CheckCollision(p_bullet->GetRect(),p_threat->GetRect());
                     if(ret_collision){
                         money++;
-
                         //=> DELETE THREATS, BULLET_BIRD => INCREASE MONEY,ITEMS,..
                          for(int ex = 0; ex < 4; ex++){
                             int xPos = p_threat->GetRect().x + p_threat->GetRect().w * 0.5 - BUL_WIDTH * 0.5 ;
@@ -217,7 +198,6 @@ while (!quit) {
                             bullet_explosion.set_frame(ex);
                             bullet_explosion.SetRect(xPos,yPos);
                             bullet_explosion.ShowBul(gRenderer);
-                            
                             Mix_PlayChannel( -1, gExplosion, 0 );
                         }
                         p_threat->Reset(SCREEN_WIDTH + tt * DISTANCE_BETWEEN_THREATS);  //RESET POSI THREAT
@@ -227,45 +207,36 @@ while (!quit) {
             }
         }
     }
- 
-    
-    //Show money
+                                                                                        //PIPE
+    pipe.update();      pipe.render();          
+                                                                                        //OPTION_CONTROL_GAME
+    OptionInGame.render();                      
+                                                                                        //Show money
     std::string val_str_money = std::to_string(money);
     std::string count_money_str(" ");
     count_money_str += val_str_money;
     text_money_game_.SetText(count_money_str);
     text_money_game_.loadFromRenderedText(gFontText, gRenderer);
     text_money_game_.RenderText(gRenderer, SCREEN_WIDTH*0.1, 2);
-    
- //Show mark value to screen
+                                                                                        //Show mark value to screen
+    if(abs( bird.strikeObstacle().x - pipe.strikeUpperObstacle().x) <=10 || abs(  bird.strikeObstacle().x - pipe.strikeLowerObstacle().x) <= 10)    ++score;
+    std::string val_str_mark = std::to_string(score);
+    std::string count_str("Score: ");
+    count_str += val_str_mark;
+    text_count_.SetText(count_str);
+    text_count_.loadFromRenderedText(gFontText, gRenderer);
+    text_count_.RenderText(gRenderer, SCREEN_WIDTH*0.01, 2);
 
-        std::string val_str_mark = std::to_string(score);
-        std::string count_str("Score: ");
-        count_str += val_str_mark;
-        text_count_.SetText(count_str);
-        text_count_.loadFromRenderedText(gFontText, gRenderer);
-        text_count_.RenderText(gRenderer, SCREEN_WIDTH*0.01, 2);
-
-
-    pipe.update();      pipe.render();          //PIPE
-cout << plant.get_rect_plant(1).x<<" ";
-    OptionInGame.render();                      //OPTION_CONTROL_GAME
+   
+                                                                                        //Loading all
     SDL_RenderPresent(gRenderer);
+                                                                                        //Change FPS
     int real_imp_time = fps_timer.get_ticks();          // calculate how long it took to render this
     int time_one_frame = 1000/FRAME_PER_SECOND;         //ms
     if (real_imp_time < time_one_frame){
         int delay_time  = time_one_frame-real_imp_time ;   //delay to make one frame
         if(delay_time >= 0) SDL_Delay(delay_time);
     }
-    }
-    
-}
-// void Game :: DeleteAll(){
-//     close();
-   
-// }
-
-void Game::CollisionWithFrame(){
-    
+ }
 }
 #endif

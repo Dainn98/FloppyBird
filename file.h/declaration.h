@@ -25,6 +25,9 @@ static char Creepy_path[] = {"Sprites/creepy.png"};
 
 static char Bullet_Threat1_path[] = {"Sprites/xbullet.png"};
 static char Explosion_path[] = {"Sprites/Expolosion.png"};
+static char Explosion_Bullet_path[] = {"Sprites/explosion.png"};
+static char Plant_path[] = {"Sprites/plantX.png"};
+
 
 static char gFly_path[] = {"Sound/wing.wav"};
 static char gMusic_path[] = {"Sound/music.wav"};

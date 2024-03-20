@@ -23,12 +23,18 @@ public:
 
   void set_clip_explosion();
   void ShowEx(SDL_Renderer* des);
+  // int get_exp_width() const {return EXP_WIDTH;}
+  // int get_exp_height() const {return EXP_HEIGHT;}
 
   void set_clip_bullet_explosion();
   void ShowBul(SDL_Renderer* des);
+  // int get_bul_height() const {return BUL_WIDTH;}
+  // int get_bul_height() const {return BUL_HEIGHT;}
+
 
 private:
   int frame_;
+  
   SDL_Rect clip_[NUM_EXPLOSION];
 };
 
