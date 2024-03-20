@@ -34,13 +34,11 @@ private:
 Pipe::Pipe(){
     x_val_ = SCREEN_WIDTH;
     y_val_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
-    // which_pipe_ = 0;
 };
 Pipe::Pipe(int posX, int pipe_height){
     x_val_ = posX;
     height_ = pipe_height;
     width_ = PIPE_WIDTH;
-    // which_pipe_ = getRandomNumber(NUMBER_OF_PIPE);
     
 }
 void Pipe::update() { 
@@ -64,14 +62,14 @@ void Pipe::render(){
                             height_};  
 
     if(which_pipe_ % 3 == 0) {
-        pipeSurface = IMG_Load("Sprites/pipeRed.png");
+        pipeSurface = IMG_Load(PipeRed_path);
         upperPipeRect = emptyObstacle;
         }
     else if(which_pipe_ % 3 == 1){
-        pipeSurface = IMG_Load("Sprites/pipeBlue.png");
+        pipeSurface = IMG_Load(PipeBlue_path);
         lowerPipeRect = emptyObstacle;
     }
-    else if (which_pipe_ % 3 == 2) pipeSurface = IMG_Load("Sprites/pipeGreen.png");
+    else if (which_pipe_ % 3 == 2) pipeSurface = IMG_Load(PipeGreen_path);
     
     SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
     SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);

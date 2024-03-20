@@ -16,15 +16,9 @@ class PlantObject : public BaseObject{
         
         void set_clip_plant();
         void set_frame_plant( int& fr) {frame_ = fr;}
+
         void ShowPlant(SDL_Renderer* des);
-
-        // SDL_Rect get_rect_plant(const int num)  const {return clip_[num];}
-        // SDL_Rect get_position_plant();
         SDL_Rect ImplementPlantRect(Pipe pipe, Bird bird,SDL_Renderer* des,int index);
-
-        // void CollisionBirdAndPlant(Bird bird,ExplosionObject explosion_Collision, SDL_Renderer* gRenderer, int& num);
-        // void ImplementPlant(Pipe pipe, Bird bird,SDL_Renderer* des,int index);
-        // int get_rect_clip() const return{;}
     private:
         int frame_;
         int x_val_;
@@ -87,31 +81,3 @@ SDL_Rect PlantObject::ImplementPlantRect(Pipe pipe, Bird bird,SDL_Renderer* des,
     return rect;
 }
 #endif
-
-
-
-// ++index;
-// SDL_Rect PlantObject:: get_position_plant(){
-//     SDL_Rect rect_ = {x_val_,y_val_,PLANT_WIDTH,PLANT_HEIGHT};
-//     return rect_;
-// }
-// void PlantObject::ImplementPlant(Pipe pipe, Bird bird,SDL_Renderer* des,int index){
-//     if(pipe.get_which_pipe() % 3 == 0){
-//         if(pipe.get_x_val() - bird.get_x_val() <= 50){
-//                     index %=5;
-//                     x_val_ = (pipe.get_x_val() + PIPE_WIDTH*0.2);
-//                     y_val_ = pipe.get_height_pipe()+ LOWER_PIPE_OFFSET -PLANT_HEIGHT + clip_[index].y ;
-//                     set_frame_plant(index);     
-//                     SetRect(x_val_,y_val_);
-//                     ShowPlant(des);  
-//         }           
-//     }
-//     // ++index;
-// }
-// void PlantObject::CollisionBirdAndPlant(Bird bird,ExplosionObject explosion_Collision, SDL_Renderer* gRenderer, int& num){
-//     num = 4;
-//     if(SDLCommonFunc::CheckCollision(get_rect_plant(num),bird.strikeObstacle())){
-//         int a = 4;
-//     }
-    
-// }

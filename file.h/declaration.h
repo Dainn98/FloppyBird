@@ -28,6 +28,9 @@ static char Explosion_path[] = {"Sprites/Expolosion.png"};
 static char Explosion_Bullet_path[] = {"Sprites/explosion.png"};
 static char Plant_path[] = {"Sprites/plantX.png"};
 
+static char PipeRed_path[] = {"Sprites/pipeRed.png"};
+static char PipeBlue_path[] = {"Sprites/pipeBlue.png"};
+static char PipeGreen_path[] = {"Sprites/pipeGreen.png"};
 
 static char gFly_path[] = {"Sound/wing.wav"};
 static char gMusic_path[] = {"Sound/music.wav"};
@@ -85,7 +88,6 @@ int bullet[BULLET_TYPES] = {50,51};
                                                     //FUNCTION
 bool init();  
 bool loadMedia();
-bool checkCollision(const SDL_Rect& a, const SDL_Rect& b);
 void close();
 void BuildScreen();
 void COLLISION_WITH_OBSTACLE();

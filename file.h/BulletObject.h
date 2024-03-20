@@ -81,11 +81,6 @@ void BulletObject::HandleMove(const int& x_border, const int& y_border){    //BU
         is_move_ = false;
     }
 }
-// void BulletObject:: HandleMoveRightToLeft(){    //BULLET FOR THREAT
-//     rect_.x -= x_val_*3; //VELOCITY_BULLET
-//     if(rect_.x < 0) is_move_ = false;
-
-// }
 void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
     rect_.x -= x_val_ * 3; // VELOCITY_BULLET
     if (rect_.x < 0)

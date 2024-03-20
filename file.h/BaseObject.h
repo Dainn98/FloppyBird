@@ -28,8 +28,7 @@ BaseObject::BaseObject(){
     p_object_texture = NULL;
     rect_.x = 0;
     rect_.y = 0;
-    // rect_.w = 0;
-    // rect_.h = 0; 
+
 }
 
 BaseObject::~BaseObject()   {Free();}
@@ -72,13 +71,6 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     }
     SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
 }
-// bool BaseObject::LoadImg(const char* file_name)
-// {
-//   p_object_surface = SDLCommonFunc::LoadImage(file_name);
-//   if (p_object_surface == NULL)
-//     return false;
-//   return true;
-// }
 
 void BaseObject::Show(SDL_Surface* des)
 {

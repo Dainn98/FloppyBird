@@ -14,7 +14,6 @@ class Collision :public BaseObject{
 
 void Collision:: CollisionBirdAndPlant(Pipe pipe,PlantObject plant,Bird bird,ExplosionObject CollisionObject, SDL_Renderer* gRenderer, int num){
     if(SDLCommonFunc::CheckCollision(plant.ImplementPlantRect(pipe,bird,gRenderer,num),bird.strikeObstacle())){
-        // int a = 5;
         ExplosionBirdAndObject(pipe,bird,CollisionObject,gRenderer);
     }
 }

@@ -4,7 +4,6 @@ int main( int argc, char* argv[]){
     loadMedia();    
     Game game;
     game.Play();
-    // game.DeleteAll();
     close();
     
     return 0;
@@ -21,7 +20,6 @@ bool loadMedia(){
             gSpriteBackground[i].h = BACKGROUND_HEIGHT;
         }
                                                     //BASE LOADING
-    // gPiranhaPlant.loadFromFile("Sprites/piranha5.png");
     gBaseSurface.loadFromFile( gBaseSurface_path );
                                                     //BIRD LOADING
     for(int i = 0; i <FLYING_ANIMATION_FRAMES_OF_BIRD;i++){     //=> continuous bird

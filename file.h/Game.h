@@ -81,7 +81,7 @@ again_label:
                                                                             //INITIALIZE PIRANHA OBJECT
 
                                                                             //INITIALIZE ICE OBJCET
- while (!quit) { 
+while (!quit) {
     fps_timer.start();
     while (SDL_PollEvent(&e) != 0){
                                                                             //MOUSEBUTTONDOWN
@@ -133,9 +133,10 @@ again_label:
     //To do
         }
     }
-    // if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
+    if( bird.strikeObstacle().y +  bird.strikeObstacle().h >= SCREEN_HEIGHT - BASE_HEIGHT ||  bird.strikeObstacle().y < - PIPE_HEIGHT) quit = true;     
 
-    if( SDLCommonFunc::CheckCollision(pipe.strikeLowerObstacle(),  bird.strikeObstacle())||checkCollision( bird.strikeObstacle(), pipe.strikeUpperObstacle())){
+    if( SDLCommonFunc::CheckCollision (pipe.strikeLowerObstacle(),bird.strikeObstacle())||
+        SDLCommonFunc::CheckCollision (bird.strikeObstacle(),pipe.strikeUpperObstacle())){
         //To do GameOver
             collision.ExplosionBirdAndObject(pipe,bird,explosion_Collision,gRenderer);
             // Mix_PlayChannel( -1, gDie, 0 );
@@ -230,13 +231,15 @@ again_label:
    
                                                                                         //Loading all
     SDL_RenderPresent(gRenderer);
-                                                                                        //Change FPS
+                                                                            //
     int real_imp_time = fps_timer.get_ticks();          // calculate how long it took to render this
     int time_one_frame = 1000/FRAME_PER_SECOND;         //ms
     if (real_imp_time < time_one_frame){
         int delay_time  = time_one_frame-real_imp_time ;   //delay to make one frame
         if(delay_time >= 0) SDL_Delay(delay_time);
     }
- }
+    }
+    
 }
+
 #endif

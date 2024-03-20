@@ -61,7 +61,6 @@ bool init(){
 }
 void BuildScreen(){
     
-  
     SDL_Rect* currentBackground = &gSpriteBackground[ frame /  BACKGROUND_FRAME]; // LOADING BACKGROUND
     gBackgroundTexture.render((SCREEN_WIDTH - currentBackground->w) - picture,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
     gBackgroundTexture.render((SCREEN_WIDTH*2 - currentBackground->w) - picture ,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
@@ -71,10 +70,5 @@ void BuildScreen(){
     if(++picture >= SCREEN_WIDTH ) picture = 0;
     if( ++frame / BACKGROUND_FRAME >= BACKGROUND_FRAME)frame = 0;
 }
-bool checkCollision(const SDL_Rect& a, const SDL_Rect& b) {
-    return (a.x <= b.x + b.w &&
-            a.x + a.w >= b.x &&
-            a.y <= b.y + b.h &&
-            a.y + a.h >= b.y);
-}
+
 #endif
