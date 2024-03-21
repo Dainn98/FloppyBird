@@ -36,8 +36,6 @@ public:
     void RemoveBullet(const int& idx);
 
     void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
-    // void CollisionBirdAndPlant(PlantObject plant,ExplosionObject explosion_Collision, SDL_Renderer* gRenderer);
-
     
     SDL_Rect strikeObstacle() const;
 private:
@@ -53,7 +51,7 @@ private:
 Bird::Bird(){
                                 //POSITION
     x_val_ = SCREEN_WIDTH / 4;
-    y_val_ = SCREEN_HEIGHT / 2;
+    y_val_ = SCREEN_HEIGHT/3;
     width_ = BIRD_WIDTH;
     height_ = BIRD_HEIGHT;
 
@@ -70,7 +68,7 @@ Bird :: ~Bird(){
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
-    y_val_ = SCREEN_HEIGHT/2;
+    y_val_ = SCREEN_HEIGHT/3*2;
     velocity_ = 0;
     currentFrame = 0;
     width_ = BIRD_WIDTH;

@@ -8,7 +8,7 @@ public:
     Pipe();
     ~Pipe();
 
-    Pipe(int posX, int pipe_height);
+    void init_pipe();
 
     void update();
     void render();
@@ -34,12 +34,16 @@ private:
 Pipe::Pipe(){
     x_val_ = SCREEN_WIDTH;
     y_val_ = getRandomNumber(PIPE_HEIGHT)+BASE_HEIGHT;
-};
-Pipe::Pipe(int posX, int pipe_height){
-    x_val_ = posX;
-    height_ = pipe_height;
     width_ = PIPE_WIDTH;
-    
+
+};
+// Pipe::Pipe(int posX, int pipe_height){
+//     x_val_ = posX;
+//     height_ = pipe_height;
+// }
+void Pipe:: init_pipe(){
+    x_val_ = SCREEN_WIDTH;
+    height_ = getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2);
 }
 void Pipe::update() { 
         x_val_ -= PIPE_VELOCITY;

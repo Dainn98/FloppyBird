@@ -6,6 +6,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+#include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
+
 // #include "Bird.h"    //ko
 // #include "Pipe.h"    //ko
 using namespace std;

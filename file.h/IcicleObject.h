@@ -67,12 +67,12 @@ void IcicleObject::ShowIcicle(SDL_Renderer* des){
 SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx,int& moveY){
     SDL_Rect rect = {SCREEN_WIDTH,SCREEN_HEIGHT,ICICLE_WIDTH,ICICLE_HEIGHT};
     if(pipe.get_which_pipe() % 3 == 1){
-        if(pipe.get_x_val() - bird.get_x_val() <= 70){
+        if(pipe.get_x_val() - bird.get_x_val() <= 100){
             rect.x = pipe.get_x_val() + 10;
             if(pipe.get_height_pipe() < 450){
                 rect.y = pipe.get_height_pipe() + UPPER_PIPE_OFFSET;// DELETE THE SITUATION : PIPE_HEIGHT IS REACHING BASE => NOT RENDERING ICICLE 
                 if(rect.y > 531) rect.y = 531;
-                else rect.y += (++moveY)*ICICLE_WIDTH/2;
+                else rect.y += (++moveY)*ICICLE_WIDTH/1.5;
             }  
             else if(pipe.get_height_pipe() >= 510) rect.y = 0;
             if(pipe.get_x_val() <= 0) moveY = 0;
