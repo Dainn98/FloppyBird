@@ -39,9 +39,9 @@ void Pause::handleEvent(SDL_Event* e){
     if( mPresentState[PAUSE] ){                 
                                                                 // IN BUTTON PLAY
         if ( x >= BUTTON_POSITION[PLAY].x &&
-         x <=  BUTTON_POSITION[PLAY].x + BUTTON_WIDTH &
-          y >= BUTTON_POSITION[PLAY].y &&
-           y <= BUTTON_POSITION[PLAY].y + BUTTON_HEIGHT){
+             x <= BUTTON_POSITION[PLAY].x + BUTTON_WIDTH &
+             y >= BUTTON_POSITION[PLAY].y &&
+             y <= BUTTON_POSITION[PLAY].y + BUTTON_HEIGHT){
             if( e->type == SDL_MOUSEBUTTONDOWN ){
                 mPresentState[PAUSE] = false;
                 zooming = PAUSE;

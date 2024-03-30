@@ -33,6 +33,13 @@ public:
     void HandleBullet(SDL_Renderer* des,Pipe pipe);
     void HandleInputAction(SDL_Event events);
 
+    void DoFalling(SDL_Renderer* des);
+    bool GetFalling() const { return is_falling_; }
+    void SetFalling(bool falling) { is_falling_ = falling; }
+    // void DoGround(SDL_Renderer* des);
+    bool GetIsDie() const { return is_die_; }
+    void SetIsDie(bool is_die) {is_die_ = is_die;}
+
     void RemoveBullet(const int& idx);
 
     void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
@@ -40,12 +47,16 @@ public:
     SDL_Rect strikeObstacle() const;
 private:
     std::vector<BulletObject *> p_bullet_list_;
-    int x_val_,
-        y_val_,
-        velocity_,
-        currentFrame,
-        width_,
-        height_;
+
+    int x_val_;
+    int y_val_;
+    int velocity_;
+    int currentFrame;
+    int width_;
+    int height_;
+
+    bool is_falling_;
+    bool is_die_;
 };
 
 Bird::Bird(){
@@ -142,8 +153,41 @@ void Bird::RemoveBullet(const int& idx){
     }
   }
 }
-void Bird::HandleInputAction(SDL_Event events){
+void Bird::HandleInputAction(SDL_Event e){
     //To do
+    if(e.type == SDL_MOUSEBUTTONDOWN)  
+        if(e.button.button == SDL_BUTTON_LEFT ){
+            // bird.LoadBullet();
+            LoadBullet();
+            Mix_PlayChannel(-1,gSwoosh,0);
+        }
+       
+        else if (e.type == SDL_KEYDOWN){
+            switch( e.key.keysym.sym ){  
+                case SDLK_b:
+                                                                                //SWITCH TYPE BULLET (IN DECLARATION)
+                    std::swap(bullet[0],bullet[1]); 
+                    Mix_PlayChannel(-1,gSwapBullet,0);
+                    break;
+                                                                                //BIRD SWING
+                case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
+                    jump();
+                    Mix_PlayChannel( -1, gFly, 0 );
+                    break;
+                                                                                //PLAY THE MUSIC
+                case SDLK_m:
+                    if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
+                    else{
+                        if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
+                        else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
+                    }
+                    break;
+                                                                                //STOP THE MUSIC
+                case SDLK_0:    
+                    Mix_HaltMusic();   
+                    break;
+            }
+        }
 }
 void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Renderer* gRenderer){
     for(int ex = 0; ex < 4; ex++){

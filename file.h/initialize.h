@@ -47,11 +47,17 @@ bool init(){
 					printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError() );
 					success = false;
 				}
-   				  gFontText  = TTF_OpenFont("Sprites/turok.ttf",28);
+   				gFontText  = TTF_OpenFont("Sprites/turok.ttf",28);
 				  if(gFontText == NULL){
 					printf("Failed to load font %s!\n", "Sprites/turok.ttf");
 					success = false;
 				  }
+				gFontMENU = TTF_OpenFont("Sprites/turok.ttf", 80);
+				 if (gFontMENU == NULL)
+				{
+					printf("Failed to load font menu %s!\n", "Sprites/turok.ttf");
+					success = false;
+				}
 
 			}
 		}

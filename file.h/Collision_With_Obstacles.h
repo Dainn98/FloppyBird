@@ -11,7 +11,7 @@ class Collision :public BaseObject{
     void CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, SDL_Renderer* des, int num);
    
     void CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_,SDL_Renderer* des, int num, int& moveY );
-
+    
     void ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_, SDL_Renderer* des);
 
 

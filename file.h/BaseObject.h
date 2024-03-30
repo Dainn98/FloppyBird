@@ -15,10 +15,13 @@ public:
   SDL_Rect GetRect() const {return rect_;}    //lấy ra ảnh 
   SDL_Texture* GetObject() {return p_object_texture;}  //lây ra ảnh 
 
-  void Show(SDL_Surface* des);
+  // void Show(SDL_Surface* des);
   bool LoadImg(const char* file_name);
    
 protected:
+  const int COLOR_KEY_R = 167;
+  const int COLOR_KEY_G = 175;
+  const int COLOR_KEY_B = 180;
   SDL_Texture* p_object_texture; //lưu ảnh 
   SDL_Rect rect_; //lưu kích thước ảnh
   SDL_Surface* p_object_surface;
@@ -72,12 +75,12 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
 }
 
-void BaseObject::Show(SDL_Surface* des)
-{
-  if (p_object_surface != NULL)
-  {
-    rect_ =  SDLCommonFunc::ApplySurface(p_object_surface, des, rect_.x, rect_.y);
-  }
-}
+// void BaseObject::Show(SDL_Surface* des)
+// {
+//   if (p_object_surface != NULL)
+//   {
+//     rect_ =  SDLCommonFunc::ApplySurface(p_object_surface, des, rect_.x, rect_.y);
+//   }
+// }
 
 #endif

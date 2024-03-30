@@ -1,7 +1,7 @@
 #ifndef TEXT_OBJECT_H
 #define TEXT_OBJECT_H
 #include "BaseObject.h"
-#include "declaration.h"
+// #include "declaration.h"
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL.h>
 class TextObject : public BaseObject{
@@ -15,6 +15,7 @@ class TextObject : public BaseObject{
     };
    
     void SetText(const std::string& text) {str_val_ = text;}
+    void setColor(Uint8 red, Uint8 green, Uint8 blue);
     void SetColor(const int& type);
 
     bool loadFromRenderedText(TTF_Font* gFont, SDL_Renderer* screen);
@@ -79,4 +80,9 @@ void TextObject::RenderText(SDL_Renderer* screen, int x, int y, SDL_Rect* clip /
   SDL_RenderCopyEx(screen, texture_, clip, &renderQuad, angle, center, flip );            //RENDER SCREEN
 }
 
+void TextObject::setColor(Uint8 red, Uint8 green, Uint8 blue){
+  text_color_.r = red;
+  text_color_.g = green;
+  text_color_.b = blue;
+}
 #endif
