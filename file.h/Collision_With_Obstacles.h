@@ -38,7 +38,6 @@ void Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,
 
 void Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_,SDL_Renderer* des, int num, int& moveY){
     if(SDLCommonFunc::CheckCollision(icicle_.ImplementIciclceRect(pipe_,bird_,des,num,moveY),bird_.strikeObstacle())){
-        // int a = 5;
         ExploringBird(pipe_,bird_,CollisionObject_,des);
     }
     

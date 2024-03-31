@@ -6,8 +6,7 @@
 #include "BulletObject.h"
 #include "Pipe.h"
 #include "Explosion.h"
-// #include "defLTexture.h"
-// #include "F:\Lap trinh cung C++\FLoppyBird\file.h\Object\SDL\include\SDL2"
+
 class Bird;
 class Bird : public BaseObject {
 public:

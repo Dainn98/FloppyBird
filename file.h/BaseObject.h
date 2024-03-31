@@ -74,13 +74,4 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     }
     SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
 }
-
-// void BaseObject::Show(SDL_Surface* des)
-// {
-//   if (p_object_surface != NULL)
-//   {
-//     rect_ =  SDLCommonFunc::ApplySurface(p_object_surface, des, rect_.x, rect_.y);
-//   }
-// }
-
 #endif
