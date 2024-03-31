@@ -141,6 +141,7 @@ void Pause::render(){
             gButtonControlGame[PAUSE].render(BUTTON_POSITION[PAUSE].x, BUTTON_POSITION[PAUSE].y, NULL);
         }
     }
+    // SDL_RenderPresent(gRenderer);
 }
 Pause:: ~Pause(){
     //To do

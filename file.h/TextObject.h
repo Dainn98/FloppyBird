@@ -24,6 +24,7 @@ class TextObject : public BaseObject{
 
     int getWidth() const {return width_;}
     int getHeight() const {return height_;}
+    
   private:
     std::string str_val_;
     SDL_Color text_color_;

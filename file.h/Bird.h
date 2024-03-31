@@ -79,7 +79,7 @@ Bird :: ~Bird(){
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
-    y_val_ = SCREEN_HEIGHT/3*2;
+    y_val_ = SCREEN_HEIGHT/3;
     velocity_ = 0;
     currentFrame = 0;
     width_ = BIRD_WIDTH;

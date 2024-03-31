@@ -96,7 +96,7 @@ int bullet[BULLET_TYPES] = {50,51};
 bool init();  
 bool loadMedia();
 void close();
-void BuildScreen();
+// void BuildScreen();
 void COLLISION_WITH_OBSTACLE();
 void solveEvent();
 int getRandomNumber(int size)   {return rand() % size + 1;}

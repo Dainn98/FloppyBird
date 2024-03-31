@@ -6,7 +6,6 @@ int main( int argc, char* argv[]){
     Game game;
     game.Play();
     close();
-    // 
     return 0;
 }
 bool loadMedia(){

@@ -21,7 +21,7 @@ public:
         LASER_BULLET = 51,
         DYNAMIC_BULLET = 52,
     };
-    
+    void freeBulletObject();
     void set_x_val(const int& xVal) { x_val_ = xVal;}
     void set_y_val(const int& yVal) { y_val_ = yVal;}
     int get_x_val() const {return x_val_;}
@@ -37,7 +37,6 @@ public:
     bool get_is_move() const { return is_move_; }
    
     void HandleMove(const int& x_border, const int& y_border);   
-    // void HandleMoveRightToLeft(); 
     void HandleMoveRightToLeft(const int& trajectory_bullet ); 
     double Trajectory_Sin(double time, double amplitude, double frequency, double phaseShift, double verticalShift) {return amplitude * sin(2 * PI * frequency * time + phaseShift) + verticalShift;}
 
@@ -64,7 +63,13 @@ BulletObject:: BulletObject(){
     bullet_type_ = SPHERE_BULLET;
 }
 
-BulletObject:: ~BulletObject(){}
+BulletObject:: ~BulletObject(){
+    //
+}
+void BulletObject::freeBulletObject(){
+   
+}
+
 
 void BulletObject::LoadImgBullet(SDL_Renderer* des){
     if(bullet_type_ == SPHERE_BULLET){
@@ -85,9 +90,9 @@ void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
     rect_.x -= x_val_ * 3; // VELOCITY_BULLET
     if (rect_.x < 0)
         is_move_ = false;
-    if (trajectory_bullet % 3 == 0)  rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, verticalShift);
-    else if (trajectory_bullet % 5 == 0)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, degree, verticalShift);
-    else if (trajectory_bullet % 4 == 0)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, degree);
+    if (trajectory_bullet == 1)  rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, verticalShift);
+    else if (trajectory_bullet  == 2)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, degree, verticalShift);
+    else if (trajectory_bullet == 3)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, degree);
     else rect_.y +=0;   //trajectory_bullet: 0
 }
 

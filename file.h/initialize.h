@@ -2,6 +2,8 @@
 #define INITIALIZE_H
 #include "declaration.h"
 #include "LTexture.h"
+#include "Game.h"
+Game mGame;
 //https://lazyfoo.net/tutorials/SDL/index.php
 bool init(){
 	//Initialization flag
@@ -65,16 +67,21 @@ bool init(){
 
 	return success;
 }
-void BuildScreen(){
-																			// LOADING BACKGROUND
-    SDL_Rect* currentBackground = &gSpriteBackground[ frame /  BACKGROUND_FRAME]; 
-    gBackgroundTexture.render((SCREEN_WIDTH - currentBackground->w) - picture,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
-    gBackgroundTexture.render((SCREEN_WIDTH*2 - currentBackground->w) - picture ,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
-																			// LOADING BASE
-    gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);	
-    gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
-    if(++picture >= SCREEN_WIDTH ) picture = 0;
-    if( ++frame / BACKGROUND_FRAME >= BACKGROUND_FRAME)frame = 0;
-}
+// void BuildScreen(){
+// 																			// LOADING BACKGROUND
+//     SDL_Rect* currentBackground = &gSpriteBackground[ frame /  BACKGROUND_FRAME]; 
+//     gBackgroundTexture.render((SCREEN_WIDTH - currentBackground->w) - picture,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
+//     gBackgroundTexture.render((SCREEN_WIDTH*2 - currentBackground->w) - picture ,(SCREEN_HEIGHT - currentBackground->h), currentBackground );
+// 																			// LOADING BASE
+//     gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);	
+//     gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
+//     if(!mGame.getIsPaused()){
+// 		if(++picture >= SCREEN_WIDTH ) picture = 0;
+//     	if( ++frame / BACKGROUND_FRAME >= BACKGROUND_FRAME)frame = 0;
+// 	}else if(mGame.getIsPlayed()){
+// 		int a = 5;
+// 		cout << "5" <<endl;
+// 	}
+// }
 
 #endif

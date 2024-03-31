@@ -24,7 +24,7 @@ public:
   std::vector<BulletObject*> GetBulletList() const {return p_bullet_list_;}                     
 
   void InitBullet(BulletObject* p_bullet);
-  void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe);
+  void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted);
   void Reset(const int& xboder);
   void ResetBullet(BulletObject* p_bullet);
 
@@ -83,22 +83,24 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
   }
 }
 
-void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe){
+void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted){
   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
     BulletObject* p_bullet = p_bullet_list_.at(itmb);
     if (p_bullet!=NULL){     //IF P_BULLET IS NOT EMPTY         
-      if (p_bullet->get_is_move()){ //BULLET MOVE
+      if (p_bullet->get_is_move() ){ //BULLET MOVE
         p_bullet->Render(des);
+        // int random_trajectory_bullet = rand() % 100;
                                                                 // TRAJECTION
-        p_bullet->HandleMoveRightToLeft(itmb);
+        if(!isPaused)p_bullet->HandleMoveRightToLeft(itmb);
       }
-      else{                   
+      else if (!p_bullet->get_is_move()){                   
         p_bullet->set_is_move(true);                       
         p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);  //RESET BULLET BACK TO THE PREVIOUS POSITION
       }
     }
     if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) || //RESET BULLET WHEN COLLIDE WITH PIPE
                     SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))){
+        // p_bullet = NULL;
         ResetBullet(p_bullet);
     }
   }
