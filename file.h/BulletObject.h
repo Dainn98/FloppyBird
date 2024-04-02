@@ -6,7 +6,7 @@ class BulletObject;
 
 #define WIDTH_LASER 35
 #define HEIGHT_LASER 5
-#define WIDTH_SPHERE 10
+#define WIDTH_SPHERE 25
 #define HEIGHT_SPHERE 10
 
  
