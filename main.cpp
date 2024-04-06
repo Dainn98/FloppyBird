@@ -5,8 +5,8 @@ int main( int argc, char* argv[]){
     loadMedia();    
     Game game;
     game.Play();
-    // game.FreeBird();
     close();
+   
     return 0;
 }
 bool loadMedia(){

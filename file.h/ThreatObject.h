@@ -1,11 +1,11 @@
 #ifndef THREAT_OBJECT_H
 #define THREAT_OBJECT_H
-#include"BaseObject.h"
-#include "declaration.h"
-#include "BulletObject.h"
-#include "Pipe.h"
-#include "Bird.h"
-#include <vector>
+// #include"BaseObject.h"
+// #include "declaration.h"
+// #include "BulletObject.h"
+// #include "Pipe.h"
+// #include "Bird.h"
+// #include <vector>
  
 // const int NUM_THREAT_FRAME = 25; 
 //ROW*COL = 25
@@ -70,6 +70,10 @@ ThreatObject::ThreatObject(){
   x_val_ = 0;
   y_val_ = 0;
   frame_ = 0;
+}
+ThreatObject::~ThreatObject(){
+//To do
+Free();
 }
 void ThreatObject::set_clip_threat(){
     clip_[0].x = 0;
@@ -253,20 +257,7 @@ SDL_Rect ThreatObject:: GetThreatRect(){
   SDL_Rect rect = {get_x_val(), get_y_val(), THREAT_BODY_WIDTH, THREAT_BODY_HEIGHT};
   return rect;
 }
-ThreatObject::~ThreatObject(){
-  //destructor 
-  // Free();
-  // if (p_bullet_list_.size() > 0){
-  //     for (int ib = 0; ib < p_bullet_list_.size(); ib++){
-  //       BulletObject* p_bullet = p_bullet_list_.at(ib);
-  //       if (p_bullet){
-  //         delete p_bullet;
-  //         p_bullet = NULL;
-  //       }
-  //     }
-  //     p_bullet_list_.clear();
-  //   }
-}
+
 void ThreatObject::Free(){
   if (p_bullet_list_.size() > 0){
       for (int ib = 0; ib < p_bullet_list_.size(); ib++){

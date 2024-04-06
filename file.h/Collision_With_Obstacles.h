@@ -1,13 +1,13 @@
 #ifndef COLLISION_WITH_OBSTACLES_H
 #define COLLISION_WITH_OBSTACLES_H
-#include "BaseObject.h"
-#include "declaration.h"
-#include "Bird.h"
+// #include "BaseObject.h"
+// #include "declaration.h"
+// #include "Bird.h"
 #include "Pipe.h"
 #include "PlantObject.h"
 #include "IcicleObject.h"
 #include "ThreatObject.h"
-#include "BulletObject.h"
+// #include "BulletObject.h"
 class Collision :public BaseObject{
     public:
     void CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, SDL_Renderer* des, int num);

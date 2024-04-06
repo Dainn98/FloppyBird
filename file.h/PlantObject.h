@@ -1,10 +1,10 @@
 #ifndef PLANT_OBJECT_H
 #define PLANT_OBJECT_H
 
-#include "BaseObject.h"
-#include "declaration.h"
+// #include "BaseObject.h"
+// #include "declaration.h"
 #include "Bird.h"
-#include "Pipe.h"
+// #include "Pipe.h"
 
 const int NUM_PLANT = 5;
 const int PLANT_WIDTH = 45;

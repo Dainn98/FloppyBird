@@ -2,8 +2,8 @@
 #ifndef EXPLOSION_H_
 #define EXPLOSION_H_
 
-#include "BaseObject.h"
-#include "declaration.h"
+// #include "BaseObject.h"
+// #include "declaration.h"
 
 const int EXP_WIDTH = 165;
 const int EXP_HEIGHT = 165;

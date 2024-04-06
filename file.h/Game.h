@@ -1,19 +1,21 @@
 #ifndef Game_h
 #define Game_h
-#include "declaration.h"
-#include "Bird.h"
-#include "Pipe.h"
-#include "LTexture.h"
 #include "Pause.h"
 #include "impTimer.h"
-#include "Explosion.h"
+#include "Collision_With_Obstacles.h"
+#include "MoneyObject.h"
+#include "ItemObject.h"
+//Maybe delete
 #include "BaseObject.h"
+#include "declaration.h"
+#include "Explosion.h"
 #include "ThreatObject.h"
 #include "TextObject.h"
 #include "PlantObject.h"
-#include "Collision_With_Obstacles.h"
-#include "MoneyObject.h"
-   
+#include "IcicleObject.h"
+#include "Bird.h"
+#include "Pipe.h"
+#include "LTexture.h"
 class Game : public BaseObject{
 private:    
     unsigned int bullet_type_ = 50;
@@ -105,19 +107,19 @@ public:
     void ResetStats();
     void changeFPS();
 
-    void FreeBird();
 };
 
 Game::Game(){
     //To do
 }
 Game::~Game(){
-    FreeBird();
+    // FreeBird();
 }
 
 void Game::Play(){
     int ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", "Sprites/startgame.png");
-    if (ret_menu == 1)  quit = true;
+    if (ret_menu == 1) quit = true;
+    
 
     SDL_Event e;
                                         //   GENERATE THE THREAT POSITION FIRST AND SET THE BULLET FOR THREAT
@@ -135,7 +137,8 @@ while (!quit) {
             Mix_PlayChannel(-1,gSwoosh,0);
         }
                                                                                 //KEY
-        if (e.type == SDL_QUIT)  quit = true;
+        if (e.type == SDL_QUIT) quit = true;
+        
         
         else if (e.type == SDL_KEYDOWN){
             switch( e.key.keysym.sym ){  
@@ -152,7 +155,7 @@ while (!quit) {
                     break;
                 case SDLK_ESCAPE:
                     OptionInGame.mPresentState[PAUSE] = true;
-                    quit = true;
+                    // quit = true;
                     break;
                                                                                 //PLAY THE MUSIC
                 case SDLK_m:
@@ -171,7 +174,8 @@ while (!quit) {
         }         
                                         //OPTION_CONTROL_GAME LOGIC
         OptionInGame.handleEvent( &e );
-        if (OptionInGame.mPresentState[EXIT])       quit = true; 
+        if (OptionInGame.mPresentState[EXIT]) quit = true; 
+        
     }
 
         if(OptionInGame.mPresentState[REPLAY]){  
@@ -408,7 +412,8 @@ void Game::HandleWhenPlay(){
 void Game::HandleWhenGameOver(){
     // //To do
     int ret_menu = SDLCommonFunc::ShowMenuGameOver(gRenderer, gFontMENU, "Restart", "Exit", "Sprites/background.jpg");
-    if (ret_menu == 1)  quit = true;
+    if (ret_menu == 1) quit = true;
+    
     else if (ret_menu == 0) {
         ResetStats();
     }
@@ -514,19 +519,5 @@ void Game::ImplementMoney(){
 }
 void Game:: HandleInputAction(SDL_Event &e){
     //To do
-}
-void Game::FreeBird(){
-    //To do
-    // for(int i = 0; i < NUM_THREAT; i++) if (p_threat_list) (p_threat_list + i)->Free();
-    // p_bullet_bird->Free();
-    // p_bullet_threat->Free();
-    p_bullet_bird = NULL;
-    p_bullet_threat = NULL;
-    // for(int i = 0; i < bullet_list.size(); i++) if(bullet_list.at(i)) bullet_list.at(i)->Free();
-    // for(int i = 0; i < bullet_arr.size(); i++) if(bullet_arr.at(i)) bullet_arr.at(i)->Free();
-    bullet_arr.clear();
-    bullet_list.clear();
-    delete[] p_money_list;
-    
 }
 #endif

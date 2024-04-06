@@ -1,8 +1,8 @@
 #ifndef ICICLEOBJECT_H
 #define ICICLEOBJECT_H
-#include "BaseObject.h"
-#include "Pipe.h"
-#include "Bird.h"
+// #include "BaseObject.h"
+// #include "Pipe.h"
+// #include "Bird.h"
 
 const int NUM_ICICLE = 6;
 const int ICICLE_WIDTH = 48;

@@ -1,7 +1,7 @@
 #ifndef GENERATING_PIPE_H
 #define GENERATING_PIPE_H
-#include "declaration.h"
-#include "LTexture.h"
+// #include "declaration.h"
+// #include "LTexture.h"
 const int   PIPE_WIDTH = 100,       
             NUMBER_OF_PIPE = 100,
             UPPER_PIPE_OFFSET = -40,

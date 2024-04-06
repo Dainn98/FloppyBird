@@ -1,7 +1,7 @@
 #ifndef MONEY_OBJECT_H
 #define MONEY_OBJECT_H
 // #include "declaration.h"
-#include "BaseObject.h"
+// #include "BaseObject.h"
 // #include "Pipe.h"
 
 const int MONEY_SIZE = 45;
@@ -31,7 +31,10 @@ MoneyObject::MoneyObject(){
     rect_.w = MONEY_SIZE;
 }
 MoneyObject::~MoneyObject(){
-    Free();
+    for(MoneyObject* ptr : p_money_list_) {
+    delete ptr;
+    }
+    p_money_list_.clear();
 }
 void MoneyObject::HandleMove(const int& x_border, const int& y_border){
     rect_.x -= x_val_;

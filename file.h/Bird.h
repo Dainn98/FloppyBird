@@ -2,9 +2,9 @@
 #define MAIN_OBJECT_H
 
 // #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
-#include "declaration.h"
+// #include "declaration.h"
 #include "BulletObject.h"
-#include "Pipe.h"
+// #include "Pipe.h"
 #include "Explosion.h"
 const int                                               //BIRD
   BIRD_WIDTH = 34,        
