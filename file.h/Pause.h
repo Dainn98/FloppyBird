@@ -1,8 +1,9 @@
 #ifndef Pause_h
 #define Pause_h
 #include "declaration.h"
+#include "BaseObject.h"
 //Tham khảo Phan Tho
-class Pause {
+class Pause : public BaseObject {
 public:
     
     Pause();

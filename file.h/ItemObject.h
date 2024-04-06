@@ -1,8 +1,6 @@
-#ifndef MONEY_OBJECT_H
-#define MONEY_OBJECT_H
-// #include "declaration.h"
+#ifndef ITEM_OBJECT_H
+#define ITEM_OBJECT_H
 #include "BaseObject.h"
-// #include "Pipe.h"
 
 const int MONEY_SIZE = 45;
 class MoneyObject : public BaseObject {

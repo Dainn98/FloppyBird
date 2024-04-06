@@ -90,10 +90,13 @@ void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
     rect_.x -= x_val_ * 3; // VELOCITY_BULLET
     if (rect_.x < 0)
         is_move_ = false;
-    if (trajectory_bullet == 1)  rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, verticalShift);
-    else if (trajectory_bullet  == 2)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, degree, verticalShift);
-    else if (trajectory_bullet == 3)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, degree);
-    else rect_.y +=0;   //trajectory_bullet: 0
+    int trajectory = rand() % 10 + 1;
+    
+    if(trajectory % 5 == 0) rect_.y -= Trajectory_Sin(time, amplitude, frequency, degree, verticalShift);
+    else  rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, verticalShift);
+    // else if (trajectory % 2 == 0)  rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, degree);
+    // else if (trajectory  % 2 == 0)   rect_.y -= Trajectory_Sin(time, amplitude, frequency, phaseShift, degree);
+    // else rect_.y +=0;   //trajectory_bullet: 0
 }
 
 void BulletObject::HandleInputAction(SDL_Event events)

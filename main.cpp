@@ -5,6 +5,7 @@ int main( int argc, char* argv[]){
     loadMedia();    
     Game game;
     game.Play();
+    // game.FreeBird();
     close();
     return 0;
 }
@@ -29,6 +30,7 @@ bool loadMedia(){
     gFly = Mix_LoadWAV(gFly_path);
     gMusic = Mix_LoadMUS(gMusic_path);
     gSwoosh = Mix_LoadWAV(gSwoosh_path);
+    gMoneyCol = Mix_LoadWAV(gMoneyCol_path);
     gSwapBullet = Mix_LoadWAV(gSwapBullet_path);
     gExplosion = Mix_LoadWAV(gExplosion_path);
     gDie = Mix_LoadWAV(gDie_path);
@@ -52,19 +54,21 @@ void close() {
     Mix_FreeChunk( gFly );  gFly = NULL;
     Mix_FreeMusic( gMusic ); gMusic = NULL;
     Mix_FreeChunk( gSwoosh ); gSwoosh = NULL;
+    Mix_FreeChunk( gMoneyCol ); gMoneyCol = NULL;
     Mix_FreeChunk( gDie ); gDie = NULL;
     Mix_FreeChunk( gExplosion ); gExplosion = NULL;
     Mix_FreeChunk( gSwapBullet ); gSwapBullet = NULL;
     
 	                                                                //DESTROY TEXTURE
     SDL_DestroyTexture(pipeTexture);            
-    SDL_DestroyTexture(birdTexture);
+    // SDL_DestroyTexture(birdTexture);
                                                                     //DESTROY RENDER,WINDOW
     SDL_DestroyRenderer(gRenderer);  gRenderer = NULL;
     SDL_DestroyWindow(gWindow);      gWindow= NULL;
                                                                     //DESTROY FONT
-    TTF_CloseFont(gFontText);
-    gFontText = NULL;
+    TTF_CloseFont(gFontText);gFontText = NULL;
+    TTF_CloseFont(gFontMENU);gFontMENU = NULL;
+
                                                                     //DESTROY SURFACE
     IMG_Quit();
     Mix_Quit();

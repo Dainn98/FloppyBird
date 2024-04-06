@@ -30,11 +30,11 @@ void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionOb
         CollisionObject_.set_frame(ex);
         CollisionObject_.SetRect(xPos,yPos);
         CollisionObject_.ShowEx(des);
-        Mix_PlayChannel( -1, gExplosion, 0 );
+        Mix_PlayChannel( 1, gExplosion, 0 );
         SDL_Delay(100);
         SDL_RenderPresent(des);
     }
-    Mix_PlayChannel( -1, gDie, 0 );
+    Mix_PlayChannel( 1, gDie, 0 );
 }
 void Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, SDL_Renderer* des, int num){
     if(SDLCommonFunc::CheckCollision(plant_.ImplementPlantRect(pipe_,bird_,des,num),bird_.strikeObstacle())){

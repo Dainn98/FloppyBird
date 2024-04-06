@@ -9,11 +9,13 @@ public:
   ~BaseObject();
   virtual bool LoadImageFile(std::string path, SDL_Renderer* screen); //đường dẫn lấy tấm ảnh 
   void Render(SDL_Renderer* des, const SDL_Rect* clip = NULL);        // hàm render()
+  void RenderImage(SDL_Renderer* des,SDL_Rect ret /*=NULL*/);
   
   void Free();
   void SetRect(const int& x, const int& y) {rect_.x = x, rect_.y = y;};//hàm lưu kích thước ảnh
   SDL_Rect GetRect() const {return rect_;}    //lấy ra ảnh 
   SDL_Texture* GetObject() {return p_object_texture;}  //lây ra ảnh 
+  
 
   // void Show(SDL_Surface* des);
   bool LoadImg(const char* file_name);
@@ -74,4 +76,10 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     }
     SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
 }
+void BaseObject :: RenderImage(SDL_Renderer* des,SDL_Rect ret /*=NULL*/){
+    SDL_Rect* clip = NULL;
+    SDL_Rect renderQuad = { ret.x, ret.y, ret.w, ret.h };
+    SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
+}
+
 #endif

@@ -1,11 +1,16 @@
 #ifndef MAIN_OBJECT_H
 #define MAIN_OBJECT_H
 
-#include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
+// #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
 #include "declaration.h"
 #include "BulletObject.h"
 #include "Pipe.h"
 #include "Explosion.h"
+const int                                               //BIRD
+  BIRD_WIDTH = 34,        
+  BIRD_HEIGHT = 24,
+  GRAVITY = 1,          
+  BIRD_JUMP_VELOCITY = -15;
 
 class Bird;
 class Bird : public BaseObject {
@@ -14,7 +19,7 @@ public:
     ~Bird();
      
     void resetPositon();    //reset position when restart
-    void Free(); //thieu
+    void FreeMain(); //thieu
 
     void update();
     void render();
@@ -74,7 +79,7 @@ Bird::Bird(){
     currentFrame = 0;
 }
 Bird :: ~Bird(){
-    Free();
+    FreeMain();
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
@@ -98,7 +103,7 @@ void Bird::update() {
         y_val_ += velocity_;
         currentFrame = (currentFrame + 1) % FLYING_ANIMATION_FRAMES_OF_BIRD;
 }
-void Bird:: Free(){
+void Bird:: FreeMain(){
     //To do
 }
 

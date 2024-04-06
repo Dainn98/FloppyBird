@@ -2,7 +2,13 @@
 #define GENERATING_PIPE_H
 #include "declaration.h"
 #include "LTexture.h"
-
+const int   PIPE_WIDTH = 100,       
+            NUMBER_OF_PIPE = 100,
+            UPPER_PIPE_OFFSET = -40,
+            LOWER_PIPE_OFFSET = 150,
+            PIPE_HEIGHT = 300,
+            LOWER_PIPE_HEIGHT_OFFSET = 134,
+            PIPE_VELOCITY = 15;
 class Pipe:public BaseObject {
 public:
     Pipe();
