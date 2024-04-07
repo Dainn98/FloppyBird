@@ -9,12 +9,11 @@
 #include "ThreatObject.h"
 #include "ShieldObject.h"
 #include "BulletObject.h"
-BaseObject Shield;
 class Collision :public BaseObject{
     public:
-    void CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, int num);
+    bool CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, int num,ShieldObject shield_);
    
-    void CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_, int num, int& moveY );
+    bool CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_, int num, int& moveY ,ShieldObject shield_);
     
     void ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_);
 
@@ -39,17 +38,37 @@ void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionOb
     }
     Mix_PlayChannel( 1, gDie, 0 );
 }
-void Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, int num){
+bool Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, int num,ShieldObject shield_){
+    
     if(SDLCommonFunc::CheckCollision(plant_.ImplementPlantRect(pipe_,bird_,gRenderer,num),bird_.strikeObstacle())){
-        ExploringBird(pipe_,bird_,CollisionObject_);
+        if(!shield_.getIsShield()){
+            ExploringBird(pipe_,bird_,CollisionObject_);
+            return true;
+        }
     }
+    return false;
 }
 
-void Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_, int num, int& moveY){
+
+
+
+
+
+
+
+
+
+
+
+
+bool Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_, int num, int& moveY, ShieldObject shield_){
     if(SDLCommonFunc::CheckCollision(icicle_.ImplementIciclceRect(pipe_,bird_,gRenderer,num,moveY),bird_.strikeObstacle())){
+       if(!shield_.getIsShield()) {
         ExploringBird(pipe_,bird_,CollisionObject_);
+        return true;
+       }
     }
-    
+    return false;
 }
 void Collision:: CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_, ThreatObject* p_threat,int num){
     if(SDLCommonFunc::CheckCollision(p_threat_frame.ImplementThreatRect(p_threat,gRenderer,num),bird_.strikeObstacle())){

@@ -12,6 +12,7 @@ class TextObject : public BaseObject{
       RED_TEXT = 0,
       WHITE_TEXT = 1,
       BLACK_TEXT = 2,
+      VIOLET_TEXT = 3,
     };
    
     void SetText(const std::string& text) {str_val_ = text;}
@@ -52,6 +53,10 @@ void TextObject::SetColor(const int& type){
   }
   else if (type == WHITE_TEXT){
     SDL_Color color = {0xFF, 0xFF, 0xFF};
+    text_color_ = color;
+  }
+  else if (type == VIOLET_TEXT){
+    SDL_Color color = {124,15, 37};
     text_color_ = color;
   }
   else{

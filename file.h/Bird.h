@@ -49,7 +49,7 @@ public:
 
     // void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
         void ExplosionBirdAndThreat(ExplosionObject explosion_Collision);
-    void renderShield(Bird bird_,ShieldObject shield_);
+    void renderShield(ShieldObject shield_);
     
     SDL_Rect strikeObstacle() const;
 private:
@@ -210,11 +210,18 @@ void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
     }
 }
 
-void Bird::renderShield(Bird bird_,ShieldObject shield_){
+void Bird::renderShield(ShieldObject shield_){
+    // if(shield_.getIsShield()){
+    //     shield_.LoadImageFile("Sprites/bubbleShieldx.png",gRenderer);
+    //     shield_.SetRect(bird_.strikeObstacle().x - BIRD_WIDTH/3,bird_.strikeObstacle().y - BIRD_HEIGHT/2);
+    //     shield_.Render(gRenderer);
+    // }
     if(shield_.getIsShield()){
         shield_.LoadImageFile("Sprites/bubbleShieldx.png",gRenderer);
-        shield_.SetRect(bird_.strikeObstacle().x - BIRD_WIDTH/3,bird_.strikeObstacle().y - BIRD_HEIGHT/2);
+        shield_.SetRect(strikeObstacle().x - BIRD_WIDTH/3,strikeObstacle().y - BIRD_HEIGHT/2);
         shield_.Render(gRenderer);
+    }else{
+        shield_.Free();
     }
 }
 
