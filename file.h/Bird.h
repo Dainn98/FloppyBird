@@ -6,6 +6,7 @@
 #include "BulletObject.h"
 // #include "Pipe.h"
 #include "Explosion.h"
+#include "ShieldObject.h"
 const int                                               //BIRD
   BIRD_WIDTH = 34,        
   BIRD_HEIGHT = 24,
@@ -46,7 +47,9 @@ public:
 
     void RemoveBullet(const int& idx);
 
-    void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
+    // void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
+        void ExplosionBirdAndThreat(ExplosionObject explosion_Collision);
+    void renderShield(Bird bird_,ShieldObject shield_);
     
     SDL_Rect strikeObstacle() const;
 private:
@@ -193,7 +196,8 @@ void Bird::HandleInputAction(SDL_Event e){
             }
         }
 }
-void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Renderer* gRenderer){
+// void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Renderer* g
+void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
     for(int ex = 0; ex < 4; ex++){
         int xPos = ( strikeObstacle().x + strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;
         int yPos = ( strikeObstacle().y + strikeObstacle().h*0.5) - EXP_HEIGHT * 0.5;
@@ -203,6 +207,14 @@ void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Rende
         Mix_PlayChannel( -1, gExplosion, 0 );
         SDL_Delay(100);
         SDL_RenderPresent(gRenderer);
+    }
+}
+
+void Bird::renderShield(Bird bird_,ShieldObject shield_){
+    if(shield_.getIsShield()){
+        shield_.LoadImageFile("Sprites/bubbleShieldx.png",gRenderer);
+        shield_.SetRect(bird_.strikeObstacle().x - BIRD_WIDTH/3,bird_.strikeObstacle().y - BIRD_HEIGHT/2);
+        shield_.Render(gRenderer);
     }
 }
 

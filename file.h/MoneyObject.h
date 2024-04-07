@@ -5,6 +5,7 @@
 // #include "Pipe.h"
 
 const int MONEY_SIZE = 45;
+const int NUM_MONEY = 3;
 class MoneyObject : public BaseObject {
     public: 
         MoneyObject();
@@ -40,7 +41,7 @@ void MoneyObject::HandleMove(const int& x_border, const int& y_border){
     rect_.x -= x_val_;
     // set_x_val(rect_.x);
     if(rect_.x < -SCREEN_WIDTH*0.5){
-        rect_.x = SCREEN_WIDTH;
+        rect_.x = SCREEN_WIDTH+ (getRandomNumber(SCREEN_WIDTH*1.5));
         rect_.y = SDLCommonFunc::MakeRandValue();
     }
 }

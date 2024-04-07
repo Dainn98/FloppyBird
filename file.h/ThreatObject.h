@@ -14,7 +14,7 @@ const int THREAT_BODY_WIDTH = 60;
 const int THREAT_HEIGHT = 64;
 const int THREAT_BODY_HEIGHT = 60;
 const int NUM_THREAT_FRAME = 20,
-        NUM_THREAT = 6,        
+        NUM_THREAT = 10,        
         DISTANCE_BETWEEN_THREATS = 400,
         THREAT_VELOCITY = 10,
         SPEED_BULLET_THREATS = 12,
@@ -196,7 +196,7 @@ SDL_Rect ThreatObject::ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* 
 void ThreatObject::HandleMove(const int& x_bordr, const int& y_border){                                   
   rect_.x -= x_val_;                                                                            
   if (rect_.x < 0){
-    rect_.x  = SCREEN_WIDTH;      
+    rect_.x  = SCREEN_WIDTH + getRandomNumber(SCREEN_WIDTH*2);      
     rect_.y= SDLCommonFunc::MakeRandValue();  
   }
 }
@@ -220,8 +220,8 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
 void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted){
   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
     BulletObject* p_bullet = p_bullet_list_.at(itmb);
-    if (p_bullet!=NULL){     //IF P_BULLET IS NOT EMPTY         
-      if (p_bullet->get_is_move() ){ //BULLET MOVE
+    if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.5){     //IF P_BULLET IS NOT EMPTY         
+      if (p_bullet->get_is_move()){ //BULLET MOVE
         p_bullet->Render(des);
         // int random_trajectory_bullet = rand() % 100;
                                                                 // TRAJECTION

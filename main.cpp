@@ -61,7 +61,6 @@ void close() {
     
 	                                                                //DESTROY TEXTURE
     SDL_DestroyTexture(pipeTexture);            
-    // SDL_DestroyTexture(birdTexture);
                                                                     //DESTROY RENDER,WINDOW
     SDL_DestroyRenderer(gRenderer);  gRenderer = NULL;
     SDL_DestroyWindow(gWindow);      gWindow= NULL;
