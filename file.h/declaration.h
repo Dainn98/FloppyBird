@@ -51,6 +51,8 @@ static char gSwapBullet_path[] = {"Sound/swapBullet.wav"};
 static char gExplosion_path[] = {"Sound/explosion.wav"};
 static char gDie_path[] = {"Sound/die.wav"};
 static char gMoneyCol_path[] = {"Sound/moneyCol.wav"};
+static char gBubbleAdd_path[] = {"Sound/bubbleAdd.wav"};
+static char gBubllePow_path[] = {"Sound/bubblePow.wav"};
 
 #define GA_FAILED -1
 
@@ -110,7 +112,12 @@ Mix_Chunk *gMoneyCol = NULL;
 Mix_Chunk *gSwapBullet = NULL;
 Mix_Chunk *gDie = NULL;
 Mix_Chunk *gExplosion = NULL;
+Mix_Chunk *gBubbleAdd = NULL;
+Mix_Chunk *gBubblePow = NULL;
 Mix_Music *gMusic = NULL;
+// Mix_Music *gBubbleAdd = NULL;
+
+
                                                             //OPTION_CONTROL_GAME
 enum Button{
     PAUSE,
@@ -145,7 +152,7 @@ namespace SDLCommonFunc{
                             const std::string& menu3,
                             const std::string& menu4,
                             const std::string& menu5,
-                            BaseObject pBackground);
+                            BaseObject gBackground);
         int ShowMenuStart(SDL_Renderer* des, TTF_Font* font, 
                             const std::string& menu1, 
                             const std::string& menu2,
@@ -158,12 +165,19 @@ namespace SDLCommonFunc{
                             // const std::string& menu3,
                             // const std::string& menu4,
                             const std::string& img_name);
-        int ShowTutorialWindow(TTF_Font* font,
+        int ShowTutorialWindow(SDL_Renderer* des,
+                            TTF_Font* font,
                             const std::string& menu1, 
                             const std::string& menu2,
                             // const std::string& menu3,
                             // const std::string& menu4,
-                            const std::string& img_name);                    
+                            BaseObject gBackground);        
+        int ShowMenuStart2(SDL_Renderer* des, TTF_Font* font, 
+                            const std::string& menu1, 
+                            const std::string& menu2,
+                            const std::string& menu3,
+                            const std::string& menu4,
+                            BaseObject gBackground);            
 }
 void SDLCommonFunc::ApplySurfaceClip(SDL_Texture* src, SDL_Renderer* des, SDL_Rect* clip, int x, int y)
 {
@@ -377,13 +391,14 @@ int SDLCommonFunc::ShowMenuPause(TTF_Font* font,
 
     return 0;
 }
-int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
+int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
+                            TTF_Font* font,
                             const std::string& menu1, 
                             const std::string& menu2,
-                            const std::string& img_name){
+                            BaseObject gBackground){
     char* ch1 = (char*)menu1.c_str();
     char* ch2 = (char*)menu2.c_str();
-    char* img_file = (char*)img_name.c_str();
+    // char* img_file = (char*)img_name.c_str();
 
     int size1 = menu1.length();
     int size2 = menu2.length();
@@ -407,22 +422,29 @@ int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
     TextObject text_object[kMenuNum];
     text_object[0].SetText(labels[0]);
     text_object[0].setColor(color[0].r, color[0].g, color[0].b);
-    text_object[0].loadFromRenderedText(font, gRenderer);
+    text_object[0].loadFromRenderedText(font, des);
 
     text_object[1].SetText(labels[1]);
     text_object[1].setColor(color[0].r, color[0].g, color[0].b);
-    text_object[1].loadFromRenderedText(font, gRenderer);
+    text_object[1].loadFromRenderedText(font, des);
 
 
     SDL_Rect pos[kMenuNum];
-    pos[0].x = SCREEN_WIDTH*0.4 - 20;
-    pos[0].y = SCREEN_HEIGHT/3 ;
+    // pos[0].x = SCREEN_WIDTH*0.4 - 20;
+    // pos[0].y = SCREEN_HEIGHT/3 ;
 
-    pos[1].x = SCREEN_WIDTH*0.5 - 70;
-    pos[1].y = SCREEN_HEIGHT/3 + 60;
+    // pos[1].x = SCREEN_WIDTH*0.5 - 70;
+    // pos[1].y = SCREEN_HEIGHT/3 + 60;
+    pos[0].x = 300;
+    pos[0].y = 450;
+
+    pos[1].x = 800;
+    pos[1].y = 465;
 
     // BaseObject gBackground;
-    // bool ret = gBackground.LoadImageFile(img_file, gRenderer);
+    // bool ret = gBackground.LoadImageFile(img_file, des);
+    SDL_Rect rect_tutor = {200,100,900,485};
+
 
     SDL_Event event;
     while (1)
@@ -448,7 +470,7 @@ int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
                             selected[i] = 1;
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[1].r, color[1].g, color[1].b);
-                            text_object[i].loadFromRenderedText(font, gRenderer);
+                            text_object[i].loadFromRenderedText(font, des);
                         }
                     }
                     else{
@@ -457,7 +479,7 @@ int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
                             text_object[i].Free();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
-                            text_object[i].loadFromRenderedText(font, gRenderer);
+                            text_object[i].loadFromRenderedText(font, des);
                         }
                     }
                 }
@@ -471,7 +493,7 @@ int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
                     {
                         text_object[0].Free();
                         text_object[1].Free();
-                        // gBackground.Free();
+                        gBackground.Free();
 
                         return i;
                     }
@@ -482,30 +504,51 @@ int SDLCommonFunc::ShowTutorialWindow(TTF_Font* font,
                 {
                     text_object[0].Free();
                     text_object[1].Free();
-                    // gBackground.Free();
+                    gBackground.Free();
 
                     return 1;
                 }
             }
         }
 
-        // gBackground.Render(gRenderer, NULL);
+        // gBackground.Render(des, NULL);
+        // SDL_Rect rect_tutor = {200,100,900,485};
+        gBackground.RenderImage(des,rect_tutor);
 
         for (int i = 0; i < kMenuNum; ++i)
         {
-            text_object[i].RenderText(gRenderer, pos[i].x, pos[i].y);
+            text_object[i].RenderText(des, pos[i].x, pos[i].y);
             pos[i].w = text_object[i].getWidth();
             pos[i].h = text_object[i].getHeight();
         }
 
 
-        SDL_RenderPresent(gRenderer);
+        SDL_RenderPresent(des);
         if (1000 / 30 > (SDL_GetTicks() - time))
             SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
     }
 
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font, 
                             const std::string& menu1, 
                             const std::string& menu2,
@@ -556,6 +599,7 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
     BaseObject PauseMenu_;
     // bool ret = gBackground.LoadImageFile(img_file, des);
     PauseMenu_.LoadImageFile(img_file,gRenderer);
+    SDL_Rect rect_pause = {200,100,900,485};
     
 
     SDL_Event event;
@@ -623,7 +667,7 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
                 }
             }
         }
-        SDL_Rect rect_pause = {200,100,900,485};
+        // SDL_Rect rect_pause = {200,100,900,485};
         PauseMenu_.RenderImage(gRenderer,rect_pause);
         // gBackground.Render(des, NULL);
 
@@ -693,6 +737,7 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
 
     // bool ret = gBackground.LoadImageFile(img_file, des);
     // PauseMenu_.LoadImageFile(img_file,gRenderer);
+    SDL_Rect rect_pause = {200,100,900,485};
     
 
     SDL_Event event;
@@ -759,8 +804,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                 }
             }
         }
-        SDL_Rect rect_pause = {200,100,900,485};
-        gBackground.RenderImage(gRenderer,rect_pause);
+        // SDL_Rect rect_pause = {200,100,900,485};
+        gBackground.RenderImage(des,rect_pause);
         // gBackground.Render(des, NULL);
 
         for (int i = 0; i < kMenuNum; ++i)
@@ -935,6 +980,167 @@ int SDLCommonFunc::ShowMenuStart(SDL_Renderer* des, TTF_Font* font,
         }
 
         gBackground.Render(des, NULL);
+
+        for (int i = 0; i < kMenuNum; ++i)
+        {
+            text_object[i].RenderText(des, pos[i].x, pos[i].y);
+            pos[i].w = text_object[i].getWidth();
+            pos[i].h = text_object[i].getHeight();
+        }
+
+
+        SDL_RenderPresent(des);
+        if (1000 / 30 > (SDL_GetTicks() - time))
+            SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
+    }
+
+    return 0;
+}
+int SDLCommonFunc::ShowMenuStart2(SDL_Renderer* des, TTF_Font* font, 
+                            const std::string& menu1, 
+                            const std::string& menu2,
+                            const std::string& menu3,
+                            const std::string& menu4,
+                            BaseObject gBackground){
+    char* ch1 = (char*)menu1.c_str();
+    char* ch2 = (char*)menu2.c_str();
+    char* ch3 = (char*)menu3.c_str();
+    char* ch4 = (char*)menu4.c_str();
+    // char* img_file = (char*)img_name.c_str();
+
+    int size1 = menu1.length();
+    int size2 = menu2.length();
+    int size3 = menu3.length();
+    int size4 = menu4.length();
+
+    int time = 0;
+    int x = 0;
+    int y = 0;
+    const int kMenuNum = 4;
+    char* labels[kMenuNum];
+
+    labels[0] = new char[size1 + 1];
+    labels[1] = new char[size2 + 1];
+    labels[2] = new char[size3 + 1];
+    labels[3] = new char[size4 + 1];
+
+    strcpy_s(labels[0], size1+1, ch1);
+    strcpy_s(labels[1], size2+1, ch2);
+    strcpy_s(labels[2], size3+1, ch3);
+    strcpy_s(labels[3], size4+1, ch4);
+
+    SDL_Texture* menu[kMenuNum];
+    bool selected[kMenuNum] = { 0, 0 ,0, 0};
+    SDL_Color color[2] = { { 0, 0, 0 },{ 255, 0, 0 } };
+
+    TextObject text_object[kMenuNum];
+    text_object[0].SetText(labels[0]);
+    text_object[0].setColor(color[0].r, color[0].g, color[0].b);
+    text_object[0].loadFromRenderedText(font, des);
+
+    text_object[1].SetText(labels[1]);
+    text_object[1].setColor(color[0].r, color[0].g, color[0].b);
+    text_object[1].loadFromRenderedText(font, des);
+
+    text_object[2].SetText(labels[2]);
+    text_object[2].setColor(color[0].r, color[0].g, color[0].b);
+    text_object[2].loadFromRenderedText(font, des);
+
+    text_object[3].SetText(labels[3]);
+    text_object[3].setColor(color[0].r, color[0].g, color[0].b);
+    text_object[3].loadFromRenderedText(font, des);
+
+
+    SDL_Rect pos[kMenuNum];
+    pos[0].x = SCREEN_WIDTH*0.4 - 80;
+    pos[0].y = SCREEN_HEIGHT/3 ;
+
+    pos[1].x = SCREEN_WIDTH*0.5 - 70;
+    pos[1].y = SCREEN_HEIGHT/3 + 60;
+
+    pos[2].x = SCREEN_WIDTH/2 - 150;
+    pos[2].y = SCREEN_HEIGHT/3 + 120;
+
+    pos[3].x = SCREEN_WIDTH*0.3 ;
+    pos[3].y = SCREEN_HEIGHT/3 +180;
+
+    // BaseObject gBackground;
+    // bool ret = gBackground.LoadImageFile(img_file, des);
+    SDL_Rect rect_start = {0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
+
+    SDL_Event event;
+    while (1)
+    {
+        time = SDL_GetTicks();
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type) 
+            {
+            case SDL_QUIT:
+                text_object[0].Free();
+                text_object[0].Free();
+                gBackground.Free();
+                return 1;
+            case SDL_MOUSEMOTION:
+                x = event.motion.x;
+                y = event.motion.y;
+                for (int i = 0; i < kMenuNum; ++i)
+                {
+                    if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
+                        y >= pos[i].y && y <= pos[i].y + pos[i].h)
+                    {
+                        if (!selected[i])
+                        {
+                            selected[i] = 1;
+                            text_object[i].SetText(labels[i]);
+                            text_object[i].setColor(color[1].r, color[1].g, color[1].b);
+                            text_object[i].loadFromRenderedText(font, des);
+                        }
+                    }
+                    else
+                    {
+                        if (selected[i])
+                        {
+                            selected[i] = 0;
+                            text_object[i].Free();
+                            text_object[i].SetText(labels[i]);
+                            text_object[i].setColor(color[0].r, color[0].g, color[0].b);
+                            text_object[i].loadFromRenderedText(font, des);
+                        }
+                    }
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                x = event.button.x;
+                y = event.button.y;
+                for (int i = 0; i < kMenuNum; ++i) {
+                    if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
+                        y >= pos[i].y && y <= pos[i].y + pos[i].h)
+                    {
+                        text_object[0].Free();
+                        text_object[1].Free();
+                        text_object[2].Free();
+                        text_object[3].Free();
+                        gBackground.Free();
+                        return i;
+                    }
+                }
+                break;
+            case SDL_KEYDOWN:
+                if (event.key.keysym.sym == SDLK_ESCAPE)
+                {
+                    text_object[0].Free();
+                    text_object[1].Free();
+                    text_object[2].Free();
+                    text_object[3].Free();
+                    gBackground.Free();
+                    return 1;
+                }
+            }
+        }
+
+        // gBackground.Render(des, NULL);
+        gBackground.RenderImage(gRenderer,rect_start);
 
         for (int i = 0; i < kMenuNum; ++i)
         {

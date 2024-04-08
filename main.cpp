@@ -34,6 +34,8 @@ bool loadMedia(){
     gSwapBullet = Mix_LoadWAV(gSwapBullet_path);
     gExplosion = Mix_LoadWAV(gExplosion_path);
     gDie = Mix_LoadWAV(gDie_path);
+    gBubbleAdd = Mix_LoadWAV(gBubbleAdd_path);
+    gBubblePow = Mix_LoadWAV(gBubllePow_path);
                                                                     //BUTTON CONTORL LOADING
     gButtonControlGame[PAUSE].loadFromFile(gButtonControlGame_PAUSE_path);
     gButtonControlGame[PLAY].loadFromFile(gButtonControlGame_PLAY_path);

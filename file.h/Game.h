@@ -81,6 +81,7 @@ private:
     BaseObject GameOverMenu;
     BaseObject Tutorial;
     BaseObject Statswd;
+    BaseObject StartGame;
     // BaseObject MoneyFrame;    
     // BaseObject item_game;
         
@@ -135,7 +136,7 @@ Game::~Game(){
 
 void Game::Play(){
 
-    ResetStats();
+    // ResetStats();
     // ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", "Sprites/startgame.png");
     // if (ret_menu == 1) quit = true;
     // if (ret_menu == 2) {
@@ -148,8 +149,8 @@ void Game::Play(){
     //     if (ret_menu_over == 1) quit = true;
     // }
     // again_label:
+    ResetStats();
     showIntroWindow();
-
 
 
 
@@ -289,6 +290,7 @@ void Game::ImplementThreat(){
                             break;
                         }
                         else{
+                            Mix_PlayChannel(-1,gBubblePow,0);
                             shield.setIsShield(false);
                             time_shield = 0;
 
@@ -345,6 +347,7 @@ void Game::ResetStats(){
     bullet_arr.clear();
     setIsTapped(false);
     shield.setIsShield(true);
+    // Mix_PlayChannel(-1,gBubbleAdd,0);
     time_shield = 50;
     scoreCur = 0;
     moneyCur = 0;
@@ -410,15 +413,10 @@ void Game::ResetStats(){
 
     TappingFrame.LoadImageFile(Intro_path,gRenderer);
     shield.LoadImageFile(Shield_path,gRenderer);
+    StartGame.LoadImageFile("Sprites/startgame.png",gRenderer);
     GameOverMenu.LoadImageFile("Sprites/gameoverwd.png",gRenderer);
     Tutorial.LoadImageFile("Sprites/tutorialwd.png",gRenderer);
     Statswd.LoadImageFile("Sprites/statswd.png",gRenderer);
-
-
-
-
-
-
 
 
     // ret_menu = 0;
@@ -484,7 +482,7 @@ void Game::HandleWhenPlay(){
     setIsPlayed(false);
     }
                                                 //IMPLEMETN PLANT,ICECLE & CHECK COLLISION 
-
+    
 }
 void Game::HandleWhenGameOver(){
     std::ofstream outputFile("Stats/stats.txt");
@@ -692,9 +690,11 @@ void Game::ImplementMoney(){
 }
 void Game:: ImplementShield(){
     // shield.LoadImageFile(Shield_path,gRenderer);
+    int cnt = 0;
     if(!getIsPaused())shield.HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
     shield.Render(gRenderer);
     if(SDLCommonFunc::CheckCollision(bird.strikeObstacle(),shield.GetRect())){
+        Mix_PlayChannel(-1,gBubbleAdd,0);
         shield.setIsShield(true);
         shield.Reset();
         time_shield = 500;
@@ -705,21 +705,21 @@ void Game:: ImplementShield(){
             checkBirdAndIcicle){
         shield.setIsShield(false);
         }
+        if(time_shield == 0) cnt = 1;
     }
     bird.renderShield(shield);
+    if(cnt == 1){
+        Mix_PlayChannel(-1,gBubblePow,0);
+        cnt--;
+    }
+
 }
 void Game:: showIntroWindow(){
     again_label:
     ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", "Sprites/startgame.png");
+    // ret_menu = SDLCommonFunc::ShowMenuStart2(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame);
+    if  (ret_menu == 1) quit = true;
     if (ret_menu == 3) {
-        //  ret_highestScore_window = SDLCommonFunc::ShowMenuGameOver(gRenderer,
-        //                                             gFontMENU,
-        //                                             "Got it!",
-        //                                             "Exit",
-        //                                             std::to_string(money),
-        //                                             std::to_string(highestScore),
-        //                                             "HOME",
-        //                                             "Sprites/pausemenuX.png");
         ret_highestScore_window = SDLCommonFunc::ShowMenuGameOver2(gRenderer,
                                                     gFontMENU,
                                                     "Got it!",
@@ -730,33 +730,27 @@ void Game:: showIntroWindow(){
                                                     Statswd);
         if (ret_highestScore_window == 0) { 
             goto again_label;
+            // showIntroWindow();
         }
         else quit = true;
     }
    
-    // else if (ret_menu == 2) {
-    //     ret_menu_tutorial = SDLCommonFunc::ShowTutorialWindow(gFontText,
-    //                                                 "Got it!",
-    //                                                 "Exit",
-    //                                                 Tutorial);
-    //     if(ret_menu_tutorial == 0) {
-    //         goto again_label;
-    //     }
-    //     else quit = true;
-    // }
-     else if  (ret_menu == 1) quit = true;
+    else if (ret_menu == 2) {
+        ret_menu_tutorial = SDLCommonFunc::ShowTutorialWindow(gRenderer,
+                                                    gFontText,
+                                                    "",
+                                                    "Got it!",
+                                                    Tutorial);
+        if(ret_menu_tutorial == 1) {
+        // ret_menu = SDLCommonFunc::ShowMenuStart2(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame);
+            goto again_label;
+        }
+    }
+    else if (ret_menu == 0) {
+        ResetStats();
+    }
     
 }
-
-
-
-
-
-
-
-
-
-
 
 void Game:: HandleInputAction(SDL_Event &e){
     //To do
