@@ -14,9 +14,9 @@ const int THREAT_BODY_WIDTH = 60;
 const int THREAT_HEIGHT = 64;
 const int THREAT_BODY_HEIGHT = 60;
 const int NUM_THREAT_FRAME = 20,
-        NUM_THREAT = 10,        
+        NUM_THREAT = 6,        
         DISTANCE_BETWEEN_THREATS = 400,
-        THREAT_VELOCITY = 10,
+        THREAT_VELOCITY = 12,
         SPEED_BULLET_THREATS = 12,
         // UNDER_LIMIT_THREAT = 200,
         WIDTH_THREAT = 60,
@@ -220,7 +220,7 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
 void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted){
   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
     BulletObject* p_bullet = p_bullet_list_.at(itmb);
-    if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.5){     //IF P_BULLET IS NOT EMPTY         
+    if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.2){     //IF P_BULLET IS NOT EMPTY         
       if (p_bullet->get_is_move()){ //BULLET MOVE
         p_bullet->Render(des);
         // int random_trajectory_bullet = rand() % 100;

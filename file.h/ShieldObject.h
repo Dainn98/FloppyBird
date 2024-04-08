@@ -52,13 +52,13 @@ void ShieldObject::HandleMove(const int& x_border, const int& y_border){
     }
 }
 void ShieldObject::Reset(){
-    // rect_.x = getRandomNumber(5*SCREEN_WIDTH) + 3*SCREEN_WIDTH;
-    rect_.x = SCREEN_WIDTH;
+    rect_.x = getRandomNumber(5*SCREEN_WIDTH) + 3*SCREEN_WIDTH;
+    // rect_.x = SCREEN_WIDTH;
     rect_.y = SDLCommonFunc::MakeRandValue();
 }
 void ShieldObject::InitShield(){
-    // rect_.x = getRandomNumber(5*SCREEN_WIDTH) + 3*SCREEN_WIDTH;
-    rect_.x = SCREEN_WIDTH;
+    rect_.x = getRandomNumber(5*SCREEN_WIDTH) + 3*SCREEN_WIDTH;
+    // rect_.x = SCREEN_WIDTH;
     rect_.y = SDLCommonFunc::MakeRandValue();
 }
 
