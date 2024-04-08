@@ -36,6 +36,7 @@ bool loadMedia(){
     gDie = Mix_LoadWAV(gDie_path);
     gBubbleAdd = Mix_LoadWAV(gBubbleAdd_path);
     gBubblePow = Mix_LoadWAV(gBubllePow_path);
+    gScoreIncrement = Mix_LoadWAV(gScoreIncrement_path);
                                                                     //BUTTON CONTORL LOADING
     gButtonControlGame[PAUSE].loadFromFile(gButtonControlGame_PAUSE_path);
     gButtonControlGame[PLAY].loadFromFile(gButtonControlGame_PLAY_path);

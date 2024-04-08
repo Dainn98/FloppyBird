@@ -15,7 +15,7 @@
 using namespace std;
                                 //Loading Sprites,Sound
 static char gBaseSurface_path[] = {"Sprites/base.png"};
-static char gBackGroundTexture_path[] ={"Sprites/background.jpg"};
+static char gBackGroundTexture_path[] ={"Sprites/background.png"};
 static char Intro_path[] = {"Sprites/introx.png"};
 
 static char gButtonControlGame_PAUSE_path[] = {"Sprites/pausebutton.png"};
@@ -45,7 +45,7 @@ static char PipeBlue_path[] = {"Sprites/pipeBlue.png"};
 static char PipeGreen_path[] = {"Sprites/pipeGreen.png"};
 
 static char gFly_path[] = {"Sound/wing.wav"};
-static char gMusic_path[] = {"Sound/music.wav"};
+static char gMusic_path[] = {"Sound/musicBackground.wav"};
 static char gSwoosh_path[] = {"Sound/swoosh.wav"};
 static char gSwapBullet_path[] = {"Sound/swapBullet.wav"};
 static char gExplosion_path[] = {"Sound/explosion.wav"};
@@ -53,6 +53,7 @@ static char gDie_path[] = {"Sound/die.wav"};
 static char gMoneyCol_path[] = {"Sound/moneyCol.wav"};
 static char gBubbleAdd_path[] = {"Sound/bubbleAdd.wav"};
 static char gBubllePow_path[] = {"Sound/bubblePow.wav"};
+static char gScoreIncrement_path[] = {"Sound/scoreMusic.wav"};
 
 #define GA_FAILED -1
 
@@ -114,6 +115,7 @@ Mix_Chunk *gDie = NULL;
 Mix_Chunk *gExplosion = NULL;
 Mix_Chunk *gBubbleAdd = NULL;
 Mix_Chunk *gBubblePow = NULL;
+Mix_Chunk *gScoreIncrement = NULL;
 Mix_Music *gMusic = NULL;
 // Mix_Music *gBubbleAdd = NULL;
 
@@ -697,22 +699,26 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
 {
     char* ch1 = (char*)menu1.c_str();
     char* ch2 = (char*)menu2.c_str();
+    char* ch3 = (char*)menu3.c_str();
     // char* img_file = (char*)img_name.c_str();
 
     int size1 = menu1.length();
     int size2 = menu2.length();
+    int size3 = menu3.length();
 
     int time = 0;
     int x = 0;
     int y = 0;
-    const int kMenuNum = 2;
+    const int kMenuNum = 3;
     char* labels[kMenuNum];
 
-    labels[0] = new char [size1 + 1];
+    labels[0] = new char[size1 + 1];
     labels[1] = new char[size2 + 1];
+    labels[2] = new char[size3 + 1];
 
     strcpy_s(labels[0], size1+1, ch1);
     strcpy_s(labels[1], size2+1, ch2);
+    strcpy_s(labels[2], size3+1, ch3);
 
     SDL_Texture* menu[kMenuNum];
     bool selected[kMenuNum] = { 0, 0 };
@@ -727,19 +733,24 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
     text_object[1].setColor(color[0].r, color[0].g, color[0].b);
     text_object[1].loadFromRenderedText(font, des);
 
+    text_object[2].SetText(labels[2]);
+    text_object[2].setColor(color[0].r, color[0].g, color[0].b);
+    text_object[2].loadFromRenderedText(font, des);
 
     SDL_Rect pos[kMenuNum];
     pos[0].x = 300;
     pos[0].y = 450 ;
 
-    pos[1].x = 800;
-    pos[1].y = 450;
+    pos[1].x = 550;
+    pos[1].y = 350;
+
+    pos[2].x = 700;
+    pos[2].y = 450;
 
     // bool ret = gBackground.LoadImageFile(img_file, des);
     // PauseMenu_.LoadImageFile(img_file,gRenderer);
     SDL_Rect rect_pause = {200,100,900,485};
     
-
     SDL_Event event;
     while (1)
     {
@@ -750,7 +761,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
             {
             case SDL_QUIT:
                 text_object[0].Free();
-                text_object[0].Free();
+                text_object[1].Free();
+                text_object[2].Free();
                 gBackground.Free();
                 // PauseMenu_.Free();
                 return 1;
@@ -787,6 +799,7 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                     {
                         text_object[0].Free();
                         text_object[1].Free();
+                        text_object[2].Free();
                         gBackground.Free();
                         // PauseMenu_.Free();
                         return i;
@@ -798,6 +811,7 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                 {
                     text_object[0].Free();
                     text_object[1].Free();
+                    text_object[2].Free();
                     gBackground.Free();
                     // PauseMenu_.Free();
                     return 1;
@@ -814,8 +828,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
             pos[i].w = text_object[i].getWidth();
             pos[i].h = text_object[i].getHeight();
         }
-        SDLCommonFunc::showInfo("Total Coins: ", menu3,350, 190,3,emptyObstacle,"Sprites/none.png",gFontMENU);
-        SDLCommonFunc::showInfo("Highest Score: ", menu4,350,260,3,emptyObstacle,"Sprites/none.png",gFontMENU);
+        SDLCommonFunc::showInfo("Total Coins: ", menu4,350, 190,3,emptyObstacle,"Sprites/none.png",gFontMENU);
+        SDLCommonFunc::showInfo("Highest Score: ", menu5,350,260,3,emptyObstacle,"Sprites/none.png",gFontMENU);
 
         SDL_RenderPresent(des);
         if (1000 / 30 > (SDL_GetTicks() - time))
