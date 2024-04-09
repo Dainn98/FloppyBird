@@ -20,9 +20,6 @@ class Collision :public BaseObject{
     void CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_,ThreatObject* p_threat,int num);
 
     void CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,BulletObject* p_bullet_threat,ThreatObject* p_threat);
-
-
-
 };
 
 void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_){
@@ -32,11 +29,11 @@ void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionOb
         CollisionObject_.set_frame(ex);
         CollisionObject_.SetRect(xPos,yPos);
         CollisionObject_.ShowEx(gRenderer);
-        Mix_PlayChannel( 1, gExplosion, 0 );
+        Mix_PlayChannel(-1, gExplosion, 0 );
         SDL_Delay(50);
         SDL_RenderPresent(gRenderer);
     }
-    Mix_PlayChannel( 1, gDie, 0 );
+    Mix_PlayChannel(-1, gDie, 0 );
 }
 bool Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,ExplosionObject CollisionObject_, int num,ShieldObject shield_){
     
@@ -60,7 +57,6 @@ bool Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icic
 void Collision:: CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_, ThreatObject* p_threat,int num){
     if(SDLCommonFunc::CheckCollision(p_threat_frame.ImplementThreatRect(p_threat,gRenderer,num),bird_.strikeObstacle())){
         ExploringBird(pipe_,bird_,CollisionObject_);
-        // int a = 5;
     }
     
 }

@@ -25,9 +25,7 @@ private:
     unsigned long long money = 0;
     unsigned long long highestScore = 0;
     int moveY = 0;
-    // int NUM_THREAT_CURRENT = 1;
-    
-    // bool isShield = false;
+
     bool isPaused = false;
     bool isTapped = false;
     bool isRestarted = false;
@@ -51,13 +49,6 @@ private:
     int time_shield = 0;
     int fps_manual = 0;
 
-    // ThreatObject* p_threat_list = new ThreatObject[NUM_THREAT];
-    ThreatObject p_threat_frame;
-
-    // MoneyObject* p_money_list = new MoneyObject[NUM_MONEY];
-
-    ShieldObject shield;
-
     BulletObject* p_bullet_threat = NULL;
     BulletObject* p_bullet_bird = NULL;
     std::vector<BulletObject*> bullet_list;
@@ -69,6 +60,8 @@ private:
     ImpTimer fps_timer;
     ExplosionObject explosion_Collision;
     ExplosionObject bullet_explosion;
+    ThreatObject p_threat_frame;
+    ShieldObject shield;
     IcicleObject icicle;
     PlantObject plant;
     TextObject text_count_;  
@@ -82,7 +75,6 @@ private:
     BaseObject GameOverMenu;
     BaseObject Tutorial;
     BaseObject Statswd;
-    BaseObject StartGame;
         
 public:
     Game();
@@ -101,12 +93,11 @@ public:
     std::vector<ThreatObject*> MakeThreatList();
     std::vector<ThreatObject*> threats_list;
     void ImplementThreat();
-    void setBulletForThreat();
 
     std::vector<MoneyObject*> MakeMoneyList();
     std::vector<MoneyObject*> money_list;
     void ImplementMoney();
-    // void setMoney();
+
     void ImplementShield();
 
     void setIsTapped(const bool isTapped_) {isTapped = isTapped_;}
@@ -124,12 +115,12 @@ public:
     int getHighestScore() const {return highestScore;}
     int getMoney() const {return money;}
 
-
     void InitStats();
     void ShowStats();
     void ResetStats();
     void changeFPS();
     void BuildBackground_Base();
+    void RenderGame();
 
     void FreeBird();
     void FreeObjectPointer();
@@ -138,9 +129,6 @@ public:
     void FreeMoney();
     void FreeBulletList();
     void FreeBulletArr();
-
-    // void FreeThreatList() {delete[] p_threat_list;}
-    // void FreeMoneyList() {delete[] p_money_list;}
 
 };
 
@@ -155,7 +143,7 @@ Game::~Game(){
     unsigned long long money = 0;
     unsigned long long highestScore = 0;
     int moveY = 0;
-    // int NUM_THREAT_CURRENT = 1;
+
     bool isPaused = false;
     bool isTapped = false;
     bool isRestarted = false;
@@ -179,49 +167,16 @@ Game::~Game(){
     int time_shield = 0;
     int fps_manual = 0;
 
-    // FreeBird();
-    // p_threat_list = NULL;
-    // p_money_list = NULL;
-    // p_bullet_threat = NULL;
-    // p_bullet_bird = NULL;
-
-    bird.Free();
-    pipe.Free();
-    OptionInGame.Free();
-    fps_timer.Free();
-    explosion_Collision.Free();
-    bullet_explosion.Free();
-    icicle.Free();
-    plant.Free();
-    text_count_.Free();
-    text_money_game_.Free();
-    text_item_game_.Free();
-    text_guide_.Free();
-    shield.Free();
-    TappingFrame.Free();
-    GameOverMenu.Free();
-    Tutorial.Free();
-    Statswd.Free();
-    StartGame.Free();
-    collision.Free();
-
-    FreeObjectPointer();
+    FreeBird();
 
 }
 
 void Game::Play(){
-    Mix_PlayMusic( gMusic, -1 );
     InitStats();
-    // setBulletForThreat();
-    // threats_list = MakeThreatList();
-    // setMoney();
+    Mix_PlayMusic( gMusic, -1 );
     again_label:
     ResetStats();
-    // threats_list = MakeThreatList();
-    // showIntroWindow();
-    // again_label:
-    ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", "Sprites/startgame1.png");
-    // ret_menu = SDLCommonFunc::ShowMenuStart2(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame);
+    ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame_path);
     if (ret_menu == 1) {
         FreeBird();        
         quit = true;
@@ -251,10 +206,6 @@ void Game::Play(){
                                                     Tutorial);
         if(ret_menu_tutorial == 1) goto again_label;
     }
-
-                                            //   GENERATE THE THREAT POSITION FIRST AND SET THE BULLET FOR THREAT
-    
-    
     SDL_Event e;
 
 while (!quit) {
@@ -268,13 +219,10 @@ while (!quit) {
         }
                                                                                 //KEY
         if (e.type == SDL_QUIT) {
-            // FreeBullet();
             FreeBird();
             quit = true;
             return;
         }
-        
-        
         else if (e.type == SDL_KEYDOWN){
             switch( e.key.keysym.sym ){  
                 case SDLK_b:
@@ -321,7 +269,10 @@ while (!quit) {
             OptionInGame.mPresentState[PAUSE] = false;
             OptionInGame.mPresentState[REPLAY] = false;
             setIsRestarted(true);
-            ResetStats();
+            isRestarted = true;
+            // ResetStats();
+            HandleWhenReplay();
+            continue;
         }
 
         SDL_SetRenderDrawColor(gRenderer,COLOR_KEY_R,COLOR_KEY_G,COLOR_KEY_B,0xFF);  
@@ -363,25 +314,7 @@ while (!quit) {
         CheckCollision();
         changeFPS();
         SDL_RenderPresent(gRenderer);
-        // if(gRenderer == NULL){
-        //     delete [] p_threat_list;
-        //     p_threat_list = NULL;
-        //     delete [] p_money_list;
-        //     p_money_list = NULL;
-        // }
     } 
-
-                                                //Update the highest score and money
-    // std::ofstream outputFile("Stats/stats.txt");
-    // highestScore = max(highestScore,scoreCur);
-    // money += moneyCur;
-    // outputFile << highestScore << " " << money;
-    // cout << highestScore << " " << money << endl;
-    // FreeThreat();
-    // FreeMoney();
-    // FreeThreatList();
-    // FreeMoneyList();
-    
 
 }
 std::vector<ThreatObject*> Game::MakeThreatList(){
@@ -394,111 +327,17 @@ std::vector<ThreatObject*> Game::MakeThreatList(){
             int rand_y = SDLCommonFunc::MakeRandValue();
             p_threat->SetRect(SCREEN_WIDTH + th*DISTANCE_BETWEEN_THREATS ,rand_y);
             p_threat->set_x_val(THREAT_VELOCITY);
-            if(!getIsRestarted()){
+            // if(!getIsRestarted()){
                 BulletObject* p_bullet = new BulletObject();
                 p_threat->InitBullet(p_bullet);
-            }
+            // }
             list_threats.push_back(p_threat);
         }
     }
     return list_threats;
 }
-
                                                                                                 //IMPLEMENT THREAT
 void Game::ImplementThreat(){
-    // for(int tt = 0; tt < NUM_THREAT;tt++){ 
-    //     ThreatObject *p_threat;
-    //     p_threat = (p_threat_list + tt);
-    //     if(p_threat){                       //CHECK POINTER IS NULL OR NOT               
-    //         if(!getIsPaused()){
-    //             random_threat = getRandomNumber(NUM_THREAT_FRAME)-1;                       
-    //             p_threat->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
-    //         }
-    //                                                                                             //IMPLEMENT THREAT
-    //         collision.CollisionBirdAndThreat(pipe,p_threat_frame,bird,explosion_Collision,p_threat,random_threat);
-    //                                                                                                     //LOADING BULLET FOR THREAT                            
-    //         p_threat->MakeBullet(gRenderer,p_threat->GetRect().x,SCREEN_HEIGHT,pipe,getIsPaused(),getIsRestarted());   
-
-    //         bullet_arr = p_threat->GetBulletList();
-
-    //         for (int am = 0; am < bullet_arr.size(); am++){
-    //             p_bullet_threat = bullet_arr.at(am);
-    //             if (p_bullet_threat){
-    //                 bool Collision_Bird_BulletOfThreat = SDLCommonFunc::CheckCollision(p_bullet_threat->GetRect(), bird.strikeObstacle());
-    //                 if (Collision_Bird_BulletOfThreat){
-    //                     if(!shield.getIsShield()){
-    //                         collision.ExploringBird(pipe,bird,explosion_Collision);
-    //                         bird.SetIsDie(true);
-    //                         break;
-    //                     }
-    //                     else{
-    //                         Mix_PlayChannel(-1,gBubblePow,0);
-    //                         shield.setIsShield(false);
-    //                         time_shield = 0;
-    //                         bird.SetIsDie(false);
-    //                         p_threat->ResetBullet(p_bullet_threat);
-    //                         // FreeBullet();
-    //                         break;
-    //                         // p_bullet_threat = NULL;
-    //                     }
-    //                     // p_bullet_threat = NULL;
-    //                 }
-    //                 // p_bullet_threat = NULL;              //Error
-    //             }
-    //         }
-    //         // for(int amfree = 0; amfree < bullet_arr.size(); amfree++){
-    //         //     p_bullet_threat = bullet_arr.at(amfree);
-    //         //     if(p_bullet_threat){
-    //         //         p_bullet_threat = NULL;
-    //         //     }
-    //         // }                                            //Error
-
-
-
-    //                                                                                         //CHECK COLLISION BIRD AND THREATS
-    //         bool Collision_Bird_Threat = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
-    //         if(Collision_Bird_Threat){
-    //             collision.ExploringBird(pipe,bird,explosion_Collision);
-    //             bird.SetIsDie(true);
-    //             // FreeBullet();
-    //             if(gRenderer == NULL){
-    //                 delete [] p_threat_list;
-    //                 p_threat_list = NULL;
-    //             }
-    //         }
-    //                                                                                         //CHECK BULLET_BIRD WITH THREATS
-    //         bullet_list = bird.get_bullet_list();
-    //         for(int ib = 0; ib < bullet_list.size(); ib++){
-    //             p_bullet_bird = bullet_list.at(ib);
-    //             if(p_bullet_bird!=NULL){
-    //                 collision.CollisionBulletBirdandBulletThreat(p_bullet_bird,p_bullet_threat,p_threat);
-
-    //                 bool ret_collision = SDLCommonFunc::CheckCollision(p_bullet_bird->GetRect(),p_threat->GetRect());
-    //                 if(ret_collision){
-    //                     moneyCur++;
-    //                     //=> DELETE THREATS, BULLET_BIRD => INCREASE MONEY,ITEMS,..
-    //                      for(int ex = 0; ex < 4; ex++){
-    //                         int xPos = p_threat->GetRect().x + p_threat->GetRect().w * 0.5 - BUL_WIDTH * 0.5 ;
-    //                         int yPos = p_threat->GetRect().y + p_threat->GetRect().h * 0.5 - BUL_HEIGHT * 0.5;
-    //                         bullet_explosion.set_frame(ex);
-    //                         bullet_explosion.SetRect(xPos,yPos);
-    //                         bullet_explosion.ShowBul(gRenderer);
-    //                         Mix_PlayChannel( -1, gExplosion, 0 );
-    //                         if(gRenderer == NULL){
-    //                             delete [] p_threat_list;
-    //                             p_threat_list = NULL;
-    //                         }
-    //                     }
-    //                     // collision.ExploringBird(pipe,bird,explosion_Collision);
-    //                     if(!isPaused)p_threat->Reset(SCREEN_WIDTH + getRandomNumber(SCREEN_WIDTH*2));  //RESET POSI THREAT
-    //                     bird.RemoveBullet(ib);                                          //REMOVE BULLET BIRD
-    //                     // FreeBullet();
-    //                     Mix_PlayChannel(-1,gMoneyCol,0);
-    //                 }                    
-    //             }
-    //         }
-    //     }
-    // }
     for(int it = 0; it < NUM_THREAT; it++){
         ThreatObject* p_threat = threats_list.at(it);
         if(p_threat!=NULL){
@@ -550,10 +389,6 @@ void Game::ImplementThreat(){
                             bullet_explosion.SetRect(xPos,yPos);
                             bullet_explosion.ShowBul(gRenderer);
                             Mix_PlayChannel( -1, gExplosion, 0 );
-                            // if(gRenderer == NULL){
-                            //     delete [] p_threat_list;
-                            //     p_threat_list = NULL;
-                            // }
                         }
                         if(!isPaused)p_threat->Reset(SCREEN_WIDTH + getRandomNumber(SCREEN_WIDTH*2));  //RESET POSI THREAT
                         bird.RemoveBullet(ib);                                          //REMOVE BULLET BIRD
@@ -563,10 +398,6 @@ void Game::ImplementThreat(){
             }
         }
     }
-
-
-    // FreeBullet();
-    
 }
 void Game::InitStats(){
     bird.SetIsDie(false);
@@ -580,18 +411,13 @@ void Game::InitStats(){
     }
     cout << highestScore << " " << money << endl;
 
-    // FreeThreat();
-    // FreeMoney();
-    // FreeBulletList();
-    // FreeBulletArr();
     FreeObjectPointer();
 
-    
     text_count_.SetColor(TextObject::BLACK_TEXT);
     text_money_game_.SetColor(TextObject::WHITE_TEXT);  
 
     std::string str("Press M to mute the music");
-    text_guide_.SetColor(TextObject::WHITE_TEXT);
+    text_guide_.SetColor(TextObject::BLACK_TEXT);
     text_guide_.SetText(str);
     text_guide_.loadFromRenderedText(gFontText,gRenderer);
                                                                 //INITIALIZE  EXPLOSION OBJECT
@@ -612,34 +438,22 @@ void Game::InitStats(){
 
     TappingFrame.LoadImageFile(Intro_path,gRenderer);
     shield.LoadImageFile(Shield_path,gRenderer);
-    StartGame.LoadImageFile(StartGame_path,gRenderer);
     GameOverMenu.LoadImageFile(GameOverMenu_path,gRenderer);
     Tutorial.LoadImageFile(Tutorial_path,gRenderer);
     Statswd.LoadImageFile(Stastic_path,gRenderer);
 
-    
-
 }
 void Game::ResetStats(){
-
-    // FreeThreat();
-    // FreeMoney();
-    // FreeBulletList();
-    // FreeBulletArr();
     FreeObjectPointer();
-
     SDL_SetRenderDrawColor(gRenderer,COLOR_KEY_R,COLOR_KEY_G,COLOR_KEY_B,0xFF);         //CLEAR SCREEN   
 	SDL_RenderClear(gRenderer);
-    // Mix_PlayMusic( gMusic, -1 );
     pipe.init_pipe();
     bird.resetPositon();
     shield.InitShield();
     bird.SetIsDie(false);
-    // bullet_list.clear();
-    // bullet_arr.clear();
     setIsTapped(false);
     shield.setIsShield(true);
-    time_shield = 50;
+    time_shield = 69;
     scoreCur = 0;
     moneyCur = 0;
     moveY = 0;
@@ -648,92 +462,14 @@ void Game::ResetStats(){
     ret_menu_over = 0;
     ret_menu_tutorial = 0;
     ret_highestScore_window = 0;
-                                                //TEXT  
-    // text_count_.SetColor(TextObject::BLACK_TEXT);
-    // text_money_game_.SetColor(TextObject::WHITE_TEXT);   
-
-    std::ifstream inputFile("Stats/stats.txt");
+  
+    std::ifstream inputFile(Statistics_path);
 
         while(!inputFile.eof()){
             inputFile >> highestScore;
             inputFile >> money;
         }
         cout << highestScore << " " << money << endl;
-
-                                        //GENERATE THE THREAT POSITION 
-    // for(int t = 0; t < NUM_THREAT; t++){                
-    //     ThreatObject* p_init_threat = (p_threat_list + t);
-    //     if(p_init_threat){
-    //         // p_init_threat->LoadImageFile(Creepy_path,gRenderer);
-    //         int rand_y = SDLCommonFunc::MakeRandValue();
-    //         p_init_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); 
-    //         // p_init_threat->set_x_val(THREAT_VELOCITY);           // SET VELOCITY_THREAT
-            
-    //         for(int idx = 0; idx < bullet_arr.size(); idx++){
-    //             p_bullet_threat = bullet_arr.at(idx);
-    //             if(p_bullet_threat){
-    //                 p_bullet_threat->set_is_move(true);
-    //                 p_bullet_threat->SetRect(p_init_threat->GetRect().x,p_init_threat->GetRect().y);
-    //             }
-    //         }
-    //     }
-    // }
-    // for(int m = 0; m < NUM_MONEY; m++){
-    //     MoneyObject* p_money = (p_money_list + m);
-    //     if(p_money){
-    //         // p_money->LoadImageFile(Money_path,gRenderer);
-    //         int rand_y = SDLCommonFunc::MakeRandValue();
-    //         p_money->SetRect(SCREEN_WIDTH + m*SCREEN_WIDTH*0.9,rand_y);
-    //         // p_money->set_x_val(THREAT_VELOCITY);// SET VELOCITY_MONEY
-    //     }
-    // }
-    // FreeThreat();
-    // FreeMoney();
-    // FreeBulletList();
-    // FreeBulletArr();
-
-    //                                                             //INITIALIZE  EXPLOSION OBJECT
-    // explosion_Collision.LoadImageFile(Explosion_path, gRenderer);
-    // explosion_Collision.set_clip_explosion();
-    //                                                             //INITIALIZE BULLET_EXPLOSION OBJECT
-    // bullet_explosion.LoadImageFile(Explosion_Bullet_path,gRenderer);
-    // bullet_explosion.set_clip_bullet_explosion();
-    //                                             //INITIALIZE PIRANHA OBJECT
-    // plant.LoadImageFile(Plant_path,gRenderer);
-    // plant.set_clip_plant();
-    //                                             //INITIALIZE ICE OBJCET
-    // icicle.LoadImageFile(Icicle_path,gRenderer);
-    // icicle.set_clip_icicle();
-
-    // p_threat_frame.LoadImageFile(Threat_path,gRenderer);
-    // p_threat_frame.set_clip_threat();
-
-    // TappingFrame.LoadImageFile(Intro_path,gRenderer);
-    // shield.LoadImageFile(Shield_path,gRenderer);
-    // StartGame.LoadImageFile("Sprites/startgame.png",gRenderer);
-    // GameOverMenu.LoadImageFile("Sprites/gameoverwd.png",gRenderer);
-    // Tutorial.LoadImageFile("Sprites/tutorialwd.png",gRenderer);
-    // Statswd.LoadImageFile("Sprites/statswd.png",gRenderer);
-
-
-
-
-    // for(int tl = 0 ; tl < threats_list.size();tl++){
-    //     ThreatObject* p_threat = threats_list.at(tl);
-    //     if(p_threat!=NULL){
-    //         p_threat->Free();
-    //         p_threat = NULL;
-    //     }
-    // }
-    // threats_list.clear();
-    // for(int ml = 0 ; ml < money_list.size();ml++){
-    //     MoneyObject* p_money = money_list.at(ml);
-    //     if(p_money!=NULL){
-    //         p_money->Free();
-    //         p_money = NULL;
-    //     }
-    // }
-    money_list.clear();
     threats_list = MakeThreatList();
     money_list = MakeMoneyList();
     setIsRestarted(false);
@@ -746,7 +482,6 @@ void Game::CheckCollision(){
     if(abs( bird.strikeObstacle().x - pipe.strikeUpperObstacle().x) <= 10 || 
        abs( bird.strikeObstacle().x - pipe.strikeLowerObstacle().x) <= 10 ) {
         ++scoreCur;
-        // Mix_PlayChannel(-1,gMoneyCol,0);
         Mix_PlayChannel(-1,gScoreIncrement,0);
     }
 
@@ -780,93 +515,11 @@ void Game::HandleWhenPlay(){
     }
                         //IMPLEMENT THREAT & COLLISION
     ImplementThreat();
-    // for(int it = 0; it < NUM_THREAT; it++){
-    //     ThreatObject* p_threat = threats_list.at(it);
-    //     if(p_threat!=NULL){
-    //         if(!getIsPaused()){
-    //             random_threat = getRandomNumber(NUM_THREAT_FRAME)-1;
-    //             p_threat->HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
-    //         }
-    //         collision.CollisionBirdAndThreat(pipe,p_threat_frame,bird,explosion_Collision,p_threat,random_threat);
-    //         p_threat->MakeBullet(gRenderer,p_threat->GetRect().x,SCREEN_HEIGHT,pipe,getIsPaused(),getIsRestarted());
-    //         bullet_arr = p_threat->GetBulletList();
-    //         for(int am = 0; am  < bullet_arr.size();am++){
-    //             p_bullet_threat = bullet_arr.at(am);
-    //             if(p_bullet_threat!=NULL){
-    //                 bool Collision_Bird_BulletOfThreat = SDLCommonFunc::CheckCollision(p_bullet_threat->GetRect(), bird.strikeObstacle());
-    //                 if(Collision_Bird_BulletOfThreat){
-    //                     if(!shield.getIsShield()){
-    //                         collision.ExploringBird(pipe,bird,explosion_Collision);
-    //                         bird.SetIsDie(true);
-    //                         break;
-    //                     }
-    //                     else{
-    //                         Mix_PlayChannel(-1,gBubblePow,0);
-    //                         shield.setIsShield(false);
-    //                         time_shield = 0;
-    //                         bird.SetIsDie(false);
-    //                         p_threat->ResetBullet(p_bullet_threat);
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         bool Collision_Bird_Threat = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
-    //         if(Collision_Bird_Threat){
-    //             collision.ExploringBird(pipe,bird,explosion_Collision);
-    //             bird.SetIsDie(true);
-    //         }
-    //         bullet_list = bird.get_bullet_list();
-    //         for(int ib = 0 ; ib < bullet_list.size();ib++){
-    //             p_bullet_bird = bullet_list.at(ib);
-    //             if(p_bullet_bird!=NULL){
-    //                 collision.CollisionBulletBirdandBulletThreat(p_bullet_bird,p_bullet_threat,p_threat);
-    //                 bool ret_collision = SDLCommonFunc::CheckCollision(p_bullet_bird->GetRect(),p_threat->GetRect());
-    //                 if(ret_collision){
-    //                     moneyCur++;
-    //                     for(int ex = 0; ex < 4; ex++){
-    //                         int xPos = p_threat->GetRect().x + p_threat->GetRect().w * 0.5 - BUL_WIDTH * 0.5 ;
-    //                         int yPos = p_threat->GetRect().y + p_threat->GetRect().h * 0.5 - BUL_HEIGHT * 0.5;
-    //                         bullet_explosion.set_frame(ex);
-    //                         bullet_explosion.SetRect(xPos,yPos);
-    //                         bullet_explosion.ShowBul(gRenderer);
-    //                         Mix_PlayChannel( -1, gExplosion, 0 );
-    //                         // if(gRenderer == NULL){
-    //                         //     delete [] p_threat_list;
-    //                         //     p_threat_list = NULL;
-    //                         // }
-    //                     }
-    //                     if(!isPaused)p_threat->Reset(SCREEN_WIDTH + getRandomNumber(SCREEN_WIDTH*2));  //RESET POSI THREAT
-    //                     bird.RemoveBullet(ib);                                          //REMOVE BULLET BIRD
-    //                     Mix_PlayChannel(-1,gMoneyCol,0);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     ImplementMoney();
     ImplementShield();   
-
     checkBirdAndPlant = collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,random_plant,shield);
     checkBirdAndIcicle = collision.CollisionBirdAndIcicle(pipe,bird,icicle,explosion_Collision,random_icicle,moveY,shield);
+    
     if(checkBirdAndPlant || checkBirdAndIcicle){
         bird.SetIsDie(true);
         Mix_PlayChannel(-1,gDie,0);
@@ -882,10 +535,7 @@ void Game::HandleWhenPlay(){
     ShowStats();
     setIsPlayed(false);
     }
-    // std::string str("Press M to mute the music");
-    // text_guide_.SetColor(TextObject::BLACK_TEXT);
-    // text_guide_.SetText(str);
-    // text_guide_.loadFromRenderedText(gFontText,gRenderer);
+
     text_guide_.RenderText(gRenderer,SCREEN_WIDTH*0.01,SCREEN_HEIGHT*0.95);
 }
 void Game::HandleWhenGameOver(){
@@ -893,13 +543,11 @@ void Game::HandleWhenGameOver(){
     highestScore = max(highestScore,scoreCur);
     money += moneyCur;
     outputFile << highestScore << " " << money;
-    // ResetStats();
 
     BuildBackground_Base();
     ImplementThreat();
     ImplementMoney();
     ImplementShield();
-    // ResetStats();
     bird.render();          
     pipe.render();      
     checkBirdAndPlant = collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,random_plant,shield);
@@ -907,9 +555,10 @@ void Game::HandleWhenGameOver(){
                                                     //LOADING BASE
     gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);
     gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
-    OptionInGame.render();                      
-    FreeObjectPointer();
+    OptionInGame.render();   
     ShowStats();
+
+    FreeObjectPointer();
     SDL_RenderPresent(gRenderer);
 }
 void Game::HandleWhenPause(){
@@ -924,6 +573,7 @@ void Game::HandleWhenPause(){
                                                     //LOADING BASE
     gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);
     gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
+    
                             //OPTION_CONTROL_GAME
     if(bird.GetIsDie()){
         HandleWhenGameOver();
@@ -941,7 +591,7 @@ void Game::ShowStats(){
     SDL_Rect rect_mn = {SCREEN_WIDTH/120,25,MONEY_SIZE/4*3,MONEY_SIZE/4*3};
     SDLCommonFunc::showInfo(" ", std::to_string(moneyCur), SCREEN_WIDTH*0.03, 25,1,rect_mn,Money_path,gFontText);
                                                                 
-    SDLCommonFunc:: showInfo("Score: ", std::to_string(scoreCur), SCREEN_WIDTH*0.01, 2,2,emptyObstacle,"sprites/none.png",gFontText);//SHOW SCORE
+    SDLCommonFunc:: showInfo("Score: ", std::to_string(scoreCur), SCREEN_WIDTH*0.01, 2,2,emptyObstacle,None_path,gFontText);//SHOW SCORE
         
     if( time_shield <= 0 ) time_shield = 0;
     SDL_Rect rect_item = {SCREEN_WIDTH/110,55,SHIELD_WIDTH/2,SHIELD_HEIGHT/2};//SHOW ITEM   
@@ -967,34 +617,7 @@ void Game::BuildBackground_Base(){
     gBaseSurface.render(0,SCREEN_HEIGHT-BASE_HEIGHT);	
     gBaseSurface.render(BASE_WIDTH,SCREEN_HEIGHT-BASE_HEIGHT);
 }
-// void Game::setBulletForThreat(){
-//     for(int t = 0; t < NUM_THREAT; t++){                
-//         ThreatObject* p_init_threat = (p_threat_list + t);
-//         if(p_init_threat){
-//             // p_init_threat->LoadImageFile(Creepy_path,gRenderer);
-//             // p_init_threat->LoadImageFile("Sprites/threatSprites.",gRenderer);
-//             // p_init_threat->set_clip_threat();
-//             int rand_y = SDLCommonFunc::MakeRandValue();
-//             p_init_threat->SetRect(SCREEN_WIDTH + t*DISTANCE_BETWEEN_THREATS ,rand_y); 
-//             p_init_threat->set_x_val(THREAT_VELOCITY);           // SET VELOCITY_THREAT
-//             if(!getIsRestarted()){
-//                 BulletObject* p_bullet = new BulletObject();  //INTIALIZE BULLET FOR THREAT
-//                 p_init_threat->InitBullet(p_bullet); 
-//             }
-//         }
-//     }
-// }
-// void Game:: setMoney(){
-//     for(int m = 0; m < NUM_MONEY; m++){
-//         MoneyObject* p_money = (p_money_list + m);
-//         if(p_money){
-//             p_money->LoadImageFile(Money_path,gRenderer);
-//             int rand_y = SDLCommonFunc::MakeRandValue();
-//             p_money->SetRect(SCREEN_WIDTH + m*SCREEN_WIDTH*0.9,rand_y);
-//             p_money->set_x_val(THREAT_VELOCITY);// SET VELOCITY_MONEY
-//         }
-//     }
-// }
+
 std::vector<MoneyObject*> Game::MakeMoneyList(){
     std::vector<MoneyObject*> list_money;
     MoneyObject* p_moneys = new MoneyObject[NUM_MONEY];
@@ -1029,7 +652,6 @@ void Game::ImplementMoney(){
     }
 }
 void Game:: ImplementShield(){
-    // shield.LoadImageFile(Shield_path,gRenderer);
     int cnt = 0;
     if(!getIsPaused())shield.HandleMove(SCREEN_WIDTH,SCREEN_HEIGHT);
     shield.Render(gRenderer);
@@ -1055,55 +677,34 @@ void Game:: ImplementShield(){
 
 }
 void Game:: FreeBird(){
-    bird.FreeBullet();
-    bird.Free();
-    pipe.Free();
-
+    
     FreeObjectPointer();
-
+    bird.FreeBullet();
     bird.Free();
     pipe.Free();
     OptionInGame.Free();
     fps_timer.Free();
     explosion_Collision.Free();
     bullet_explosion.Free();
+    p_threat_frame.Free();
+    shield.Free();
     icicle.Free();
     plant.Free();
     text_count_.Free();
     text_money_game_.Free();
     text_item_game_.Free();
     text_guide_.Free();
-    shield.Free();
     TappingFrame.Free();
     GameOverMenu.Free();
     Tutorial.Free();
     Statswd.Free();
-    StartGame.Free();
     collision.Free();
 
-    // FreeThreat();
-    // FreeMoney();
-    // FreeBulletArr();
-    // FreeBulletList();
-
-    // for(int i = 0; i < bullet_list.size(); i++){ //Error
-    //     BulletObject* p_bullet = bullet_list.at(i);
-    //         delete [] p_bullet;
-    //         p_bullet = NULL;
-    // }
-    // for(int i = 0; i < bullet_arr.size(); i++){
-    //     BulletObject* p_bullet = bullet_arr.at(i);
-    //         delete [] p_bullet;
-    //         p_bullet = NULL;
-    // }
-    // delete [] bullet_list;
-    // delete [] bullet_arr;
 }
 void Game:: FreeBulletList(){
     for(int i = 0; i < bullet_list.size(); i++){
         p_bullet_bird = bullet_list.at(i);
         if(p_bullet_bird){
-            // p_bullet_bird ->Free();
             p_bullet_bird = NULL;
             delete[] p_bullet_bird;
         }
@@ -1114,7 +715,6 @@ void Game:: FreeBulletArr(){
     for(int amfree = 0; amfree < bullet_arr.size(); amfree++){ //Maybe Error if too long
         p_bullet_threat = bullet_arr.at(amfree);
         if(p_bullet_threat){
-            // p_bullet_threat ->Free();
             p_bullet_threat = NULL;
             delete[] p_bullet_threat;
         }
@@ -1143,13 +743,14 @@ void Game:: FreeThreat(){
     threats_list.clear();
 }
 
-void Game:: HandleInputAction(SDL_Event &e){
-    //To do
-}
+
 void Game:: FreeObjectPointer(){
     FreeBulletArr();
     FreeBulletList();
     FreeThreat();
     FreeMoney();
+}
+void Game:: HandleInputAction(SDL_Event &e){
+    //To do
 }
 #endif

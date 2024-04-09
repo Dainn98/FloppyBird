@@ -1,17 +1,13 @@
 #ifndef MAIN_OBJECT_H
 #define MAIN_OBJECT_H
-
-// #include "F:\\Lap trinh cung C++\\FLoppyBird\\file.h\\Object\\SDL\\include\\SDL2\\SDL.h"
-// #include "declaration.h"
 #include "BulletObject.h"
-// #include "Pipe.h"
 #include "Explosion.h"
 #include "ShieldObject.h"
-const int                                               //BIRD
-  BIRD_WIDTH = 34,        
-  BIRD_HEIGHT = 24,
-  GRAVITY = 1,          
-  BIRD_JUMP_VELOCITY = -15;
+                                             //BIRD
+const int BIRD_WIDTH = 34,        
+        BIRD_HEIGHT = 24,
+        GRAVITY = 1,          
+        BIRD_JUMP_VELOCITY = -15;
 
 class Bird;
 class Bird : public BaseObject {
@@ -20,7 +16,7 @@ public:
     ~Bird();
      
     void resetPositon();    //reset position when restart
-    void FreeBullet(); //thieu
+    void FreeBullet();
 
     void update();
     void render();
@@ -38,16 +34,15 @@ public:
     void HandleBullet(SDL_Renderer* des,Pipe pipe);
     void HandleInputAction(SDL_Event events);
 
-    void DoFalling(SDL_Renderer* des);
-    bool GetFalling() const { return is_falling_; }
-    void SetFalling(bool falling) { is_falling_ = falling; }
-    // void DoGround(SDL_Renderer* des);
+    // void DoFalling(SDL_Renderer* des);
+    // bool GetFalling() const { return is_falling_; }
+    // void SetFalling(bool falling) { is_falling_ = falling; }
+
     bool GetIsDie() const { return is_die_; }
     void SetIsDie(bool is_die) {is_die_ = is_die;}
 
     void RemoveBullet(const int& idx);
 
-    // void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
     void ExplosionBirdAndThreat(ExplosionObject explosion_Collision);
     void renderShield(ShieldObject shield_);
     
@@ -82,7 +77,7 @@ Bird::Bird(){
     currentFrame = 0;
 }
 Bird :: ~Bird(){
-    // FreeMain();
+    //To do
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
@@ -107,7 +102,6 @@ void Bird::update() {
         currentFrame = (currentFrame + 1) % FLYING_ANIMATION_FRAMES_OF_BIRD;
 }
 void Bird:: FreeBullet(){
-    //To do
     for(BulletObject* p_bullet : p_bullet_list_){
         if(p_bullet != NULL){
             p_bullet->Free();
@@ -169,10 +163,8 @@ void Bird::RemoveBullet(const int& idx){
   }
 }
 void Bird::HandleInputAction(SDL_Event e){
-    //To do
     if(e.type == SDL_MOUSEBUTTONDOWN)  
         if(e.button.button == SDL_BUTTON_LEFT ){
-            // bird.LoadBullet();
             LoadBullet();
             Mix_PlayChannel(-1,gSwoosh,0);
         }
@@ -204,7 +196,6 @@ void Bird::HandleInputAction(SDL_Event e){
             }
         }
 }
-// void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision, SDL_Renderer* g
 void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
     for(int ex = 0; ex < 4; ex++){
         int xPos = ( strikeObstacle().x + strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;
@@ -219,13 +210,8 @@ void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
 }
 
 void Bird::renderShield(ShieldObject shield_){
-    // if(shield_.getIsShield()){
-    //     shield_.LoadImageFile("Sprites/bubbleShieldx.png",gRenderer);
-    //     shield_.SetRect(bird_.strikeObstacle().x - BIRD_WIDTH/3,bird_.strikeObstacle().y - BIRD_HEIGHT/2);
-    //     shield_.Render(gRenderer);
-    // }
     if(shield_.getIsShield()){
-        shield_.LoadImageFile("Sprites/bubbleShieldx.png",gRenderer);
+        shield_.LoadImageFile(Bubble_path,gRenderer);
         shield_.SetRect(strikeObstacle().x - BIRD_WIDTH/3,strikeObstacle().y - BIRD_HEIGHT/2);
         shield_.Render(gRenderer);
     }else{

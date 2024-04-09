@@ -3,7 +3,7 @@
 #include "declaration.h"
 #include "LTexture.h"
 //https://lazyfoo.net/tutorials/SDL/index.php
-bool init(){
+bool Initialize(){
 	//Initialization flag
 	bool success = true;
 

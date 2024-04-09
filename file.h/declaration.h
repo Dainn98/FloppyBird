@@ -17,11 +17,13 @@ using namespace std;
 static char gBaseSurface_path[] = {"Sprites/base.png"};
 static char gBackGroundTexture_path[] ={"Sprites/background.jpg"};
 static char Intro_path[] = {"Sprites/introx.png"};
+static char None_path[] = {"Sprites/none.png"};
 
-static char StartGame_path[] = {"Sprites/startgame.png"};
+static char StartGame_path[] = {"Sprites/startgame1.png"};
 static char Tutorial_path[] = {"Sprites/tutorialwd.png"};
 static char GameOverMenu_path[] = {"Sprites/gameoverwd.png"};
 static char Stastic_path[] = {"Sprites/statswd.png"};
+// static char StartGame_path[] = {"Sprites/pausewd.png"};
 
 static char Statistics_path[] = {"Stats/stats.txt"};
 
@@ -39,6 +41,7 @@ static char Threat_path[] = {"Sprites/threatSprites.png"};
 
 static char Money_path[] = {"Sprites/Money.png"};
 static char Shield_path[] = {"Sprites/shieldx.png"};
+static char Bubble_path[] = {"Sprites/bubbleshieldx.png"};
 
 static char Bullet_Threat1_path[] = {"Sprites/bulletx1.png"};
 static char Explosion_path[] = {"Sprites/Expolosion.png"};
@@ -87,9 +90,9 @@ const int
                                               //
 int bullet[BULLET_TYPES] = {50,51};      
                                                     //FUNCTION
-bool init();  
-bool loadMedia();
-void close();
+bool Initialize();  
+bool LoadingMedia();
+void ShutdownMedia();
 
 int getRandomNumber(int size)   {return rand() % size + 1;}
                                                             //DECLARE SDL

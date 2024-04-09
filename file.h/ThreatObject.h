@@ -1,14 +1,6 @@
 #ifndef THREAT_OBJECT_H
 #define THREAT_OBJECT_H
-// #include"BaseObject.h"
-// #include "declaration.h"
-// #include "BulletObject.h"
-// #include "Pipe.h"
-// #include "Bird.h"
-// #include <vector>
- 
-// const int NUM_THREAT_FRAME = 25; 
-//ROW*COL = 25
+
 const int THREAT_WIDTH = 64; 
 const int THREAT_BODY_WIDTH = 60;
 const int THREAT_HEIGHT = 64;
@@ -18,7 +10,6 @@ const int NUM_THREAT_FRAME = 20,
         DISTANCE_BETWEEN_THREATS = 400,
         THREAT_VELOCITY = 12,
         SPEED_BULLET_THREATS = 12,
-        // UNDER_LIMIT_THREAT = 200,
         WIDTH_THREAT = 60,
         HEIGHT_THREAT = 60,
         THREAT_GRAVITY = 1.5,
@@ -53,8 +44,6 @@ public:
   SDL_Rect ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* des,int idx);
   SDL_Rect GetThreatRect();
 
-  // void Free();
-
 private:
   int x_val_;
   int y_val_;
@@ -81,11 +70,9 @@ if (p_bullet_list_.size() > 0)
       if (p_bullet != NULL)
       {
         p_bullet->Free();
-        // delete p_bullet;
         p_bullet = NULL;
       }
     }
-    // delete[] & p_bullet_list_;
     p_bullet_list_.clear();
   }
 }
