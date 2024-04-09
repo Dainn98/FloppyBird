@@ -2,8 +2,6 @@
 #define INITIALIZE_H
 #include "declaration.h"
 #include "LTexture.h"
-#include "Game.h"
-Game mGame;
 //https://lazyfoo.net/tutorials/SDL/index.php
 bool init(){
 	//Initialization flag

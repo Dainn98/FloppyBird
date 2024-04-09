@@ -15,8 +15,15 @@
 using namespace std;
                                 //Loading Sprites,Sound
 static char gBaseSurface_path[] = {"Sprites/base.png"};
-static char gBackGroundTexture_path[] ={"Sprites/background.png"};
+static char gBackGroundTexture_path[] ={"Sprites/background.jpg"};
 static char Intro_path[] = {"Sprites/introx.png"};
+
+static char StartGame_path[] = {"Sprites/startgame.png"};
+static char Tutorial_path[] = {"Sprites/tutorialwd.png"};
+static char GameOverMenu_path[] = {"Sprites/gameoverwd.png"};
+static char Stastic_path[] = {"Sprites/statswd.png"};
+
+static char Statistics_path[] = {"Stats/stats.txt"};
 
 static char gButtonControlGame_PAUSE_path[] = {"Sprites/pausebutton.png"};
 static char gButtonControlGame_PLAY_path[]={"Sprites/playbutton.png"};
@@ -91,7 +98,6 @@ int getRandomNumber(int size)   {return rand() % size + 1;}
 
 static SDL_Window* gWindow = NULL;
 static SDL_Renderer* gRenderer = NULL;
-// static SDL_Texture* birdTexture = NULL;
 static SDL_Texture* pipeTexture = NULL;
 static SDL_Surface* pipeSurface = NULL;
 static SDL_Rect emptyObstacle = {0, 0, 0, 0};

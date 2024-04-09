@@ -20,7 +20,7 @@ public:
     ~Bird();
      
     void resetPositon();    //reset position when restart
-    void FreeMain(); //thieu
+    void FreeBullet(); //thieu
 
     void update();
     void render();
@@ -48,7 +48,7 @@ public:
     void RemoveBullet(const int& idx);
 
     // void ExplosionBirdAndThreat(ExplosionObject explosion_Collision,SDL_Renderer* gRenderer);
-        void ExplosionBirdAndThreat(ExplosionObject explosion_Collision);
+    void ExplosionBirdAndThreat(ExplosionObject explosion_Collision);
     void renderShield(ShieldObject shield_);
     
     SDL_Rect strikeObstacle() const;
@@ -82,7 +82,7 @@ Bird::Bird(){
     currentFrame = 0;
 }
 Bird :: ~Bird(){
-    FreeMain();
+    // FreeMain();
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
@@ -106,8 +106,15 @@ void Bird::update() {
         y_val_ += velocity_;
         currentFrame = (currentFrame + 1) % FLYING_ANIMATION_FRAMES_OF_BIRD;
 }
-void Bird:: FreeMain(){
+void Bird:: FreeBullet(){
     //To do
+    for(BulletObject* p_bullet : p_bullet_list_){
+        if(p_bullet != NULL){
+            p_bullet->Free();
+            p_bullet = NULL;
+        }
+    }
+    p_bullet_list_.clear();
 }
 
 void Bird::LoadBullet(){
@@ -154,8 +161,9 @@ void Bird::RemoveBullet(const int& idx){
       p_bullet_list_.erase(p_bullet_list_.begin() + idx);
 
       if (p_bullet != NULL){
-        delete p_bullet;
+        p_bullet->Free();
         p_bullet = NULL;
+        delete p_bullet;
       }
     }
   }

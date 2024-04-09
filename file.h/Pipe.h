@@ -105,6 +105,6 @@ Pipe::~Pipe(){
     y_val_ = 0;
     height_ = 0;
     width_ = 0;
-    which_pipe_ = -1;
+    which_pipe_ = 0;
 }
 #endif

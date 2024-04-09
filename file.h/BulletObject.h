@@ -55,16 +55,28 @@ private:
     const double PI = 3.14159265;
     bool is_move_;
     unsigned int bullet_type_;
+
+
+
+    // std::unique_ptr<BulletObject> p_bullet;
 };
 BulletObject:: BulletObject(){
     x_val_ = 0;
     y_val_  = 0;
     is_move_ =false;
     bullet_type_ = SPHERE_BULLET;
+
+
+    
+    // p_bullet = nullptr;
 }
 
 BulletObject:: ~BulletObject(){
-    //
+    //To do
+    // if (p_bullet != nullptr) {
+    //     p_bullet.
+    //     p_bullet = nullptr;
+    // }
 }
 void BulletObject::freeBulletObject(){
    
@@ -88,8 +100,7 @@ void BulletObject::HandleMove(const int& x_border, const int& y_border){    //BU
 }
 void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
     rect_.x -= x_val_ * 3; // VELOCITY_BULLET
-    if (rect_.x < 0)
-        is_move_ = false;
+    if (rect_.x < 0) is_move_ = false;
     int trajectory = rand() % 10 + 1;
     
     if(trajectory % 5 == 0) rect_.y -= Trajectory_Sin(time, amplitude, frequency, degree, verticalShift);

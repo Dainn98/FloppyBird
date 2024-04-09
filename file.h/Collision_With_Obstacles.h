@@ -33,7 +33,7 @@ void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionOb
         CollisionObject_.SetRect(xPos,yPos);
         CollisionObject_.ShowEx(gRenderer);
         Mix_PlayChannel( 1, gExplosion, 0 );
-        SDL_Delay(100);
+        SDL_Delay(50);
         SDL_RenderPresent(gRenderer);
     }
     Mix_PlayChannel( 1, gDie, 0 );
@@ -48,19 +48,6 @@ bool Collision:: CollisionBirdAndPlant(Pipe pipe_,PlantObject plant_,Bird bird_,
     }
     return false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 bool Collision :: CollisionBirdAndIcicle(Pipe pipe_,Bird bird_,IcicleObject icicle_,ExplosionObject CollisionObject_, int num, int& moveY, ShieldObject shield_){
     if(SDLCommonFunc::CheckCollision(icicle_.ImplementIciclceRect(pipe_,bird_,gRenderer,num,moveY),bird_.strikeObstacle())){
        if(!shield_.getIsShield()) {
@@ -81,6 +68,9 @@ void Collision::CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,
     if(SDLCommonFunc::CheckCollision(p_bullet_bird->GetRect(),p_bullet_threat->GetRect())){
         p_bullet_threat->set_is_move(true);                       
         p_bullet_threat->SetRect(p_threat->GetRect().x, p_threat->GetRect().y + p_threat->GetRect().h*0.5);  //RESET BULLET BACK TO THE PREVIOUS POSITION
+        p_bullet_threat = NULL;
+        p_bullet_bird = NULL;
+        p_threat = NULL;
     }
 }
 

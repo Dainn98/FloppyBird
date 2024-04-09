@@ -44,6 +44,7 @@ TextObject::TextObject(){
 
 TextObject::~TextObject(){
   //To do
+  Free();
 }
 
 void TextObject::SetColor(const int& type){

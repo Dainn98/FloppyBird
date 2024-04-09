@@ -33,6 +33,15 @@ PlantObject::PlantObject() {
 }
 PlantObject :: ~PlantObject(){
     //To do 
+    frame_ = 0;
+    x_val_ = 0;
+    y_val_ = 0;
+    for(int i = 0; i < NUM_PLANT; i++){
+        clip_[i].x = 0;
+        clip_[i].y = 0;
+        clip_[i].w = 0;
+        clip_[i].h = 0;
+    }
 }
  void PlantObject:: set_clip_plant(){
     clip_[0].x = 0;

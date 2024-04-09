@@ -3,7 +3,7 @@
 #define IMP_TIMER_H_
 // #include "declaration.h"
 
-class ImpTimer{
+class ImpTimer : public BaseObject{
 public:
   ImpTimer();
   void start();

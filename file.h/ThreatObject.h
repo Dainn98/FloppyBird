@@ -53,7 +53,8 @@ public:
   SDL_Rect ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* des,int idx);
   SDL_Rect GetThreatRect();
 
-  void Free();
+  // void Free();
+
 private:
   int x_val_;
   int y_val_;
@@ -72,8 +73,21 @@ ThreatObject::ThreatObject(){
   frame_ = 0;
 }
 ThreatObject::~ThreatObject(){
-//To do
-Free();
+if (p_bullet_list_.size() > 0)
+  {
+    for (int i = 0; i < p_bullet_list_.size(); i++)
+    {
+      BulletObject* p_bullet = p_bullet_list_.at(i);
+      if (p_bullet != NULL)
+      {
+        p_bullet->Free();
+        // delete p_bullet;
+        p_bullet = NULL;
+      }
+    }
+    // delete[] & p_bullet_list_;
+    p_bullet_list_.clear();
+  }
 }
 void ThreatObject::set_clip_threat(){
     clip_[0].x = 0;
@@ -223,7 +237,6 @@ void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& 
     if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.2){     //IF P_BULLET IS NOT EMPTY         
       if (p_bullet->get_is_move()){ //BULLET MOVE
         p_bullet->Render(des);
-        // int random_trajectory_bullet = rand() % 100;
                                                                 // TRAJECTION
         if(!isPaused)p_bullet->HandleMoveRightToLeft(itmb);
       }
@@ -234,7 +247,6 @@ void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& 
     }
     if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) || //RESET BULLET WHEN COLLIDE WITH PIPE
                     SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))){
-        // p_bullet = NULL;
         ResetBullet(p_bullet);
     }
   }
@@ -252,25 +264,13 @@ void ThreatObject::Reset(const int& xboder){
 
 void ThreatObject::ResetBullet(BulletObject* p_bullet){
    p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);
+  //  p_bullet = NULL;
 }
 SDL_Rect ThreatObject:: GetThreatRect(){
   SDL_Rect rect = {get_x_val(), get_y_val(), THREAT_BODY_WIDTH, THREAT_BODY_HEIGHT};
   return rect;
 }
 
-void ThreatObject::Free(){
-  if (p_bullet_list_.size() > 0){
-      for (int ib = 0; ib < p_bullet_list_.size(); ib++){
-        BulletObject* p_bullet = p_bullet_list_.at(ib);
-        if (p_bullet){
-          delete p_bullet;
-          p_bullet = NULL;
-        }
-      }
-      p_bullet_list_.clear();
-    }
-
-}
 void ThreatObject::HandleInputAction(SDL_Event events)
 {
   //Todo

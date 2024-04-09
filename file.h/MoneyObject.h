@@ -33,7 +33,10 @@ MoneyObject::MoneyObject(){
 }
 MoneyObject::~MoneyObject(){
     for(MoneyObject* ptr : p_money_list_) {
-    delete ptr;
+        if(ptr != NULL){
+            ptr->Free();
+            ptr = NULL;
+        }
     }
     p_money_list_.clear();
 }

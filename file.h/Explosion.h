@@ -40,10 +40,18 @@ private:
 
 ExplosionObject::ExplosionObject(){
     //To do
+    frame_ = 0;
 }
 
 ExplosionObject::~ExplosionObject(){
     //To do
+    frame_ = 0;
+    for(int i = 0; i < NUM_EXPLOSION; i++){
+      clip_[i].x = 0;
+      clip_[i].y = 0;
+      clip_[i].w = 0;
+      clip_[i].h = 0;
+    }
 }
 
 void ExplosionObject::set_clip_explosion(){

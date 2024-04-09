@@ -28,6 +28,13 @@ IcicleObject::IcicleObject(){
 }
 IcicleObject::~IcicleObject(){
     //To do
+    frame_ = 0;
+    for(int i = 0; i < NUM_ICICLE; i++){
+        clip_[i].x = 0;
+        clip_[i].y = 0;
+        clip_[i].w = 0;
+        clip_[i].h = 0;
+    }
 }
 void IcicleObject::set_clip_icicle() {
     clip_[0].x = 0;
@@ -72,7 +79,8 @@ SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* d
             if(pipe.get_height_pipe() < 450){
                 rect.y = pipe.get_height_pipe() + UPPER_PIPE_OFFSET;// DELETE THE SITUATION : PIPE_HEIGHT IS REACHING BASE => NOT RENDERING ICICLE 
                 if(rect.y > 531) rect.y = 531;
-                else rect.y += (++moveY)*ICICLE_WIDTH/1.5;
+                else rect.y += (++moveY)*ICICLE_WIDTH/2; //VELOCIY OF ICICLE
+
             }  
             else if(pipe.get_height_pipe() >= 510) rect.y = 0;
             if(pipe.get_x_val() <= 0) moveY = 0;

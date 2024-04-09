@@ -5,8 +5,8 @@ int main( int argc, char* argv[]){
     loadMedia();    
     Game game;
     game.Play();
+    game.FreeBird();
     close();
-   
     return 0;
 }
 bool loadMedia(){
@@ -61,16 +61,20 @@ void close() {
     Mix_FreeChunk( gDie ); gDie = NULL;
     Mix_FreeChunk( gExplosion ); gExplosion = NULL;
     Mix_FreeChunk( gSwapBullet ); gSwapBullet = NULL;
-    
+    Mix_FreeChunk( gBubbleAdd ); gBubbleAdd = NULL;
+    Mix_FreeChunk( gBubblePow ); gBubblePow = NULL;
+    Mix_FreeChunk( gScoreIncrement ); gScoreIncrement = NULL;
 	                                                                //DESTROY TEXTURE
-    SDL_DestroyTexture(pipeTexture);            
+    SDL_DestroyTexture(pipeTexture); pipeTexture = NULL;   
+    pipeSurface = NULL;
+
                                                                     //DESTROY RENDER,WINDOW
     SDL_DestroyRenderer(gRenderer);  gRenderer = NULL;
     SDL_DestroyWindow(gWindow);      gWindow= NULL;
                                                                     //DESTROY FONT
     TTF_CloseFont(gFontText);gFontText = NULL;
     TTF_CloseFont(gFontMENU);gFontMENU = NULL;
-
+    TTF_CloseFont(gFont);gFont = NULL;
                                                                     //DESTROY SURFACE
     IMG_Quit();
     Mix_Quit();

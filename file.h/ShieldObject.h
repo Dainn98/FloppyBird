@@ -44,6 +44,10 @@ ShieldObject::ShieldObject(){
 }
 ShieldObject::~ShieldObject(){
     // Free();
+    int x_val_ = 0;
+    int y_val_ = 0;
+    bool is_shield_ = false;
+    
 }
 void ShieldObject::HandleMove(const int& x_border, const int& y_border){
     rect_.x -= x_val_;
