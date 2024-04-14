@@ -106,5 +106,6 @@ Pipe::~Pipe(){
     height_ = 0;
     width_ = 0;
     which_pipe_ = 0;
+    FreeAll();
 }
 #endif

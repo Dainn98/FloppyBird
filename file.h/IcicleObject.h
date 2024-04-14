@@ -69,7 +69,7 @@ void IcicleObject::set_clip_icicle() {
 }
 void IcicleObject::ShowIcicle(SDL_Renderer* des){
     if (frame_ >= NUM_ICICLE) frame_ = 0;
-    SDLCommonFunc :: ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
+    SDLCommonFunc :: ApplySurfaceClip(this->mTexture, des, &clip_[frame_], rect_.x, rect_.y);
 }
 SDL_Rect IcicleObject:: ImplementIciclceRect(Pipe pipe,Bird bird,SDL_Renderer* des,int idx,int& moveY){
     SDL_Rect rect = {SCREEN_WIDTH,SCREEN_HEIGHT,ICICLE_WIDTH,ICICLE_HEIGHT};

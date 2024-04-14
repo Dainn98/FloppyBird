@@ -43,7 +43,7 @@ ShieldObject::ShieldObject(){
     y_val_ = 0;
 }
 ShieldObject::~ShieldObject(){
-    // Free();
+    // FreeAll();
     int x_val_ = 0;
     int y_val_ = 0;
     bool is_shield_ = false;

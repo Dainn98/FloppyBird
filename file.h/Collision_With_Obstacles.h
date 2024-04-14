@@ -20,6 +20,10 @@ class Collision :public BaseObject{
     void CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_,ThreatObject* p_threat,int num);
 
     void CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,BulletObject* p_bullet_threat,ThreatObject* p_threat);
+
+    //  void CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_,std::unique_ptr<ThreatObject>& p_threat,int num);
+
+    // void CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,BulletObject* p_bullet_threat,std::unique_ptr<ThreatObject>& p_threat);
 };
 
 void Collision::ExploringBird(Pipe pipe_,Bird bird_ ,ExplosionObject CollisionObject_){
@@ -69,5 +73,20 @@ void Collision::CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,
         p_threat = NULL;
     }
 }
+// void Collision:: CollisionBirdAndThreat(Pipe pipe_,ThreatObject p_threat_frame,Bird bird_,ExplosionObject CollisionObject_,std::unique_ptr<ThreatObject>& p_threat,int num){
+//     if(SDLCommonFunc::CheckCollision(p_threat_frame.ImplementThreatRect(p_threat,gRenderer,num),bird_.strikeObstacle())){
+//         ExploringBird(pipe_,bird_,CollisionObject_);
+//     }
+    
+// }
+// void Collision::CollisionBulletBirdandBulletThreat( BulletObject* p_bullet_bird,BulletObject* p_bullet_threat,std::unique_ptr<ThreatObject>& p_threat){
+//     if(SDLCommonFunc::CheckCollision(p_bullet_bird->GetRect(),p_bullet_threat->GetRect())){
+//         p_bullet_threat->set_is_move(true);                       
+//         p_bullet_threat->SetRect(p_threat->GetRect().x, p_threat->GetRect().y + p_threat->GetRect().h*0.5);  //RESET BULLET BACK TO THE PREVIOUS POSITION
+//         p_bullet_threat = NULL;
+//         p_bullet_bird = NULL;
+//         p_threat = NULL;
+//     }
+// }
 
 #endif

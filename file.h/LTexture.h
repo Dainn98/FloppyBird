@@ -1,6 +1,7 @@
 #ifndef LTEXTURE_H
 #define LTEXTURE_H
 //https://lazyfoo.net/tutorials/SDL/index.php
+// #include "declaration.h"
 
 class LTexture{
 	public:

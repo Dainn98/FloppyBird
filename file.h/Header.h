@@ -23,4 +23,5 @@
 #include "Pause.h"
 #include "TextObject.h"
 
+Game game;
 #endif

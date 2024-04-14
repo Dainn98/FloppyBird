@@ -72,7 +72,7 @@ PlantObject :: ~PlantObject(){
  }
 void PlantObject:: ShowPlant(SDL_Renderer* des){
     if(frame_ >= NUM_PLANT) frame_ = 0;
-    SDLCommonFunc :: ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
+    SDLCommonFunc :: ApplySurfaceClip(this->mTexture, des, &clip_[frame_], rect_.x, rect_.y);
 }
 
 SDL_Rect PlantObject::ImplementPlantRect(Pipe pipe, Bird bird,SDL_Renderer* des,int index){

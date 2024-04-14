@@ -73,11 +73,11 @@ void ExplosionObject::set_clip_bullet_explosion(){
 
 void ExplosionObject::ShowEx(SDL_Renderer* des){
   if (frame_ >= NUM_EXPLOSION) frame_ = 0;
-  SDLCommonFunc::ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
+  SDLCommonFunc::ApplySurfaceClip(this->mTexture, des, &clip_[frame_], rect_.x, rect_.y);
 }
 void ExplosionObject::ShowBul(SDL_Renderer* des){
   if (frame_ >= NUM_BULLET_EXPLO) frame_ = 0;
-  SDLCommonFunc::ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
+  SDLCommonFunc::ApplySurfaceClip(this->mTexture, des, &clip_[frame_], rect_.x, rect_.y);
 }
 
 #endif

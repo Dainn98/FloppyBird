@@ -16,10 +16,10 @@ using namespace std;
                                 //Loading Sprites,Sound
 static char gBaseSurface_path[] = {"Sprites/base.png"};
 static char gBackGroundTexture_path[] ={"Sprites/background.jpg"};
-static char Intro_path[] = {"Sprites/introx.png"};
+static char Intro_path[] = {"Sprites/tapping.png"};
 static char None_path[] = {"Sprites/none.png"};
 
-static char StartGame_path[] = {"Sprites/startgame1.png"};
+static char StartGame_path[] = {"Sprites/startgame.png"};
 static char Tutorial_path[] = {"Sprites/tutorialwd.png"};
 static char GameOverMenu_path[] = {"Sprites/gameoverwd.png"};
 static char Stastic_path[] = {"Sprites/statswd.png"};
@@ -36,18 +36,18 @@ static char gButtonControlGame_EXIT_path[]={"Sprites/stopbutton.png"};
 static char Sphere_Bullet_path[] = {"Sprites/bulletBird1.png"};
 static char Laser_Bullet_path[] = {"Sprites/bulletBird2.png"};
 static char Other_Type_Bullet_path[] = {"Sprites/bulletBird3.png"};
-static char Creepy_path[] = {"Sprites/threat1.png"};
+// static char Creepy_path[] = {"Sprites/threat1.png"};
 static char Threat_path[] = {"Sprites/threatSprites.png"};
 
 static char Money_path[] = {"Sprites/Money.png"};
 static char Shield_path[] = {"Sprites/shieldx.png"};
 static char Bubble_path[] = {"Sprites/bubbleshieldx.png"};
 
-static char Bullet_Threat1_path[] = {"Sprites/bulletx1.png"};
-static char Explosion_path[] = {"Sprites/Expolosion.png"};
+static char Bullet_Threat1_path[] = {"Sprites/bulletthreat.png"};
+static char Explosion_path[] = {"Sprites/BirdExplosion.png"};
 static char Explosion_Bullet_path[] = {"Sprites/explosion.png"};
-static char Plant_path[] = {"Sprites/plantX.png"};
-static char Icicle_path[] = {"Sprites/Icicle2.png"};
+static char Plant_path[] = {"Sprites/plant.png"};
+static char Icicle_path[] = {"Sprites/Icicle.png"};
 
 
 static char PipeRed_path[] = {"Sprites/pipeRed.png"};
@@ -332,9 +332,9 @@ int SDLCommonFunc::ShowMenuPause(TTF_Font* font,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[0].Free();
-                gBackground.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                gBackground.FreeAll();
                 return 1;
             case SDL_MOUSEMOTION:
                 x = event.motion.x;
@@ -352,7 +352,7 @@ int SDLCommonFunc::ShowMenuPause(TTF_Font* font,
                     else{
                         if (selected[i]){
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, gRenderer);
@@ -367,9 +367,9 @@ int SDLCommonFunc::ShowMenuPause(TTF_Font* font,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        gBackground.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        gBackground.FreeAll();
                         return i;
                     }
                 }
@@ -377,9 +377,9 @@ int SDLCommonFunc::ShowMenuPause(TTF_Font* font,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    gBackground.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    gBackground.FreeAll();
                     return 1;
                 }
             }
@@ -466,9 +466,9 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[0].Free();
-                // gBackground.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                gBackground.FreeAll();
 
                 return 1;
             case SDL_MOUSEMOTION:
@@ -487,7 +487,7 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
                     else{
                         if (selected[i]){
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, des);
@@ -502,9 +502,9 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        gBackground.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        gBackground.FreeAll();
 
                         return i;
                     }
@@ -513,9 +513,9 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    gBackground.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    gBackground.FreeAll();
 
                     return 1;
                 }
@@ -622,10 +622,10 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[0].Free();
-                // gBackground.Free();
-                PauseMenu_.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                // gBackground.FreeAll();
+                PauseMenu_.FreeAll();
                 return 1;
             case SDL_MOUSEMOTION:
                 x = event.motion.x;
@@ -643,7 +643,7 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
                     else{
                         if (selected[i]){
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, des);
@@ -658,10 +658,10 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        // gBackground.Free();
-                        PauseMenu_.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        // gBackground.FreeAll();
+                        PauseMenu_.FreeAll();
                         return i;
                     }
                 }
@@ -669,11 +669,11 @@ int SDLCommonFunc::ShowMenuGameOver(SDL_Renderer* des, TTF_Font* font,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    // gBackground.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    // gBackground.FreeAll();
                     
-                    PauseMenu_.Free();
+                    PauseMenu_.FreeAll();
                     return 1;
                 }
             }
@@ -769,11 +769,11 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[1].Free();
-                text_object[2].Free();
-                gBackground.Free();
-                // PauseMenu_.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                text_object[2].FreeAll();
+                gBackground.FreeAll();
+                // PauseMenu_.FreeAll();
                 return 1;
             case SDL_MOUSEMOTION:
                 x = event.motion.x;
@@ -791,7 +791,7 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                     else{
                         if (selected[i]){
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, des);
@@ -806,11 +806,11 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        text_object[2].Free();
-                        gBackground.Free();
-                        // PauseMenu_.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        text_object[2].FreeAll();
+                        gBackground.FreeAll();
+                        // PauseMenu_.FreeAll();
                         return i;
                     }
                 }
@@ -818,11 +818,11 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    text_object[2].Free();
-                    gBackground.Free();
-                    // PauseMenu_.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    text_object[2].FreeAll();
+                    gBackground.FreeAll();
+                    // PauseMenu_.FreeAll();
                     return 1;
                 }
             }
@@ -940,9 +940,9 @@ int SDLCommonFunc::ShowMenuStart(SDL_Renderer* des, TTF_Font* font,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[0].Free();
-                gBackground.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                gBackground.FreeAll();
                 return 1;
             case SDL_MOUSEMOTION:
                 x = event.motion.x;
@@ -965,7 +965,7 @@ int SDLCommonFunc::ShowMenuStart(SDL_Renderer* des, TTF_Font* font,
                         if (selected[i])
                         {
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, des);
@@ -980,11 +980,11 @@ int SDLCommonFunc::ShowMenuStart(SDL_Renderer* des, TTF_Font* font,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        text_object[2].Free();
-                        text_object[3].Free();
-                        gBackground.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        text_object[2].FreeAll();
+                        text_object[3].FreeAll();
+                        gBackground.FreeAll();
                         return i;
                     }
                 }
@@ -992,11 +992,11 @@ int SDLCommonFunc::ShowMenuStart(SDL_Renderer* des, TTF_Font* font,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    text_object[2].Free();
-                    text_object[3].Free();
-                    gBackground.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    text_object[2].FreeAll();
+                    text_object[3].FreeAll();
+                    gBackground.FreeAll();
                     return 1;
                 }
             }
@@ -1100,9 +1100,11 @@ int SDLCommonFunc::ShowMenuStart2(SDL_Renderer* des, TTF_Font* font,
             switch (event.type) 
             {
             case SDL_QUIT:
-                text_object[0].Free();
-                text_object[0].Free();
-                gBackground.Free();
+                text_object[0].FreeAll();
+                text_object[1].FreeAll();
+                text_object[2].FreeAll();
+                text_object[3].FreeAll();
+                gBackground.FreeAll();
                 return 1;
             case SDL_MOUSEMOTION:
                 x = event.motion.x;
@@ -1125,7 +1127,7 @@ int SDLCommonFunc::ShowMenuStart2(SDL_Renderer* des, TTF_Font* font,
                         if (selected[i])
                         {
                             selected[i] = 0;
-                            text_object[i].Free();
+                            text_object[i].FreeAll();
                             text_object[i].SetText(labels[i]);
                             text_object[i].setColor(color[0].r, color[0].g, color[0].b);
                             text_object[i].loadFromRenderedText(font, des);
@@ -1140,11 +1142,11 @@ int SDLCommonFunc::ShowMenuStart2(SDL_Renderer* des, TTF_Font* font,
                     if (x >= pos[i].x && x <= pos[i].x + pos[i].w &&
                         y >= pos[i].y && y <= pos[i].y + pos[i].h)
                     {
-                        text_object[0].Free();
-                        text_object[1].Free();
-                        text_object[2].Free();
-                        text_object[3].Free();
-                        gBackground.Free();
+                        text_object[0].FreeAll();
+                        text_object[1].FreeAll();
+                        text_object[2].FreeAll();
+                        text_object[3].FreeAll();
+                        gBackground.FreeAll();
                         return i;
                     }
                 }
@@ -1152,11 +1154,11 @@ int SDLCommonFunc::ShowMenuStart2(SDL_Renderer* des, TTF_Font* font,
             case SDL_KEYDOWN:
                 if (event.key.keysym.sym == SDLK_ESCAPE)
                 {
-                    text_object[0].Free();
-                    text_object[1].Free();
-                    text_object[2].Free();
-                    text_object[3].Free();
-                    gBackground.Free();
+                    text_object[0].FreeAll();
+                    text_object[1].FreeAll();
+                    text_object[2].FreeAll();
+                    text_object[3].FreeAll();
+                    gBackground.FreeAll();
                     return 1;
                 }
             }

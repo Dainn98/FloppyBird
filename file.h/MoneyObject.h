@@ -1,5 +1,6 @@
 #ifndef MONEY_OBJECT_H
 #define MONEY_OBJECT_H
+
 // #include "declaration.h"
 // #include "BaseObject.h"
 // #include "Pipe.h"
@@ -34,7 +35,7 @@ MoneyObject::MoneyObject(){
 MoneyObject::~MoneyObject(){
     for(MoneyObject* ptr : p_money_list_) {
         if(ptr != NULL){
-            ptr->Free();
+            ptr->FreeAll();
             ptr = NULL;
         }
     }

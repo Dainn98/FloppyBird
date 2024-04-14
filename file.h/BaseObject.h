@@ -11,10 +11,10 @@ public:
   void Render(SDL_Renderer* des, const SDL_Rect* clip = NULL);        // RENDER CLIP,IMAGE
   void RenderImage(SDL_Renderer* des,SDL_Rect ret /*=NULL*/);
   
-  void Free();
+  void FreeAll();
   void SetRect(const int& x, const int& y) {rect_.x = x, rect_.y = y;}; //FUNCTION SET DIMESION FOR IMAGE
   SDL_Rect GetRect() const {return rect_;}    //GET DIMESION OF IMAGE
-  SDL_Texture* GetObject() {return p_object_texture;}  //GET IMAGE
+  SDL_Texture* GetObject() {return mTexture;}  //GET IMAGE
 
   bool LoadImg(const char* file_name);
    
@@ -22,21 +22,23 @@ protected:
   const int COLOR_KEY_R = 167;
   const int COLOR_KEY_G = 175;
   const int COLOR_KEY_B = 180;
-  SDL_Texture* p_object_texture; // IMAGE (TEXTURE)
+  SDL_Texture* mTexture; // IMAGE (TEXTURE)
   SDL_Rect rect_; // DIMESION OF IMAGE
-  SDL_Surface* p_object_surface; //IMAGE (SURFACE)
+//   SDL_Surface* p_object_surface; //IMAGE (SURFACE)
 
 };
 BaseObject::BaseObject(){
-    p_object_texture = NULL;
+    mTexture = NULL;
     rect_.x = 0;
     rect_.y = 0;
 }
 
-BaseObject::~BaseObject()   {Free();}
+BaseObject::~BaseObject()   {
+    // FreeAll();
+}
 
 bool BaseObject::LoadImageFile(std::string path, SDL_Renderer* screen){
-    Free();
+    FreeAll();
     SDL_Texture* newTexture = NULL;
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());      //LOAD IMAGE AT PATH
     if (loadedSurface != NULL){
@@ -52,16 +54,18 @@ bool BaseObject::LoadImageFile(std::string path, SDL_Renderer* screen){
         }
         SDL_FreeSurface(loadedSurface);                                     //GET RID OF  OLDLOADED SURFACE
     }
-    p_object_texture = newTexture;
-    return p_object_texture != NULL;
+    mTexture = newTexture;
+    return mTexture != NULL;
 }
 
-void BaseObject::Free(){
-    if (p_object_texture != NULL){
-        p_object_texture = NULL;
-        rect_.w = 0;
-        rect_.h = 0;
-    }
+void BaseObject::FreeAll(){
+    if(mTexture == NULL) return;
+    // else{
+         SDL_DestroyTexture(mTexture);
+    mTexture = NULL;
+    rect_.w = 0;
+    rect_.h = 0;
+    // }
 }
 
 void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){         //Clip = NULL
@@ -69,13 +73,12 @@ void BaseObject::Render(SDL_Renderer* des, const SDL_Rect* clip /*=NULL*/){     
     if (clip != NULL){
         renderQuad.w = clip->w;
         renderQuad.h = clip->h;
-    }
-    SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
+    }    SDL_RenderCopy(des, mTexture, clip, &renderQuad);
 }
 void BaseObject :: RenderImage(SDL_Renderer* des,SDL_Rect ret /*=NULL*/){
     SDL_Rect* clip = NULL;
     SDL_Rect renderQuad = { ret.x, ret.y, ret.w, ret.h };
-    SDL_RenderCopy(des, p_object_texture, clip, &renderQuad);
+    SDL_RenderCopy(des, mTexture, clip, &renderQuad);
 }
 
 #endif

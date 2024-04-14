@@ -1,5 +1,6 @@
 #ifndef THREAT_OBJECT_H
 #define THREAT_OBJECT_H
+#include "BaseObject.h"
 
 const int THREAT_WIDTH = 64; 
 const int THREAT_BODY_WIDTH = 60;
@@ -30,10 +31,12 @@ public:
   int get_y_val() const {return y_val_;}
                                                                 // SET BULLET OBECT FOR THREAT_OBJECT
   void SetBulletList(std::vector<BulletObject*> bullet_list) {p_bullet_list_ = bullet_list;}  
+  
                                                                 // BULLET LIST  
   std::vector<BulletObject*> GetBulletList() const {return p_bullet_list_;}                     
 
   void InitBullet(BulletObject* p_bullet);
+  
   void MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted);
   void Reset(const int& xboder);
   void ResetBullet(BulletObject* p_bullet);
@@ -44,6 +47,14 @@ public:
   SDL_Rect ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* des,int idx);
   SDL_Rect GetThreatRect();
 
+  // void SetBulletList(std::vector<std::unique_ptr<BulletObject>> bullet_list) {p_bullet_list_ = std::move(bullet_list);}
+  // std::vector<std::unique_ptr<BulletObject>>& GetBulletList() { return p_bullet_list_; }
+  // void InitBullet(std::unique_ptr<BulletObject> p_bullet);
+  // void ResetBullet(std::unique_ptr<BulletObject>& p_bullet);
+  // SDL_Rect ImplementThreatRect(std::unique_ptr<ThreatObject>& p_threat,SDL_Renderer* des,int idx);
+
+
+
 private:
   int x_val_;
   int y_val_;
@@ -51,6 +62,7 @@ private:
   SDL_Rect clip_[NUM_THREAT_FRAME];
 
   std::vector<BulletObject*> p_bullet_list_;
+  // std::vector<std::unique_ptr<BulletObject>> p_bullet_list_;
 };
 ThreatObject::ThreatObject(){
   rect_.x = SCREEN_WIDTH;
@@ -61,20 +73,27 @@ ThreatObject::ThreatObject(){
   y_val_ = 0;
   frame_ = 0;
 }
+// ThreatObject::~ThreatObject(){
+// if (p_bullet_list_.size() > 0)
+//   {
+//     for (int i = 0; i < p_bullet_list_.size(); i++)
+//     {
+//       BulletObject* p_bullet = p_bullet_list_.at(i);
+//       if (p_bullet != NULL)
+//       {
+//         p_bullet->FreeAll();
+//         p_bullet = NULL;
+//       }
+//     }
+//     p_bullet_list_.clear();
+//   }
+// }
 ThreatObject::~ThreatObject(){
-if (p_bullet_list_.size() > 0)
-  {
-    for (int i = 0; i < p_bullet_list_.size(); i++)
-    {
-      BulletObject* p_bullet = p_bullet_list_.at(i);
-      if (p_bullet != NULL)
-      {
-        p_bullet->Free();
-        p_bullet = NULL;
-      }
-    }
-    p_bullet_list_.clear();
-  }
+  // for(auto & p_bullet : p_bullet_list_){
+  //   p_bullet->FreeAll();
+  //   // p_bullet.reset();
+  // }
+  // p_bullet_list_.clear();
 }
 void ThreatObject::set_clip_threat(){
     clip_[0].x = 0;
@@ -179,7 +198,7 @@ void ThreatObject::set_clip_threat(){
 }
 void ThreatObject::ShowThreat(SDL_Renderer* des){
   if (frame_ >= NUM_THREAT_FRAME) frame_ = 0;
-  SDLCommonFunc :: ApplySurfaceClip(this->p_object_texture, des, &clip_[frame_], rect_.x, rect_.y);
+  SDLCommonFunc :: ApplySurfaceClip(this->mTexture, des, &clip_[frame_], rect_.x, rect_.y);
 }
 SDL_Rect ThreatObject::ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* des,int idx){
   SDL_Rect rect = {SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, THREAT_BODY_WIDTH, THREAT_BODY_HEIGHT};
@@ -192,6 +211,17 @@ SDL_Rect ThreatObject::ImplementThreatRect(ThreatObject* p_threat,SDL_Renderer* 
   // Render(des);
   return rect;
 }
+// SDL_Rect ThreatObject::ImplementThreatRect(std::unique_ptr<ThreatObject>& p_threat,SDL_Renderer* des,int idx){
+//   SDL_Rect rect = {SCREEN_WIDTH / 2,SCREEN_HEIGHT / 2, THREAT_BODY_WIDTH, THREAT_BODY_HEIGHT};
+//   rect.x = p_threat->GetRect().x;
+//   rect.y = p_threat->GetRect().y;
+//   // cout << rect.x << " " << rect.y << endl;
+//   set_frame_threat(idx);
+//   SetRect(rect.x,rect.y);
+//   ShowThreat(des);
+//   // Render(des);
+//   return rect;
+// }
 
                                                                           // MOVE THE THREAT_OBJECT TO THE LEFT
 void ThreatObject::HandleMove(const int& x_bordr, const int& y_border){                                   
@@ -202,8 +232,22 @@ void ThreatObject::HandleMove(const int& x_bordr, const int& y_border){
   }
 }
 
+// void ThreatObject::InitBullet(BulletObject* p_bullet){
+//   // Bird bird;
+//   if (p_bullet){
+//     bool ret = p_bullet->LoadImageFile(Bullet_Threat1_path,gRenderer);
+//     if (ret){
+//       p_bullet->set_is_move(true);
+//       p_bullet->SetWidthHeight(WIDTH_SPHERE, HEIGHT_SPHERE);
+//       p_bullet->set_type(BulletObject::SPHERE_BULLET);
+//       p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);
+//       p_bullet->set_x_val(SPEED_BULLET_THREATS);
+//       // if(bird.GetIsDie() && p_bullet_list_.size() > 0) p_bullet_list_.pop_back();
+//       p_bullet_list_.push_back(p_bullet);
+//     }
+//   }
+// }
 void ThreatObject::InitBullet(BulletObject* p_bullet){
-  // Bird bird;
   if (p_bullet){
     bool ret = p_bullet->LoadImageFile(Bullet_Threat1_path,gRenderer);
     if (ret){
@@ -216,16 +260,55 @@ void ThreatObject::InitBullet(BulletObject* p_bullet){
       p_bullet_list_.push_back(p_bullet);
     }
   }
-}
 
+}
+// void ThreatObject::InitBullet(std::unique_ptr<BulletObject> p_bullet){
+//   if (p_bullet){
+//     bool ret = p_bullet->LoadImageFile(Bullet_Threat1_path,gRenderer);
+//     if (ret){
+//       p_bullet->set_is_move(true);
+//       p_bullet->SetWidthHeight(WIDTH_SPHERE, HEIGHT_SPHERE);
+//       p_bullet->set_type(BulletObject::SPHERE_BULLET);
+//       p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);
+//       p_bullet->set_x_val(SPEED_BULLET_THREATS);
+//       // if(bird.GetIsDie() && p_bullet_list_.size() > 0) p_bullet_list_.pop_back();
+//       p_bullet_list_.push_back(std::move(p_bullet));
+//     }
+//   }
+// }
+
+// void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted){
+//   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
+//     BulletObject* p_bullet = p_bullet_list_.at(itmb);
+//     if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.2){     //IF P_BULLET IS NOT EMPTY         
+//       if (p_bullet->get_is_move()){ //BULLET MOVE
+//         p_bullet->Render(des);
+//                                                                 // TRAJECTION
+//         if(!isPaused)p_bullet->HandleMoveRightToLeft(itmb);
+//       }
+//       else {                   
+//         p_bullet->set_is_move(true);                       
+//         p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);  //RESET BULLET BACK TO THE PREVIOUS POSITION
+//       }
+//     }
+//     if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) || //RESET BULLET WHEN COLLIDE WITH PIPE
+//                     SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))){
+//         ResetBullet(p_bullet);
+//     }
+//   }
+// }
 void ThreatObject::MakeBullet(SDL_Renderer* des, const int& x_limit, const int& y_limit,Pipe pipe,const bool isPaused, const bool isRestarted){
-  for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
+   for (int itmb = 0; itmb < p_bullet_list_.size(); itmb++){
+    // std::unique_ptr<BulletObject>& p_bullet = p_bullet_list_.at(itmb);
     BulletObject* p_bullet = p_bullet_list_.at(itmb);
+
+    // for(auto & p_bullet : p_bullet_list_){
     if (p_bullet!=NULL && x_limit <= SCREEN_WIDTH*1.2){     //IF P_BULLET IS NOT EMPTY         
       if (p_bullet->get_is_move()){ //BULLET MOVE
         p_bullet->Render(des);
                                                                 // TRAJECTION
-        if(!isPaused)p_bullet->HandleMoveRightToLeft(itmb);
+        // if(!isPaused)p_bullet->HandleMoveRightToLeft(itmb);
+        if(!isPaused)p_bullet->HandleMoveRightToLeft();
       }
       else {                   
         p_bullet->set_is_move(true);                       
@@ -245,6 +328,7 @@ void ThreatObject::Reset(const int& xboder){
 
   for (int irs = 0; irs < p_bullet_list_.size(); irs++){
     BulletObject* p_bullet = p_bullet_list_.at(irs);
+  // for(auto & p_bullet : p_bullet_list_){
     if (p_bullet) ResetBullet(p_bullet);
   }
 }
@@ -253,6 +337,10 @@ void ThreatObject::ResetBullet(BulletObject* p_bullet){
    p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);
   //  p_bullet = NULL;
 }
+// void ThreatObject::ResetBullet(std::unique_ptr<BulletObject>& p_bullet){
+//    p_bullet->SetRect(rect_.x, rect_.y + rect_.h*0.5);
+//   //  p_bullet = NULL;
+// }
 SDL_Rect ThreatObject:: GetThreatRect(){
   SDL_Rect rect = {get_x_val(), get_y_val(), THREAT_BODY_WIDTH, THREAT_BODY_HEIGHT};
   return rect;

@@ -68,16 +68,26 @@ Bird::Bird(){
     width_ = BIRD_WIDTH;
     height_ = BIRD_HEIGHT;
 
-    rect_.x = x_val_;
-    rect_.y = y_val_;
-    rect_.w = width_;
-    rect_.h = height_;
-    
+    // rect_.x = x_val_;
+    // rect_.y = y_val_;
+    // rect_.w = width_;
+    // rect_.h = height_;
+
+    is_die_ = false;
+    // is_falling_ = false;
     velocity_ = 0;
     currentFrame = 0;
 }
 Bird :: ~Bird(){
     //To do
+    Free();
+    x_val_ = 0;
+    y_val_ = 0;
+    velocity_ = 0;
+    currentFrame = 0;
+    width_ = 0;
+    height_ = 0;
+    is_die_ = false;
 }
 void Bird ::resetPositon(){
     x_val_ = SCREEN_WIDTH / 4;
@@ -86,6 +96,7 @@ void Bird ::resetPositon(){
     currentFrame = 0;
     width_ = BIRD_WIDTH;
     height_ = BIRD_HEIGHT;
+
 }
 void Bird::jump(){velocity_ = BIRD_JUMP_VELOCITY;}
 
@@ -102,13 +113,13 @@ void Bird::update() {
         currentFrame = (currentFrame + 1) % FLYING_ANIMATION_FRAMES_OF_BIRD;
 }
 void Bird:: FreeBullet(){
-    for(BulletObject* p_bullet : p_bullet_list_){
-        if(p_bullet != NULL){
-            p_bullet->Free();
-            p_bullet = NULL;
-        }
-    }
-    p_bullet_list_.clear();
+    // for(BulletObject* p_bullet : p_bullet_list_){
+    //     if(p_bullet != NULL){
+    //         p_bullet->FreeAll();
+    //         p_bullet = NULL;
+    //     }
+    // }
+    // p_bullet_list_.clear();
 }
 
 void Bird::LoadBullet(){
@@ -155,7 +166,7 @@ void Bird::RemoveBullet(const int& idx){
       p_bullet_list_.erase(p_bullet_list_.begin() + idx);
 
       if (p_bullet != NULL){
-        p_bullet->Free();
+        // p_bullet->FreeAll();
         p_bullet = NULL;
         delete p_bullet;
       }
@@ -214,9 +225,9 @@ void Bird::renderShield(ShieldObject shield_){
         shield_.LoadImageFile(Bubble_path,gRenderer);
         shield_.SetRect(strikeObstacle().x - BIRD_WIDTH/3,strikeObstacle().y - BIRD_HEIGHT/2);
         shield_.Render(gRenderer);
-    }else{
-        shield_.Free();
-    }
+    // }else{
+        // shield_.FreeAll();
+    // }
 }
 
 #endif

@@ -37,7 +37,8 @@ public:
     bool get_is_move() const { return is_move_; }
    
     void HandleMove(const int& x_border, const int& y_border);   
-    void HandleMoveRightToLeft(const int& trajectory_bullet ); 
+    // void HandleMoveRightToLeft(const int& trajectory_bullet ); 
+    void HandleMoveRightToLeft();
     double Trajectory_Sin(double time, double amplitude, double frequency, double phaseShift, double verticalShift) {return amplitude * sin(2 * PI * frequency * time + phaseShift) + verticalShift;}
 
     void HandleInputAction(SDL_Event events);
@@ -58,7 +59,7 @@ private:
 
 
 
-    // std::unique_ptr<BulletObject> p_bullet;
+    std::unique_ptr<BulletObject> p_bullet;
 };
 BulletObject:: BulletObject(){
     x_val_ = 0;
@@ -98,7 +99,8 @@ void BulletObject::HandleMove(const int& x_border, const int& y_border){    //BU
         is_move_ = false;
     }
 }
-void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
+// void BulletObject::HandleMoveRightToLeft(const int& trajectory_bullet) {
+void BulletObject::HandleMoveRightToLeft() {
     rect_.x -= x_val_ * 3; // VELOCITY_BULLET
     if (rect_.x < 0) is_move_ = false;
     int trajectory = rand() % 10 + 1;
