@@ -134,6 +134,13 @@ void Bird::HandleBullet(SDL_Renderer* des,Pipe pipe){
             else {
                 p_bullet_list_.erase(p_bullet_list_.begin()+i);
                 if(p_bullet != NULL){
+
+
+                    p_bullet->Free();
+
+
+
+
                     delete p_bullet;
                     p_bullet = NULL;
                 }
@@ -141,6 +148,12 @@ void Bird::HandleBullet(SDL_Renderer* des,Pipe pipe){
         }
         if(p_bullet && (SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeLowerObstacle()) ||//DELETE BULLET WHEN COLLIDE WITH PIPE
                         SDLCommonFunc::CheckCollision(p_bullet->GetRect(), pipe.strikeUpperObstacle()))) {
+            
+            
+            
+            p_bullet->Free();
+
+
             delete p_bullet;
             p_bullet = NULL;
             p_bullet_list_.erase(p_bullet_list_.begin() + i);
@@ -210,12 +223,19 @@ void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
 }
 
 void Bird::renderShield(ShieldObject shield_){
+
     if(shield_.getIsShield()){
         shield_.LoadImageFile(Bubble_path,gRenderer);
         shield_.SetRect(strikeObstacle().x - BIRD_WIDTH/3,strikeObstacle().y - BIRD_HEIGHT/2);
+        // shield_.Reset();
         shield_.Render(gRenderer);
+        shield_.Free();
+
     }
     else{
+        shield_.LoadImageFile(Shield_path,gRenderer);
+        // shield_.Reset();
+        shield_.Render(gRenderer);
         shield_.Free();
     }
 }

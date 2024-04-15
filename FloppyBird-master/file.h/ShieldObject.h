@@ -5,7 +5,7 @@
 
 const int SHIELD_WIDTH = 45;
 const int SHIELD_HEIGHT = 55;
-const int SHIELD_VELOCITY = 10;
+const int SHIELD_VELOCITY = 12;
 const int NUM_SHIELD = 10;
 int TIME_SHIELD = 150;
 const int SHIELD_SHIELD_ORDER = 1;
@@ -43,7 +43,7 @@ ShieldObject::ShieldObject(){
     y_val_ = 0;
 }
 ShieldObject::~ShieldObject(){
-    // Free();
+    Free();
     int x_val_ = 0;
     int y_val_ = 0;
     bool is_shield_ = false;
@@ -51,6 +51,7 @@ ShieldObject::~ShieldObject(){
 }
 void ShieldObject::HandleMove(const int& x_border, const int& y_border){
     rect_.x -= x_val_;
+    // rect_.x -= SHIELD_VELOCITY;
     if(rect_.x < -SCREEN_WIDTH*0.5){
         InitShield();
     }

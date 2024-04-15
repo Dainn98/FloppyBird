@@ -43,10 +43,6 @@ Pipe::Pipe(){
     width_ = PIPE_WIDTH;
 
 };
-// Pipe::Pipe(int posX, int pipe_height){
-//     x_val_ = posX;
-//     height_ = pipe_height;
-// }
 void Pipe:: init_pipe(){
     x_val_ = SCREEN_WIDTH;
     height_ = getRandomNumber(SCREEN_HEIGHT - BASE_HEIGHT*2);
@@ -65,10 +61,10 @@ void Pipe::update() {
         }
     }
 void Pipe::render(){
+
     SDL_Rect lowerPipeRect ={x_val_,
                             height_ + LOWER_PIPE_OFFSET,
                             PIPE_WIDTH,
-                            // SCREEN_HEIGHT - (LOWER_PIPE_OFFSET + LOWER_PIPE_HEIGHT_OFFSET + height_)},
                             SCREEN_HEIGHT - LOWER_PIPE_OFFSET - LOWER_PIPE_HEIGHT_OFFSET},          
              upperPipeRect ={x_val_,
                             UPPER_PIPE_OFFSET,
@@ -76,19 +72,16 @@ void Pipe::render(){
                             height_};  
 
     if(which_pipe_ % 3 == 0) {
-        pipeSurface = IMG_Load(PipeRed_path);
+        this->LoadImageFile(PipeRed_path, gRenderer);
         upperPipeRect = emptyObstacle;
         }
     else if(which_pipe_ % 3 == 1){
-        pipeSurface = IMG_Load(PipeBlue_path);
+        this->LoadImageFile(PipeBlue_path, gRenderer);
         lowerPipeRect = emptyObstacle;
     }
-    else if (which_pipe_ % 3 == 2) pipeSurface = IMG_Load(PipeGreen_path);
-    
-    SDL_RenderCopy(gRenderer, pipeTexture, NULL, &lowerPipeRect);
-    SDL_RenderCopyEx(gRenderer, pipeTexture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
-    pipeTexture = SDL_CreateTextureFromSurface(gRenderer, pipeSurface);
-    SDL_FreeSurface(pipeSurface);
+    else this->LoadImageFile(PipeGreen_path, gRenderer);
+    SDL_RenderCopyEx(gRenderer, p_object_texture, NULL, &lowerPipeRect, 0.0, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(gRenderer, p_object_texture, NULL, &upperPipeRect, 0.0, NULL, SDL_FLIP_VERTICAL);
 }
 SDL_Rect Pipe:: strikeUpperObstacle(){
     if(which_pipe_ % 3 == 0) return emptyObstacle;
@@ -106,5 +99,6 @@ Pipe::~Pipe(){
     height_ = 0;
     width_ = 0;
     which_pipe_ = 0;
+    Free();
 }
 #endif

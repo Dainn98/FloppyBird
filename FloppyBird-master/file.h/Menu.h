@@ -10,19 +10,9 @@ class Menu : public BaseObject{
     private:
         Game game_;
         bool HomeChoice;
-        // bool PlayChoice;
-        // bool TutorialChoice;
-        // bool HighestChoice;
-        // bool OverChoice;
 };
 Menu::Menu(){
-    // game_.Initialize();
-    // game_.LoadingMedia();
     HomeChoice = true;
-    // PlayChoice = false;
-    // TutorialChoice = false;
-    // HighestChoice = false;
-    // OverChoice = false;
 }
 Menu::~Menu(){
     Free();
@@ -35,7 +25,9 @@ void Menu::Operation(){
         if (HomeChoice){
             int ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame_path);
             if (ret_menu == 0){
+                game_.ResetStats();
                 game_.Play();
+                game_.FreeBird();
             }
             else if (ret_menu == 1) exit(0);
             else if (ret_menu == 2){

@@ -102,4 +102,5 @@ void TextObject::Free(){
     texture_ = NULL;
   }
 }
+
 #endif

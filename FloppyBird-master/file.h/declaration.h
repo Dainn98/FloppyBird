@@ -445,11 +445,6 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
 
 
     SDL_Rect pos[kMenuNum];
-    // pos[0].x = SCREEN_WIDTH*0.4 - 20;
-    // pos[0].y = SCREEN_HEIGHT/3 ;
-
-    // pos[1].x = SCREEN_WIDTH*0.5 - 70;
-    // pos[1].y = SCREEN_HEIGHT/3 + 60;
     pos[0].x = 300;
     pos[0].y = 450;
 
@@ -459,6 +454,7 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
     BaseObject gBackground;
     bool ret = gBackground.LoadImageFile(img_file, des);
     SDL_Rect rect_tutor = {200,100,900,485};
+    gBackground.RenderImage(des,rect_tutor);
 
 
     SDL_Event event;
@@ -473,6 +469,7 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
                 text_object[0].Free();
                 text_object[1].Free();
                 gBackground.Free();
+
 
                 return 1;
             case SDL_MOUSEMOTION:
@@ -526,10 +523,6 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
             }
         }
 
-        // gBackground.Render(des, NULL);
-        // SDL_Rect rect_tutor = {200,100,900,485};
-        gBackground.RenderImage(des,rect_tutor);
-
         for (int i = 0; i < kMenuNum; ++i)
         {
             text_object[i].RenderText(des, pos[i].x, pos[i].y);
@@ -539,10 +532,16 @@ int SDLCommonFunc::ShowTutorialWindow(SDL_Renderer* des,
 
 
         SDL_RenderPresent(des);
+        gBackground.Free();
+        text_object[0].Free();
+        text_object[1].Free();
+
         if (1000 / 30 > (SDL_GetTicks() - time))
             SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
     }
-
+    text_object[0].Free();
+    text_object[1].Free();
+    gBackground.Free();
     return 0;
 }
 
@@ -763,7 +762,7 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
     BaseObject gBackground;
     bool ret = gBackground.LoadImageFile(img_file, des);
     SDL_Rect rect_pause = {200,100,900,485};
-    gBackground.RenderImage(des,rect_pause);
+    // gBackground.RenderImage(des,rect_pause);
 
     TextObject text_coins;
     TextObject text_score;
@@ -779,6 +778,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
     text_score.setColor(124,15,37);
     text_score.SetText(count_str2);
     text_score.loadFromRenderedText(gFontMENU,des);
+
+    gBackground.RenderImage(des,rect_pause);
     text_coins.RenderText(des,350, 190);
     text_score.RenderText(des,350, 260);
 
@@ -836,8 +837,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                         gBackground.Free();
                         text_coins.Free();
                         text_score.Free();
-                        SDL_DestroyTexture(menu[0]);
-                        SDL_DestroyTexture(menu[1]);
+                        // SDL_DestroyTexture(menu[0]);
+                        // SDL_DestroyTexture(menu[1]);
                         return i;
                     }
                 }
@@ -848,8 +849,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
                     text_object[0].Free();
                     text_object[1].Free();
                     text_object[2].Free();
-                    SDL_DestroyTexture(menu[0]);
-                    SDL_DestroyTexture(menu[1]);
+                    // SDL_DestroyTexture(menu[0]);
+                    // SDL_DestroyTexture(menu[1]);
                     gBackground.Free();
                     text_coins.Free();
                     text_score.Free();

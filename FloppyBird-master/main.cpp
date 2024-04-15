@@ -18,5 +18,34 @@ int main( int argc, char* argv[]){
 
 
 // Set clip Background=> chưa
-//Pipe mất sau khi restarr (optioningame = > play,paused)
-//Pipe mất sau khi restart => lỗi ở restart xem lại 
+//Pipe mất sau khi restarr (optioningame = > play,paused) => chưa
+//Pipe mất sau khi restart => lỗi ở restart xem lại => chưa
+/*Play() =>
+    Background() => khonoong tăng ram
+    renderObject()
+    bird => không tăng ram
+    tappingFrame => tăng 10 ram
+    text_guide_ => không tăng ram
+RenderObject() 
+    
+    Money() => không tăng ram
+    Pipe() => ram tăng không ngừng:)) <cột xong, còn vật bất ngờ)
+    shield() => không tăng ram,xong
+    
+    check colliwsion shield => ok
+  
+    gBaseSurface => ok
+    optioningame =>ok
+    ShowStats() => ok
+    threat()
+    check collision => 
+    check collision icicle => 
+    check collision pwlant => 
+
+@ từ play thoát về home ram tăng
+@ mỗi chọn vào một nút ở home ram tăng
+@ màn hình statics thỉnh thoảng mất đí score
+    */
+
+    
+

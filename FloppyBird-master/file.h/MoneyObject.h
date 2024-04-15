@@ -35,6 +35,7 @@ MoneyObject::~MoneyObject(){
     for(MoneyObject* ptr : p_money_list_) {
         if(ptr != NULL){
             ptr->Free();
+            delete ptr;
             ptr = NULL;
         }
     }
@@ -42,7 +43,6 @@ MoneyObject::~MoneyObject(){
 }
 void MoneyObject::HandleMove(const int& x_border, const int& y_border){
     rect_.x -= x_val_;
-    // set_x_val(rect_.x);
     if(rect_.x < -SCREEN_WIDTH*0.5){
         rect_.x = SCREEN_WIDTH+ (getRandomNumber(SCREEN_WIDTH*1.5));
         rect_.y = SDLCommonFunc::MakeRandValue();
