@@ -31,16 +31,15 @@ RenderObject()
     Money() => không tăng ram
     Pipe() => ram tăng không ngừng:)) <cột xong, còn vật bất ngờ)
     shield() => không tăng ram,xong
-    
     check colliwsion shield => ok
   
     gBaseSurface => ok
     optioningame =>ok
     ShowStats() => ok
-    threat()
-    check collision => 
-    check collision icicle => 
-    check collision pwlant => 
+    threat()=> không tăng ram
+    check collision => ok
+    check collision icicle  => ok
+    check collision pwlant => ok
 
 @ từ play thoát về home ram tăng
 @ mỗi chọn vào một nút ở home ram tăng

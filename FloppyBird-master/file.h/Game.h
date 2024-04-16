@@ -104,20 +104,13 @@ public:
     void HandleWhenGameOver();
     void HandleWhenReplay();
     void HandleWhenCollision();
-    bool HandleButton();
 
     void CheckCollision();
 
-    // ThreatObject* p_threats = new ThreatObject[NUM_THREAT];
-    // std::vector<ThreatObject*> MakeThreatList();
-    // std::vector<ThreatObject*> threats_list;
     void ImplementThreat();
     void RenderBullet(ThreatObject* p_threat);
 
-    // std::vector<MoneyObject*> MakeMoneyList();
-    // std::vector<MoneyObject*> money_list;
     void ImplementMoney();
-
     void ImplementShield();
 
     void setIsTapped(const bool isTapped_) {isTapped = isTapped_;}
@@ -134,7 +127,6 @@ public:
 
     int getHighestScore() const {return highestScore;}
     int getMoney() const {return money;}
-
 
     void FreeBird();
     void FreeObjectPointer();
@@ -295,31 +287,6 @@ while (!quit) {
 //888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 
 }
-bool Game::HandleButton(){
-    if(OptionInGame.mPresentState[REPLAY]){  
-            OptionInGame.mPresentState[PAUSE] = false;
-            OptionInGame.mPresentState[REPLAY] = false;
-            setIsRestarted(true);
-            HandleWhenReplay();
-            // continue;
-            return 1;
-        }
-        else if(OptionInGame.mPresentState[PLAY]){
-            setIsPaused(false);
-            HandleWhenPlay();
-            // continue;
-            return 1;
-        }
-        else if(OptionInGame.mPresentState[PAUSE]){
-            OptionInGame.mPresentState[REPLAY] = false;
-            OptionInGame.mPresentState[EXIT] = false;
-            setIsPaused(true);
-            HandleWhenPause();
-            // continue;
-            return 1;
-        }
-    return 0;
-}
 std::vector<ThreatObject*> Game:: MakeThreatList(){
     std::vector<ThreatObject*> list_threats;
     ThreatObject* p_threats = new ThreatObject[NUM_THREAT];
@@ -349,11 +316,9 @@ void Game::ImplementThreat(){
         ThreatObject* p_threat = threats_list.at(it);
         if(p_threat!=NULL){
             if(!getIsPaused()){
-                // random_threat = getRandomNumber(NUM_THREAT_FRAME)-1;
                 p_threat->HandleMove(isDel);
             }
             p_threat->ShowThreat(p_threat);
-            // collision.CollisionBirdAndThreat(pipe,p_threat_frame,bird,explosion_Collision,p_threat,random_threat);
             RenderBullet(p_threat);
             
             bool Collision_Bird_Threat = SDLCommonFunc::CheckCollision(bird.strikeObstacle(),p_threat->GetRect());
@@ -529,8 +494,7 @@ void Game::HandleWhenPlay(){
         TappingFrame.Free();
         return;
     }else{
-    if(fps_manual % 3 == 0 && !getIsPaused()){
-        ++fps_manual;
+    if(++fps_manual % 3 == 0 && !getIsPaused()){
         random_threat = getRandomNumber(NUM_THREAT_FRAME)-1;
         random_plant = getRandomNumber(NUM_PLANT)-1;
         random_icicle = getRandomNumber(NUM_ICICLE)-1;
@@ -564,11 +528,11 @@ void Game::HandleWhenPause(){
 }
 void Game::RenderObject(){
                         //IMPLEMENT THREAT & COLLISION
-    // ImplementThreat();
+    ImplementThreat();
     ImplementMoney();
     ImplementShield();   
-    // checkBirdAndPlant = collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,random_plant,shield);
-    // checkBirdAndIcicle = collision.CollisionBirdAndIcicle(pipe,bird,icicle,explosion_Collision,random_icicle,moveY,shield);
+    checkBirdAndPlant = collision.CollisionBirdAndPlant(pipe,plant,bird,explosion_Collision,random_plant,shield);
+    checkBirdAndIcicle = collision.CollisionBirdAndIcicle(pipe,bird,icicle,explosion_Collision,random_icicle,moveY,shield);
 
     pipe.render();
     bird.render();  
