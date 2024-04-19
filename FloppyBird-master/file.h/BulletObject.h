@@ -8,6 +8,8 @@ class BulletObject;
 #define HEIGHT_LASER 5
 #define WIDTH_SPHERE 25
 #define HEIGHT_SPHERE 10
+#define BULLET_WIDTH 30
+#define BULLET_HEIGHT 30
 
  
 class BulletObject : public BaseObject{
