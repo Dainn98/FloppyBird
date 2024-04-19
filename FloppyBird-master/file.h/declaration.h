@@ -476,8 +476,8 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
     text_score.loadFromRenderedText(gFontMENU,des);
 
     gBackground.RenderImage(des,rect_pause);
-    text_coins.RenderText(des,350, 190);
     text_score.RenderText(des,350, 260);
+    text_coins.RenderText(des,350, 190);
 
     SDL_Event event;
     while (true){
@@ -570,13 +570,13 @@ int SDLCommonFunc::ShowMenuGameOver2(SDL_Renderer* des, TTF_Font* font,
             SDL_Delay(1000 / 30 - (SDL_GetTicks() - time));
     }
     gBackground.Free();
-    text_coins.Free();
-    text_score.Free();
     text_object[0].Free();
     text_object[1].Free();
     text_object[2].Free();
     SDL_DestroyTexture(menu[0]);
     SDL_DestroyTexture(menu[1]);
+    text_coins.Free();
+    text_score.Free();
     return 0;
 }
 void SDLCommonFunc:: showInfo(string recommend, string str, int x_pos, int y_pos,int text_color,SDL_Rect rect_,string path_,TTF_Font *gFont_){
