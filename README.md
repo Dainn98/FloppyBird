@@ -29,10 +29,10 @@
 | DOWN     |      ↓     |
 | SHOOTING | BUTTONLEFT |
 ### *Window Preview*
-![](res/demoImage/IntroDemo.png)
-![](res/demoImage/TapDemo.png)
-![](res/demoImage/TutorialDemo.png)
-![](res/demoImage/endDemo.png)
+![](FloppyBird/res/demoImage/IntroDemo.png)
+![](FloppyBird/res/demoImage/TapDemo.png)
+![](FloppyBird/res/demoImage/TutorialDemo.png)
+![](FloppyBird/res/demoImage/endDemo.png)
 
 ## **Setup**
 //To do
