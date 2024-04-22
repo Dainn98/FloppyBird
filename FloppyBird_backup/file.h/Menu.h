@@ -28,7 +28,7 @@ void Menu::Operation(){
             ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame_path);
             if (ret_menu == 0){
                 game_.ResetStats();
-                game_.LoadingGame();
+                game_.Play();
                 game_.FreeBird();
             }
             else if (ret_menu == 1) exit(0);

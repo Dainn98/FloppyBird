@@ -5,9 +5,6 @@ int main( int argc, char* argv[]){
     LoadingMedia();
     Menu menu;
     menu.Operation();    
-    // Game game;
-    // game.Play();
-    // game.FreeBird();
     ShutdownMedia();
     return 0;
 }
