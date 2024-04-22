@@ -61,7 +61,14 @@ bool Initialize(){
 					printf("Failed to load font menu %s!\n", "Sprites/turok.ttf");
 					success = false;
 				}
-
+				SDL_Surface* icon = IMG_Load("Sprites/icon.png");
+				if(icon == NULL){
+					printf("Failed to load icon %s!\n", "Sprites/icon.png");
+					success = false;
+				}else{
+					SDL_SetWindowIcon(gWindow, icon);
+					SDL_FreeSurface(icon);
+				}
 			}
 		}
 	}

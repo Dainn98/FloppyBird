@@ -379,6 +379,12 @@ void Game::ResetStats(){
     GameOverMenu.LoadImageFile(GameOverMenu_path,gRenderer);
     Tutorial.LoadImageFile(Tutorial_path,gRenderer);
     Statswd.LoadImageFile(Stats_path,gRenderer);
+    // std::string str("Press M to mute the music");
+    // text_guide_.SetColor(TextObject::BLACK_TEXT);
+    // text_guide_.SetText(str);
+    // if(!text_guide_.loadFromRenderedText(gFontText,gRenderer)){
+    //     cout << "Failed to load text_guide_" << endl;
+    // }
 
     threats_list = MakeThreatList();
     money_list = MakeMoneyList();
