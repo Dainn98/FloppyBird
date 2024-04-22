@@ -35,7 +35,11 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 ![](FloppyBird/res/demoImage/endDemo.png)
 
 ## **Setup**
-//To do
+- Yêu cầu : có C++ compiler
+    1. Tạo một New Folder bất kỳ, dùng terminal : git clone https://github.com/Dainn98/FloppyBird.git
+    2. Vào thư mục vừa tải về và ấn đúp vào FloppyBird
+    3. Ấn đúp vào FloppyBird hoặc FloppyBird_backup, ấn đúp vào main.exe để chạy chương trình
+- *Mọi khó khăn trong phần cài đặt, trong quá trình chơi, vui lòng liên hệ qua 23020010@vnu.edu.vn.*
 ## **See also**  
 ### *Các kỹ thuật sử dụng*  
 - Thư viện SDL2.0
