@@ -21,8 +21,6 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 - Game có đầy đủ chức năng hỗ trợ người chơi trong việc điều chỉnh giữa các lựa chọn dừng game, chơi lại game, thoát game, mô tả cách chơi, sử dụng phím esc để dừng game,...
 - Floppy Bird chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
 - Video demo :
-  
-Floppy Bird hứa hẹn mang đến cho bạn những giờ phút giải trí bùng nổ và đầy thú vị!
 ### *Control* 
 
 | Control  |   Player   |
@@ -52,7 +50,11 @@ Floppy Bird hứa hẹn mang đến cho bạn những giờ phút giải trí b�
 
 ### *Các nguồn tham khảo*
 - Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh youtube TOAN - TIN IUH.
-- Cách sử dụng, thư viện SDL2.0, quản lý chương trình: Tham khảo trên LazyFool,các bài lý thuyết của TS.Lê Đức Trọng, các buổi thực hành của CN. Trần Trường Thủy, kênh youtube: Let's Make Games, PolyMars, Madsycode.
+- Cách sử dụng, thư viện SDL2.0, quản lý chương trình:
+    + Tham khảo trên LazyFool.
+    + Các buổi lý thuyết của TS.Lê Đức Trọng.
+    + Các buổi thực hành của CN. Trần Trường Thủy.
+    + Kênh youtube: Let's Make Games, PolyMars, Madsycode.
 - Hình ảnh: các nguồn trên google, pinterest,..
     + https://www.spriters-resource.com/mobile/flappybird/sheet/59894/
 - Âm thanh: các nguồn trên google
@@ -76,6 +78,7 @@ Floppy Bird hứa hẹn mang đến cho bạn những giờ phút giải trí b�
     
 ### ***Hạn chế*** 
   - Một số đối tượng trong chương trình vẫn đang được quản lý theo vector kiểu con trỏ nên việc phải tự xóa sau khi không sử dụng là việc không dễ dàng
+  - Một số phần code chưa trong sáng.
 
 ### ***Hướng phát triển***
 - Cập nhật tính năng bảng xếp hạng, sau mỗi lần chơi người chơi sẽ được nhập tên để lưu lại kết quả chơi của mình
