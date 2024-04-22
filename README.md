@@ -29,10 +29,10 @@
 | DOWN     |      ↓     |
 | SHOOTING | BUTTONLEFT |
 ### *Window Preview*
-[](res/demoImage/IntroDemo.png)
-[](res/demoImage/TapDemo.png)
-[](res/demoImage/TutorialDemo.png)
-[](res/demoImage/endDemo.png)
+![](res/demoImage/IntroDemo.png)
+![](res/demoImage/TapDemo.png)
+![](res/demoImage/TutorialDemo.png)
+![](res/demoImage/endDemo.png)
 
 ## **Setup**
 //To do
