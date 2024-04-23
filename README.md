@@ -12,7 +12,7 @@
   * [Game description and instruction](#game-description-and-instruction)
   * [Control](#control)
   * [Preview](#preview)
-    + [Objects In game](#objects-in-game)
+- [Objects In game](#objects-in-game)
 - [Setup](#setup)
 - [Play Game](#play-game)
 - [See also](#see-also)
@@ -52,7 +52,9 @@
 ![](FloppyBird/res/demoImage/TapDemo.png)
 ![](FloppyBird/res/demoImage/TutorialDemo.png)
 ![](FloppyBird/res/demoImage/endDemo.png)
-#### *Objects In game*
+
+
+## **Objects In game**
 |                                         | Tên đối tượng 	       | Mô tả                                                                                        |
 |-----------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
 | ![image](FloppyBird/res/demoImage/bird.png) | Bird  | Nhân vật chính của game|
