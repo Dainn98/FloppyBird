@@ -10,9 +10,8 @@
 
 ## **Description** 
 ### *Game description and instruction* 
-- Đây là trò chơi được phát triển theo một hướng hoàn toàn khác với nhiều tính năng hay, vượt trội so với trò chơi Flappy Bird.
-Bứt phá khỏi lối chơi truyền thống, **Floppy Bird** mang đến những tính năng độc đáo và đầy hấp dẫn:
-- Gameplay:
+- Đây là trò chơi được phát triển theo một hướng hoàn toàn khác với nhiều tính năng hay, vượt trội so với trò chơi Flappy Bird, được lập trình với thư viện SDL2.
+- Bứt phá khỏi lối chơi truyền thống, **Floppy Bird** mang đến những tính năng độc đáo và Gameplay đầy hấp dẫn:
   + Thay vì chỉ tập trung vào việc điều khiển chim bay qua các chướng ngại vật, người chơi có thể sử dụng thêm tính năng bắn đạn để tiêu diệt chúng.
   + Việc kiếm tiền thưởng bằng cách ăn vàng và tiêu diệt chướng ngại vật tạo thêm động lực cho người chơi tiếp tục chơi.
   +  Có thêm các chướng ngại vật bất ngờ như cây ăn thịt và tảng băng rơi mang đến yếu tố thử thách và bất ngờ, khiến trò chơi trở nên gay cấn hơn.
@@ -26,8 +25,11 @@ Bứt phá khỏi lối chơi truyền thống, **Floppy Bird** mang đến nh�
 | Control  |   Player   |
 |----------|------------|
 | UP       |      ↑     |
-| DOWN     |      ↓     |
+| W        |      ↑     |
 | SHOOTING | BUTTONLEFT |
+
+// button control B,M,ESC.
+
 ### *Window Preview*
 ![](FloppyBird/res/demoImage/IntroDemo.png)
 ![](FloppyBird/res/demoImage/TapDemo.png)
@@ -53,12 +55,12 @@ Bứt phá khỏi lối chơi truyền thống, **Floppy Bird** mang đến nh�
 - Có sử dụng kiến thức toán học để tính toán va chạm của các đối tượng.
 
 ### *Các nguồn tham khảo*
-- Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh youtube TOAN - TIN IUH.
+- Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh youtube **TOAN - TIN IUH**.
 - Cách sử dụng, thư viện SDL2.0, quản lý chương trình:
     + Tham khảo trên **LazyFool**.
-    + Các buổi lý thuyết của **TS.Lê Đức Trọng**.
-    + Các buổi thực hành của **CN. Trần Trường Thủy**.
-    + Kênh youtube: Let's Make Games, PolyMars, Madsycode.
+    + Các buổi học lý thuyết của **TS.Lê Đức Trọng**.
+    + Các buổi học thực hành của **CN. Trần Trường Thủy**.
+    + Kênh youtube: **Let's Make Games**, **PolyMars**, **Madsycode**.
 - Hình ảnh: các nguồn trên google, pinterest,..
     + https://www.spriters-resource.com/mobile/flappybird/sheet/59894/
 - Âm thanh: các nguồn trên google
