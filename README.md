@@ -6,7 +6,24 @@
 
 + Mã sinh viên: 23020010 
 
-+ Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao) 
++ Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao)
+# Phụ lục
+- [Description](#description)
+  * [Game description and instruction](#game-description-and-instruction)
+  * [Control](#control)
+  * [Preview](#preview)
+    + [Objects In game](#objects-in-game)
+- [Setup](#setup)
+- [Play Game](#play-game)
+- [See also](#see-also)
+  * [Các kỹ thuật sử dụng](#các-kỹ-thuật-sử-dụng)
+  * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
+- [Conclusion](#conclusion)
+  * [Điều tâm đắc](#điều-tâm-đắc)
+  * [Hạn chế](#hạn-chế)
+  * [Hướng phát triển](#hướng-phát-triển)
+- [A Special Thanks To](#a-special-thanks-to)
+- [Mức điểm tự đánh giá](#mức-điểm-tự-đánh-giá)
 
 ## **Description** 
 ### *Game description and instruction* 
@@ -30,11 +47,27 @@
 
 // button control B,M,ESC.
 
-### *Window Preview*
+### *Preview*
 ![](FloppyBird/res/demoImage/IntroDemo.png)
 ![](FloppyBird/res/demoImage/TapDemo.png)
 ![](FloppyBird/res/demoImage/TutorialDemo.png)
 ![](FloppyBird/res/demoImage/endDemo.png)
+#### *Objects In game*
+|                                         | Tên đối tượng 	       | Mô tả                                                                                        |
+|-----------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
+| ![image](res/demoImage/bird.png) | Bird  | Nhân vật chính của game|
+| ![image](res/demoImage/pipeRed.png) | Pipe Red| Ống nước màu đỏ là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
+| ![image](res/demoImage/pipeGreen.png)   | Pipe Green	   | Ông nước màu lục là chướng ngại vật|
+| ![image](res/demoImage/pipeBlue.png) | Pipe Blue	 | Ống nước màu lam là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
+| ![image](res/demoImage/threat.png)   | Threat| Quái ong có khả năng phóng mũi kim có độc |
+| ![image](res/demoImage/unthreat.png)   | Unexpected Threat| Những vật cản bất ngờ |
+| ![image](res/demoImage/money.png)   | Money| Tiền thường |
+| ![image](res/demoImage/shield.png)   | Power-ups Items| Vật phẩm bổ trợ cho nhân vật  |
+| ![image](res/demoImage/bubbleShield.png)   | Shield| Lá chắn vật cản   |
+| ![image](res/demoImage/pause.png)   | Pause Game Button | Nút dừng Game  |
+| ![image](res/demoImage/play.png)   | Play Game Button | Nút chơi tiếp  |
+| ![image](res/demoImage/restart.png)   | Restart Game Button | Nút chơi lại   |
+| ![image](res/demoImage/exit.png)   | Exit Game Button | Nút thoát Game  |
 
 ## **Setup**
 - Yêu cầu : có C++ compiler.
@@ -42,6 +75,7 @@
     2. Vào thư mục vừa tải về và ấn đúp vào FloppyBird.
     3. Ấn đúp vào FloppyBird hoặc FloppyBird_backup, ấn đúp vào main.exe để chạy chương trình.
 - *Mọi khó khăn trong phần cài đặt, trong quá trình chơi, vui lòng liên hệ qua 23020010@vnu.edu.vn.*
+
 ## **See also**  
 ### *Các kỹ thuật sử dụng*  
 - Thư viện SDL2.0
@@ -97,10 +131,10 @@
     + Người chơi nạp tiền vào game, số tiền sẽ chuyển vào tài khoản nhà phát hành.
 - Sử dụng kết nối mạng máy tính (LAN, Router,...) kết nối người chơi cạnh tranh với nhau.
   
-### ***A Special Thanks:***
+# **A Special Thanks To**
 - **TS. Lê Đức Trọng** - Người hướng dẫn, Giảng viên.
 - **CN. Trần Trường Thủy** - Người hướng dẫn, Giảng viên.
 - **SV Nguyễn Hoàng Dương** - Cố vấn.
 
-### *Mức điểm tự đánh giá*
+# *Mức điểm tự đánh giá*
 *Với tất cả những điều nêu trên, em nghĩ Game của em xứng đáng được **10đ** nhưng nếu có thấp hơn em cũng xin chấp nhận.*
