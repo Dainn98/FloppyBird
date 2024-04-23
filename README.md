@@ -45,7 +45,9 @@
 | W        |      ↑     |
 | SHOOTING | BUTTONLEFT |
 
-// button control B,M,ESC.
+- **Button B**: swap bullet for bird.
+- **Button M**: unmute/unmute music.
+- **Button ESC** : pause game, or exit window menu.
 
 ### *Preview*
 ![](FloppyBird/res/demoImage/IntroDemo.png)
