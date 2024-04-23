@@ -62,7 +62,7 @@
 | ![image](FloppyBird/res/demoImage/pipeGreen.png)   | Pipe Green	   | Ông nước màu lục là chướng ngại vật|
 | ![image](FloppyBird/res/demoImage/pipeBlue.png) | Pipe Blue	 | Ống nước màu lam là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
 | ![image](FloppyBird/res/demoImage/threat.png)   | Threat| Quái ong có khả năng phóng mũi kim có độc |
-| ![image](FloppyBird/res/demoImage/unthreat.png)   | Unexpected Threat| Những vật cản bất ngờ |
+| ![image](FloppyBird/res/demoImage/unexpected.png)   | Unexpected Threat| Những vật cản bất ngờ |
 | ![image](FloppyBird/res/demoImage/money.png)   | Money| Tiền thường |
 | ![image](FloppyBird/res/demoImage/shield.png)   | Power-ups Items| Vật phẩm bổ trợ cho nhân vật  |
 | ![image](FloppyBird/res/demoImage/bubbleShield.png)   | Shield| Lá chắn vật cản   |
