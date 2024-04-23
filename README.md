@@ -57,7 +57,7 @@
 ### *Các nguồn tham khảo*
 - Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh youtube **TOAN - TIN IUH**.
 - Cách sử dụng, thư viện SDL2.0, quản lý chương trình:
-    + Tham khảo trên **LazyFool**.
+    + Tham khảo trên **LazyFoo**.
     + Các buổi học lý thuyết của **TS.Lê Đức Trọng**.
     + Các buổi học thực hành của **CN. Trần Trường Thủy**.
     + Kênh youtube: **Let's Make Games**, **PolyMars**, **Madsycode**.
