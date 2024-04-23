@@ -8,7 +8,7 @@
 
 + Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao)
 # Phụ lục
-- [**Description**](**Description**)
+- [Description](#description)
 - 
 ## **Description** 
 ### *Game description and instruction* 
