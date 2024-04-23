@@ -6,8 +6,10 @@
 
 + Mã sinh viên: 23020010 
 
-+ Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao) 
-
++ Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao)
+# Phụ lục
+- [**Description**](**Description**)
+- 
 ## **Description** 
 ### *Game description and instruction* 
 - Đây là trò chơi được phát triển theo một hướng hoàn toàn khác với nhiều tính năng hay, vượt trội so với trò chơi Flappy Bird, được lập trình với thư viện SDL2.
