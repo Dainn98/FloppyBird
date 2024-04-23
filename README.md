@@ -6,12 +6,12 @@
 
 + Mã sinh viên: 23020010 
 
-+ Bài tập lớn: Floppy Bird (INT2215_50 - Lập trình nâng cao) 
++ Bài tập lớn: **Floppy Bird** (INT2215_50 - Lập trình nâng cao) 
 
 ## **Description** 
 ### *Game description and instruction* 
 - Đây là trò chơi được phát triển theo một hướng hoàn toàn khác với nhiều tính năng hay, vượt trội so với trò chơi Flappy Bird.
-Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những tính năng độc đáo và đầy hấp dẫn:
+Bứt phá khỏi lối chơi truyền thống, **Floppy Bird** mang đến những tính năng độc đáo và đầy hấp dẫn:
 - Gameplay:
   + Thay vì chỉ tập trung vào việc điều khiển chim bay qua các chướng ngại vật, người chơi có thể sử dụng thêm tính năng bắn đạn để tiêu diệt chúng.
   + Việc kiếm tiền thưởng bằng cách ăn vàng và tiêu diệt chướng ngại vật tạo thêm động lực cho người chơi tiếp tục chơi.
@@ -19,7 +19,7 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
   + Bên cạnh các chướng ngại vật, vật phẩm giúp người chơi chống lại các chướng ngại vật, tạo thêm lợi thế và tăng cơ hội tồn tại lâu hơn.
 - Có âm thanh sôi động khi chơi game.
 - Game có đầy đủ chức năng hỗ trợ người chơi trong việc điều chỉnh giữa các lựa chọn dừng game, chơi lại game, thoát game, mô tả cách chơi, sử dụng phím esc để dừng game,...
-- Floppy Bird chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
+- **Floppy Bird** chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
 - Video demo :
 ### *Control* 
 
@@ -35,10 +35,10 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 ![](FloppyBird/res/demoImage/endDemo.png)
 
 ## **Setup**
-- Yêu cầu : có C++ compiler
-    1. Tạo một New Folder bất kỳ, dùng terminal : git clone https://github.com/Dainn98/FloppyBird.git
-    2. Vào thư mục vừa tải về và ấn đúp vào FloppyBird
-    3. Ấn đúp vào FloppyBird hoặc FloppyBird_backup, ấn đúp vào main.exe để chạy chương trình
+- Yêu cầu : có C++ compiler.
+    1. Tạo một New Folder bất kỳ, dùng terminal: $ git clone https://github.com/Dainn98/FloppyBird.git
+    2. Vào thư mục vừa tải về và ấn đúp vào FloppyBird.
+    3. Ấn đúp vào FloppyBird hoặc FloppyBird_backup, ấn đúp vào main.exe để chạy chương trình.
 - *Mọi khó khăn trong phần cài đặt, trong quá trình chơi, vui lòng liên hệ qua 23020010@vnu.edu.vn.*
 ## **See also**  
 ### *Các kỹ thuật sử dụng*  
@@ -55,9 +55,9 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 ### *Các nguồn tham khảo*
 - Cách sử dụng, cài đặt SDL2.0 trên C++: tham khảo từ các bạn, kênh youtube TOAN - TIN IUH.
 - Cách sử dụng, thư viện SDL2.0, quản lý chương trình:
-    + Tham khảo trên LazyFool.
-    + Các buổi lý thuyết của TS.Lê Đức Trọng.
-    + Các buổi thực hành của CN. Trần Trường Thủy.
+    + Tham khảo trên **LazyFool**.
+    + Các buổi lý thuyết của **TS.Lê Đức Trọng**.
+    + Các buổi thực hành của **CN. Trần Trường Thủy**.
     + Kênh youtube: Let's Make Games, PolyMars, Madsycode.
 - Hình ảnh: các nguồn trên google, pinterest,..
     + https://www.spriters-resource.com/mobile/flappybird/sheet/59894/
@@ -72,7 +72,7 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 ### ***Điều tâm đắc***
   - Dự án này hoàn toàn là do em tự làm, không đi sao chép ở bất kì đâu.
   - Hiểu được mô hình phát triển 1 phần mềm kiểu thác nước: Phân tích, thiết kế, lập trình, kiểm thử, vận hành và bảo trì.
-  - Cách dùng github.
+  - Hiểu được cách dùng github.
   - Hiểu sơ sơ một số khía cạnh của lập trình hướng đối tượng: kế thừa, đa hình,...
   - Sau khi làm dự án này, em thấy mình đã cải thiện được nhiều kỹ năng trong việc tư duy và viết code, khả năng lên ý tưởng, sắp xếp chia tách file và các kỹ năng photoshop.
   - Học được cách setup môi trường, sử dụng thư viện ngoài (SDL2, SDL2_ttf, SDL2_mixer, SDL2_image, ...)
@@ -96,8 +96,8 @@ Bứt phá khỏi lối chơi truyền thống, Floppy Bird mang đến những 
 - Sử dụng kết nối mạng máy tính (LAN, Router,...) kết nối người chơi cạnh tranh với nhau.
   
 ### ***A Special Thanks:***
-- TS. Lê Đức Trọng - Người hướng dẫn, Giảng viên.
-- CN. Trần Trường Thủy - Người hướng dẫn, Giảng viên.
-- SV Nguyễn Hoàng Dương - Cố vấn.
+- **TS. Lê Đức Trọng** - Người hướng dẫn, Giảng viên.
+- **CN. Trần Trường Thủy** - Người hướng dẫn, Giảng viên.
+- **SV Nguyễn Hoàng Dương** - Cố vấn.
 
-### *Mức điểm tự đánh giá: **/10* 
+### *Mức điểm tự đánh giá: 9-9.5/10* 
