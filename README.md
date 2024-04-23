@@ -102,4 +102,5 @@
 - **CN. Trần Trường Thủy** - Người hướng dẫn, Giảng viên.
 - **SV Nguyễn Hoàng Dương** - Cố vấn.
 
-### *Mức điểm tự đánh giá: 9-9.5/10* 
+### *Mức điểm tự đánh giá*
+*Với tất cả những điều nêu trên, em nghĩ Game của em xứng đáng được **10đ** nhưng nếu có thấp hơn em cũng xin chấp nhận.*
