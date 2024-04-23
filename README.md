@@ -55,19 +55,19 @@
 #### *Objects In game*
 |                                         | Tên đối tượng 	       | Mô tả                                                                                        |
 |-----------------------------------------|--------------------|--------------------------------------------------------------------------------------------------|
-| ![image](res/demoImage/bird.png) | Bird  | Nhân vật chính của game|
-| ![image](res/demoImage/pipeRed.png) | Pipe Red| Ống nước màu đỏ là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
-| ![image](res/demoImage/pipeGreen.png)   | Pipe Green	   | Ông nước màu lục là chướng ngại vật|
-| ![image](res/demoImage/pipeBlue.png) | Pipe Blue	 | Ống nước màu lam là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
-| ![image](res/demoImage/threat.png)   | Threat| Quái ong có khả năng phóng mũi kim có độc |
-| ![image](res/demoImage/unthreat.png)   | Unexpected Threat| Những vật cản bất ngờ |
-| ![image](res/demoImage/money.png)   | Money| Tiền thường |
-| ![image](res/demoImage/shield.png)   | Power-ups Items| Vật phẩm bổ trợ cho nhân vật  |
-| ![image](res/demoImage/bubbleShield.png)   | Shield| Lá chắn vật cản   |
-| ![image](res/demoImage/pause.png)   | Pause Game Button | Nút dừng Game  |
-| ![image](res/demoImage/play.png)   | Play Game Button | Nút chơi tiếp  |
-| ![image](res/demoImage/restart.png)   | Restart Game Button | Nút chơi lại   |
-| ![image](res/demoImage/exit.png)   | Exit Game Button | Nút thoát Game  |
+| ![image](FloppyBird/res/demoImage/bird.png) | Bird  | Nhân vật chính của game|
+| ![image](FloppyBird/res/demoImage/pipeRed.png) | Pipe Red| Ống nước màu đỏ là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
+| ![image](FloppyBird/res/demoImage/pipeGreen.png)   | Pipe Green	   | Ông nước màu lục là chướng ngại vật|
+| ![image](FloppyBird/res/demoImage/pipeBlue.png) | Pipe Blue	 | Ống nước màu lam là chướng ngại vật tiềm tàng ẩn chứa những vật cản bất ngờ|
+| ![image](FloppyBird/res/demoImage/threat.png)   | Threat| Quái ong có khả năng phóng mũi kim có độc |
+| ![image](FloppyBird/res/demoImage/unthreat.png)   | Unexpected Threat| Những vật cản bất ngờ |
+| ![image](FloppyBird/res/demoImage/money.png)   | Money| Tiền thường |
+| ![image](FloppyBird/res/demoImage/shield.png)   | Power-ups Items| Vật phẩm bổ trợ cho nhân vật  |
+| ![image](FloppyBird/res/demoImage/bubbleShield.png)   | Shield| Lá chắn vật cản   |
+| ![image](FloppyBird/res/demoImage/pause.png)   | Pause Game Button | Nút dừng Game  |
+| ![image](FloppyBird/res/demoImage/play.png)   | Play Game Button | Nút chơi tiếp  |
+| ![image](FloppyBird/res/demoImage/restart.png)   | Restart Game Button | Nút chơi lại   |
+| ![image](FloppyBird/res/demoImage/exit.png)   | Exit Game Button | Nút thoát Game  |
 
 ## **Setup**
 - Yêu cầu : có C++ compiler.
