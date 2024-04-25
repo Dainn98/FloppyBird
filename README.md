@@ -148,7 +148,6 @@
   - Học được kỹ thuật refactor code, duyệt mảng, sinh số ngẫu nhiên, giải phóng bộ nhớ động.
   - Cải thiện kỹ năng tối ưu hóa code bằng việc destructor các đối tượng trong mỗi class, khởi tạo và giải phóng bộ nhớ động, ... => Kiểm soát tốt RAM của game *TỐT*, đảm bảo mức tối đa là *100MB*
 ### ***Hạn chế*** 
-  - Một số đối tượng trong chương trình vẫn đang được quản lý theo vector kiểu con trỏ nên việc phải tự xóa sau khi không sử dụng là việc không dễ dàng
   - Một số phần code chưa trong sáng.
 
 ### ***Hướng phát triển***
