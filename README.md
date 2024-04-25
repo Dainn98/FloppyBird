@@ -1,4 +1,4 @@
-# ***Floppy Bird*** 
+ # ***Floppy Bird*** 
 
 ## **Introduction** 
 
@@ -18,6 +18,7 @@
 - [See also](#see-also)
   * [Các kỹ thuật sử dụng](#các-kỹ-thuật-sử-dụng)
   * [Các nguồn tham khảo](#các-nguồn-tham-khảo)
+- [Source Code Game](#source-code-game)
 - [Conclusion](#conclusion)
   * [Điều tâm đắc](#điều-tâm-đắc)
   * [Hạn chế](#hạn-chế)
@@ -104,10 +105,37 @@
 - Âm thanh: các nguồn trên google
   
     + https://pixabay.com/sound-effects/search/wav/
-    #Free Wav Sound Effects Download
+      * Free Wav Sound Effects Download
     + https://www.freesoundeffects.com/free-sounds/explosion-10070/
-    #Free Explosion Sound Effects
- ...
+      * Free Explosion Sound Effects
+## **Source Code Game**
+- Folder *Sound*: Chứa toàn bộ âm thanh của trò chơi.
+- Folder *Stats*: Chứa dữ liệu điểm và tiền thưởng của trò chơi.
+- Folder *Sprites*: Chứa toàn bộ hình ảnh của trò chơi.
+- Folder *file.h*: Chứa hầu hết các Header.h xử lý từng thành phần của trò chơi.
+  + Header *BaseObject.h*: chứa hầu hết các lệnh để load ảnh và vẽ lên renderer, window.
+  + Header *Bird.h*: Xử lý phần dữ liệu của nhân vật game gồm tọa độ, kích thước,...
+  + Header *BulletObject*: Xử lý dữ liệu của tất cả các loại đạn bắn.
+  + Header *Collision_With_Obstacles.h*: Xử lý chương trình khi có sự va chạm giữa các dối tượng.
+  + Header *Explosion.h*: Xử lý phần dữ liệu khi sự va chạm giữa *Threats* và *Bird* được sử dụng.
+  + Header *Pause.h*: Xử lý các *OptionInGame* bao gồm *Pause*,*Play*,*Restart*,*Exit Game*.
+  + Header *initialize*: Khởi tạo window và render.
+  + Header *declaration*:
+      * Khởi tạo và khai báo các biến global.
+      * Chứa hầu hết các lệnh của thư viện SDL2.0 để load ảnh, chữ lên render.
+      * Khai báo source cho hình ảnh và âm thanh nên có thể dễ dàng thay đổi.
+  + Header *Game.h*: Chứa logic chính của game
+      * Xử lý events: Xử lý các sự kiên trong Game (sự kiện chuột, bàn phím)
+      * Xử lý logic chính của game:
+         * Xử lý khi chương trình bắt đầu, dừng lại, thoát.
+         * Xử lý sự di chuyển và va chạm giữa các đối tượng.
+      * Xử lý thời gian FPS của game: điều chỉnh FPS phù hợp để chương trình game được mượt mà hơn.
+      * Xử lý hiện thị toàn bộ âm thanh hình ảnh
+      * Xử lý giải phóng bộ nhớ của game khi không sử dụng => đảm bảo RAM của game luôn duy trì của mức độ thấp.
+      * Xử lý hiện thị các đối tượng của game.
+  + Header *Menu.h*: Xử lý chương trình
+- Folder res: Chứa các hình ảnh preview cho game.
+- Và hàm main() của trò chơi.
 ## **Conclusion**
 ### ***Điều tâm đắc***
   - Dự án này hoàn toàn là do em tự làm, không đi sao chép ở bất kì đâu.
@@ -118,8 +146,7 @@
   - Học được cách setup môi trường, sử dụng thư viện ngoài (SDL2, SDL2_ttf, SDL2_mixer, SDL2_image, ...)
   - Cải thiện kỹ năng sử dụng class (constructor, destructor, member function,...).  
   - Học được kỹ thuật refactor code, duyệt mảng, sinh số ngẫu nhiên, giải phóng bộ nhớ động.
-  - Cải thiện kỹ năng tối ưu hóa code bằng việc destructor các đối tượng trong mỗi class, khởi tạo và giải phóng bộ nhớ động, ...
-    
+  - Cải thiện kỹ năng tối ưu hóa code bằng việc destructor các đối tượng trong mỗi class, khởi tạo và giải phóng bộ nhớ động, ... => Kiểm soát tốt RAM của game *TỐT*, đảm bảo mức tối đa là *100MB*
 ### ***Hạn chế*** 
   - Một số đối tượng trong chương trình vẫn đang được quản lý theo vector kiểu con trỏ nên việc phải tự xóa sau khi không sử dụng là việc không dễ dàng
   - Một số phần code chưa trong sáng.
