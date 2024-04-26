@@ -37,7 +37,7 @@
 - Có âm thanh sôi động khi chơi game.
 - Game có đầy đủ chức năng hỗ trợ người chơi trong việc điều chỉnh giữa các lựa chọn dừng game, chơi lại game, thoát game, mô tả cách chơi, sử dụng phím esc để dừng game,...
 - **Floppy Bird** chắc chắn sẽ không khiến cho người chơi phải thất vọng với những tính năng, đồ họa độc đáo mới lạ.
-- Video demo :
+- Video demo :https://youtu.be/moiWBao-i_U
 ### *Control* 
 
 | Control  |   Player   |
