@@ -56,6 +56,7 @@ static char PipeGreen_path[] = {"Sprites/pipeGreen.png"};
 
 static char gFly_path[] = {"Sound/wing.wav"};
 static char gMusic_path[] = {"Sound/musicBackground.wav"};
+static char gMusicIntro_path[] = {"Sound/music.wav"};
 static char gSwoosh_path[] = {"Sound/swoosh.wav"};
 static char gSwapBullet_path[] = {"Sound/swapBullet.wav"};
 static char gExplosion_path[] = {"Sound/explosion.wav"};
@@ -120,6 +121,7 @@ Mix_Chunk *gBubbleAdd = NULL;
 Mix_Chunk *gBubblePow = NULL;
 Mix_Chunk *gScoreIncrement = NULL;
 Mix_Music *gMusic = NULL;
+Mix_Music *gMusicIntro = NULL;
                                                             //OPTION_CONTROL_GAME
 enum Button{
     PAUSE,

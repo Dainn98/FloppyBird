@@ -33,6 +33,7 @@ bool LoadingMedia(){
                                                                     //MUSIC LOADING
     gFly = Mix_LoadWAV(gFly_path);
     gMusic = Mix_LoadMUS(gMusic_path);
+    gMusicIntro = Mix_LoadMUS(gMusicIntro_path);
     gSwoosh = Mix_LoadWAV(gSwoosh_path);
     gMoneyCol = Mix_LoadWAV(gMoneyCol_path);
     gSwapBullet = Mix_LoadWAV(gSwapBullet_path);

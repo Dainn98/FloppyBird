@@ -21,8 +21,11 @@ Menu::~Menu(){
 }
 void Menu::Operation(){
     game_.InitStats();
-    Mix_PlayMusic(gMusic, -1);
+    // Mix_PlayMusic(gMusic, -1);
+    Mix_PlayMusic(gMusicIntro,-1);
     while(true){
+    // Mix_PlayMusic(gMusicIntro,-1);
+
         game_.ResetStats();
         if (HomeChoice){
             ret_menu = SDLCommonFunc::ShowMenuStart(gRenderer, gFontMENU, "Start Game", "Exit","Tutorial","Highest Score", StartGame_path);

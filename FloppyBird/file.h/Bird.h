@@ -32,7 +32,7 @@ public:
     void set_bullet_list(std::vector<BulletObject *> bullet_list)   {p_bullet_list_ = bullet_list;}
     std::vector<BulletObject *> get_bullet_list() const {return p_bullet_list_;}
     void HandleBullet(SDL_Renderer* des,Pipe pipe);
-    void HandleInputAction(SDL_Event events);
+    // void HandleInputAction(SDL_Event events);
 
     // void DoFalling(SDL_Renderer* des);
     // bool GetFalling() const { return is_falling_; }
@@ -175,40 +175,40 @@ void Bird::RemoveBullet(const int& idx){
     }
   }
 }
-void Bird::HandleInputAction(SDL_Event e){
-    if(e.type == SDL_MOUSEBUTTONDOWN)  
-        if(e.button.button == SDL_BUTTON_LEFT ){
-            LoadBullet();
-            Mix_PlayChannel(-1,gSwoosh,0);
-        }
+// void Bird::HandleInputAction(SDL_Event e){
+//     if(e.type == SDL_MOUSEBUTTONDOWN)  
+//         if(e.button.button == SDL_BUTTON_LEFT ){
+//             LoadBullet();
+//             Mix_PlayChannel(-1,gSwoosh,0);
+//         }
        
-        else if (e.type == SDL_KEYDOWN){
-            switch( e.key.keysym.sym ){  
-                case SDLK_b:
-                                                                                //SWITCH TYPE BULLET (IN DECLARATION)
-                    std::swap(bullet[0],bullet[1]); 
-                    Mix_PlayChannel(-1,gSwapBullet,0);
-                    break;
-                                                                                //BIRD SWING
-                case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
-                    jump();
-                    Mix_PlayChannel( -1, gFly, 0 );
-                    break;
-                                                                                //PLAY THE MUSIC
-                case SDLK_m:
-                    if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
-                    else{
-                        if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
-                        else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
-                    }
-                    break;
-                                                                                //STOP THE MUSIC
-                case SDLK_0:    
-                    Mix_HaltMusic();   
-                    break;
-            }
-        }
-}
+//         else if (e.type == SDL_KEYDOWN){
+//             switch( e.key.keysym.sym ){  
+//                 case SDLK_b:
+//                                                                                 //SWITCH TYPE BULLET (IN DECLARATION)
+//                     std::swap(bullet[0],bullet[1]); 
+//                     Mix_PlayChannel(-1,gSwapBullet,0);
+//                     break;
+//                                                                                 //BIRD SWING
+//                 case SDLK_w: case  SDLK_UP:  case SDLK_SPACE:   
+//                     jump();
+//                     Mix_PlayChannel( -1, gFly, 0 );
+//                     break;
+//                                                                                 //PLAY THE MUSIC
+//                 case SDLK_m:
+//                     if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
+//                     else{
+//                         if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 
+//                         else  Mix_PauseMusic();                                 //PAUSE THE MUSIC                       
+//                     }
+//                     break;
+//                                                                                 //STOP THE MUSIC
+//                 case SDLK_0:    
+//                     Mix_HaltMusic();   
+//                     break;
+//             }
+//         }
+// }
 void Bird::ExplosionBirdAndThreat(ExplosionObject explosion_Collision){
     for(int ex = 0; ex < 4; ex++){
         int xPos = ( strikeObstacle().x + strikeObstacle().w*0.5) - EXP_WIDTH * 0.5;

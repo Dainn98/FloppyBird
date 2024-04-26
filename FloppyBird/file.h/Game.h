@@ -166,6 +166,7 @@ Game::~Game(){
 }
 
 void Game::Play(){
+    Mix_PlayMusic(gMusic, -1);
     SDL_Event e;
 //888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 while (!quit) {
@@ -207,14 +208,15 @@ while (!quit) {
             HandleWhenGameOver();
             ret_menu_over = SDLCommonFunc::ShowMenuGameOver2(gRenderer,gFontMENU,"Restart","HOME","Exit game",std::to_string(money),std::to_string(highestScore),GameOverMenu_path);
             if (ret_menu_over == 0) HandleWhenReplay();
-            else if (ret_menu_over == 1){break;}
-            else {exit(0);break;}
+            else if (ret_menu_over == 1){Mix_PlayMusic(gMusicIntro,-1);break;}
+            else if (ret_menu_over == 2){exit(0);}
+            else {exit(0);}
         }
         else {
             if(!getIsPaused()) HandleWhenPlay();
             else HandleWhenPause();
         }
-        if(Mix_PausedMusic())   Mix_ResumeMusic();
+        // if(Mix_PausedMusic())   Mix_ResumeMusic();
         CheckCollision();
         SDL_RenderPresent(gRenderer);
         changeFPS();
@@ -733,6 +735,7 @@ void Game:: HandleInputAction(SDL_Event &e){
                     OptionInGame.mPresentState[PAUSE] = true;
                     break;
                 case SDLK_o://PLAY THE MUSIC
+                    Mix_PlayChannel(-1,gSwoosh,0);
                     if( Mix_PlayingMusic() == 0 ) Mix_PlayMusic( gMusic, -1 ); 
                     else{
                         if( Mix_PausedMusic() == 1 )Mix_ResumeMusic();           //RESUME THE MUSIC 

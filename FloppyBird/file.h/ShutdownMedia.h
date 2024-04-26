@@ -13,6 +13,7 @@ void ShutdownMedia() {
                                                                     //FREE MUSICE
     Mix_FreeChunk( gFly );gFly = NULL;
     Mix_FreeMusic( gMusic ); gMusic = NULL;
+    Mix_FreeMusic( gMusicIntro ); gMusicIntro = NULL;
     Mix_FreeChunk( gSwoosh ); gSwoosh = NULL;
     Mix_FreeChunk( gMoneyCol ); gMoneyCol = NULL;
     Mix_FreeChunk( gDie ); gDie = NULL;
