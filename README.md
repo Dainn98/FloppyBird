@@ -114,6 +114,7 @@
 - Folder *Sprites*: Chứa toàn bộ hình ảnh của trò chơi.
 - Folder *file.h*: Chứa hầu hết các Header.h xử lý từng thành phần của trò chơi.
   + Header *BaseObject.h*: chứa hầu hết các lệnh để load ảnh và vẽ lên renderer, window.
+  + Header *LTexture.h*: Tham khảo tại http://lazyfoo.net và phát triển thêm nhiều hàm với tính năng vượt trội hơn.
   + Header *Bird.h*: Xử lý phần dữ liệu của nhân vật game gồm tọa độ, kích thước,...
   + Header *BulletObject*: Xử lý dữ liệu của tất cả các loại đạn bắn.
   + Header *Collision_With_Obstacles.h*: Xử lý chương trình khi có sự va chạm giữa các dối tượng.
@@ -133,9 +134,9 @@
       * Xử lý hiện thị toàn bộ âm thanh hình ảnh
       * Xử lý giải phóng bộ nhớ của game khi không sử dụng => đảm bảo RAM của game luôn duy trì của mức độ thấp.
       * Xử lý hiện thị các đối tượng của game.
-  + Header *Menu.h*: Xử lý chương trình
+  + Header *Menu.h*: Xử lý chương trình.
 - Folder res: Chứa các hình ảnh preview cho game.
-- Và hàm main() của trò chơi.
+- Hàm main.cpp: chỉ khởi tạo cửa sổ, loading âm thanh và class Menu.
 ## **Conclusion**
 ### ***Điều tâm đắc***
   - Dự án này hoàn toàn là do em tự làm, không đi sao chép ở bất kì đâu.
