@@ -47,7 +47,7 @@
 | SHOOTING | BUTTONLEFT |
 
 - **Button B**: swap bullet for bird.
-- **Button M**: unmute/unmute music.
+- **Button O**: unmute/unmute music.
 - **Button ESC** : pause game, or exit window menu.
 
 ### *Preview*
