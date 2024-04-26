@@ -51,9 +51,13 @@
 - **Button ESC** : pause game, or exit window menu.
 
 ### *Preview*
+#### *Cửa sổ hiện thị màn hình Start Game*
 ![](FloppyBird/res/demoImage/IntroDemo.png)
+#### *Cửa sổ hiện thị màn hình sẵn sàng chơi Game*
 ![](FloppyBird/res/demoImage/TapDemo.png)
+#### *Cửa sổ hiện thị hướng dẫn cơ bản cách chơi Game*
 ![](FloppyBird/res/demoImage/TutorialDemo.png)
+#### *Cửa sổ hiện thị ĐIỂM SỐ và TIỀN VÀNG khi Game Over*
 ![](FloppyBird/res/demoImage/endDemo.png)
 
 
